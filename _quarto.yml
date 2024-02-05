@@ -1,0 +1,7 @@
+project:
+  title: "Simulation of Potato Growth and Development"
+  type: website
+  output-dir: docs
+  
+editor: visual
+
