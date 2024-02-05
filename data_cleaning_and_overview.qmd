@@ -1,0 +1,595 @@
+---
+title: "Data Publication of BRIWECS Consortium"
+author:   
+  - Till Rose   
+  - Tien-Cheng Wang
+  - Tsu-Wei Chen
+date: "`r Sys.Date()`"
+bibliography: bibliography.bibtex.bib
+csl: european-journal-of-agronomy.csl
+chunk_output_type: console
+html-math-method: katex
+number-sections: true
+toc: true
+toc-expand: 4
+toc-depth: 4
+toc-location: left
+crossref:
+  eq-prefix: Eq.
+format:
+ html:
+  mermaid:
+    theme: neutral
+---
+
+```{r setup, include=FALSE}
+
+knitr::opts_chunk$set(echo=FALSE, warning=FALSE, message=FALSE)
+
+library("ggplot2")
+library("tidyverse")
+library("viridis")
+library("ggpmisc")
+# library("Hmisc")
+# library("ggfx")
+library("ggridges")
+library("patchwork")
+
+```
+
+```{r import, cache = TRUE}
+
+
+complete_dat <- list.files(path = "data/locations",
+                           pattern="*.csv",
+                           full.names = T) %>%
+  map_df(~read_csv2(., col_types = cols(.default = "c")))
+
+
+zulass_list <- read_delim("data/Sortenliste_2017.csv", delim = ";")
+zulass_list_2 <- read_delim("data/Sortiment_Jahre.csv")
+
+```
+
+```{r tidy}
+
+
+complete_dat <- complete_dat %>% 
+  dplyr::select(-ReifeHoehe, -Kernel_number_bio, -Sorte, -`StrawYield_dt/ha`, -HI, -SPAD, -Straw_N, -Flag_Leaf_Weight, -Flag_Leaf_N, -Flag_Leaf_C, -Subblock, -Spikes_per_ear, -Subtrial) %>% 
+  mutate(Row = as.integer(Row),
+         Column = as.integer(Column),
+         BRISONr = str_replace(BRISONr, "BRISONR", "BRISONr"),
+         Year = as.integer(Year),
+         Location = ifelse(Location == "KAD", "KAL", Location),
+         Treatment = ifelse(Treatment == "HN_WF_DD", "HN_WF_D", Treatment),
+         Block = ifelse(Block == "1", "B1", Block),
+         Block = ifelse(Block == "2", "B2", Block),
+         Sowing_date = as.integer(Sowing_date),
+         Emergence_date = as.integer(Emergence_date),
+         BBCH59 = as.integer(BBCH59),
+         BBCH87 = as.integer(BBCH87),
+         Plantheight = as.integer(Plantheight),
+         Plantheight = ifelse(Plantheight > 150, NA, Plantheight),
+         Seedyield = signif(as.double(Seedyield), digits = 3),
+         Seedyield = ifelse(Seedyield < 0, NA, Seedyield),
+         Seedyield_bio = signif(as.double(Seedyield_bio), digits = 4),
+         Seedyield_bio = ifelse(Seedyield_bio > 2000, NA, Seedyield_bio),
+         Seedyield = ifelse(Seedyield > 3000, NA, Seedyield),
+         Biomass_bio = signif(as.double(Biomass_bio), digits = 4),
+         Biomass_bio = ifelse(Biomass_bio > 3500, NA, Biomass_bio),
+         TKW_plot = signif(as.double(TKW_plot), digits = 3),
+         TKW_plot = ifelse(TKW_plot > 80, NA, TKW_plot),
+         TKW_bio = signif(as.double(TKW_bio), digits = 3),
+         Spike_number = signif(as.double(Spike_number), digits = 3),
+         Spike_number = ifelse(Spike_number > 1500, NA, Spike_number),
+         Stripe_rust = as.integer(Stripe_rust),
+         Powdery_mildew = as.integer(Powdery_mildew),
+         Leaf_rust = as.integer(Leaf_rust),
+         Leaf_rust = ifelse(Leaf_rust < 0, NA, Leaf_rust),
+         Septoria = as.integer(Septoria),
+         DTR = as.integer(DTR),
+         Fusarium = as.integer(Fusarium),
+         Sedimentation = signif(as.double(Sedimentation), digits = 3),
+         Falling_number = signif(as.double(Falling_number), digits = 3),
+         Crude_protein = signif(as.double(Crude_protein), digits = 3),
+         Crude_protein = ifelse(Crude_protein < 5, NA, Crude_protein),
+         HI = Seedyield_bio / Biomass_bio,
+         HI = ifelse(HI > 0.8, NA, HI)) %>% 
+  filter(Treatment != "LLN_WF")
+
+```
+
+```{r transform}
+
+
+
+
+```
+
+```{r Seedyield}
+
+illu <- complete_dat %>% 
+  mutate(Environment = paste(Location, Year, sep = "_"),
+         Treatment = fct_relevel(Treatment, "HN_WF", "HN_WF_D", "HN_NF", "LN_WF", "LN_NF"),
+         Environment = fct_expand(Environment, "RHH_2018", "RHH_2019"),
+         Environment = fct_expand(Environment, "GGE_2019", after = 4))
+
+plot_ <- ggplot(illu) + aes(x = Seedyield, y = Environment, fill = Treatment) +
+  theme_classic() +
+  theme(legend.justification = "top") +
+  geom_density_ridges(alpha = 0.75,
+                      jittered_points = TRUE,
+                       position = "raincloud",
+                      point_size = 0.05,
+                      point_alpha = 0.2) +
+  scale_fill_brewer(palette = "Set1") +
+  scale_y_discrete(drop=FALSE) +
+  NULL
+
+plot_
+
+```
+
+```{r HI}
+
+illu <- complete_dat %>% 
+  mutate(Environment = paste(Location, Year, sep = "_"),
+         Treatment = fct_relevel(Treatment, "HN_WF", "HN_WF_D", "HN_NF", "LN_WF", "LN_NF"),
+         Environment = fct_expand(Environment, "RHH_2018", "RHH_2019"),
+         Environment = fct_expand(Environment, "GGE_2019", after = 4))
+
+plot_ <- ggplot(illu) + aes(x = HI, y = Environment, fill = Treatment) +
+  theme_classic() +
+  theme(legend.justification = "top") +
+  geom_density_ridges(alpha = 0.75,
+                      jittered_points = TRUE,
+                       position = "raincloud",
+                      point_size = 0.05,
+                      point_alpha = 0.2) +
+  scale_fill_brewer(palette = "Set1") +
+  NULL
+
+plot_
+
+```
+
+```{r BBCH59}
+
+illu <- complete_dat %>% 
+  mutate(Environment = paste(Location, Year, sep = "_"),
+         Treatment = fct_relevel(Treatment, "HN_WF", "HN_WF_D", "HN_NF", "LN_WF", "LN_NF"),
+         Environment = fct_expand(Environment, "RHH_2018", "RHH_2019"),
+         Environment = fct_expand(Environment, "GGE_2019", after = 4))
+
+plot_ <- ggplot(illu) + aes(x = BBCH59, y = Environment, fill = Treatment) +
+  theme_classic() +
+  theme(legend.justification = "top") +
+  geom_density_ridges(alpha = 0.75,
+                      jittered_points = TRUE,
+                       position = "raincloud",
+                      point_size = 0.05,
+                      point_alpha = 0.2) +
+  scale_fill_brewer(palette = "Set1") +
+  NULL
+
+plot_
+
+```
+
+```{r BBCH87}
+
+illu <- complete_dat %>% 
+  mutate(Environment = paste(Location, Year, sep = "_"),
+         Treatment = fct_relevel(Treatment, "HN_WF", "HN_WF_D", "HN_NF", "LN_WF", "LN_NF"),
+         Environment = fct_expand(Environment, "RHH_2018", "RHH_2019"),
+         Environment = fct_expand(Environment, "GGE_2019", after = 4))
+
+plot_ <- ggplot(illu) + aes(x = BBCH87, y = Environment, fill = Treatment) +
+  theme_classic() +
+  theme(legend.justification = "top") +
+  geom_density_ridges(alpha = 0.75,
+                      jittered_points = TRUE,
+                       position = "raincloud",
+                      point_size = 0.05,
+                      point_alpha = 0.2) +
+  scale_fill_brewer(palette = "Set1") +
+  NULL
+
+plot_
+
+```
+
+```{r Sowing_date}
+
+illu <- complete_dat %>%
+  mutate(Environment = paste(Location, Year, sep = "_"),
+         Treatment = fct_relevel(Treatment, "HN_WF", "HN_WF_D", "HN_NF", "LN_WF", "LN_NF"),
+         Environment = fct_expand(Environment, "RHH_2018", "RHH_2019"),
+         Environment = fct_expand(Environment, "GGE_2019", after = 4))
+
+plot_ <- ggplot(illu) + aes(x = Sowing_date, y = Environment, fill = Treatment) +
+  theme_classic() +
+theme(legend.justification = "top") +
+  geom_density_ridges(alpha = 0.75,
+                      jittered_points = TRUE,
+                       position = "raincloud",
+                      point_size = 0.05,
+                      point_alpha = 0.2,
+                      scale = 0) +
+  scale_fill_brewer(palette = "Set1") +
+  NULL
+
+plot_
+
+```
+
+```{r Emergence_date}
+
+illu <- complete_dat %>%
+  mutate(Environment = paste(Location, Year, sep = "_"),
+         Treatment = fct_relevel(Treatment, "HN_WF", "HN_WF_D", "HN_NF", "LN_WF", "LN_NF"),
+         Environment = fct_expand(Environment, "RHH_2018", "RHH_2019"),
+         Environment = fct_expand(Environment, "GGE_2019", after = 4))
+
+plot_ <- ggplot(illu) + aes(x = Emergence_date, y = Environment, fill = Treatment) +
+  theme_classic() +
+  theme(legend.justification = "top") +
+  geom_density_ridges(alpha = 0.75,
+                      jittered_points = TRUE,
+                       position = "raincloud",
+                      point_size = 0.05,
+                      point_alpha = 0.2,
+                      scale = 0) +
+  scale_fill_brewer(palette = "Set1") +
+  NULL
+
+plot_
+
+```
+
+```{r Plantheight}
+
+illu <- complete_dat %>%
+  mutate(Environment = paste(Location, Year, sep = "_"),
+         Treatment = fct_relevel(Treatment, "HN_WF", "HN_WF_D", "HN_NF", "LN_WF", "LN_NF"),
+         Environment = fct_expand(Environment, "RHH_2018", "RHH_2019"),
+         Environment = fct_expand(Environment, "GGE_2019", after = 4))
+
+plot_ <- ggplot(illu) + aes(x = Plantheight, y = Environment, fill = Treatment) +
+  theme_classic() +
+  theme(legend.justification = "top") +
+  geom_density_ridges(alpha = 0.75,
+                      jittered_points = TRUE,
+                       position = "raincloud",
+                      point_size = 0.05,
+                      point_alpha = 0.2) +
+  scale_fill_brewer(palette = "Set1") +
+  NULL
+
+plot_
+
+```
+
+```{r Seedyield_bio}
+
+illu <- complete_dat %>%
+  mutate(Environment = paste(Location, Year, sep = "_"),
+         Treatment = fct_relevel(Treatment, "HN_WF", "HN_WF_D", "HN_NF", "LN_WF", "LN_NF"),
+         Environment = fct_expand(Environment, "RHH_2018", "RHH_2019"),
+         Environment = fct_expand(Environment, "GGE_2019", after = 4))
+
+plot_ <- ggplot(illu) + aes(x = Seedyield_bio, y = Environment, fill = Treatment) +
+  theme_classic() +
+  theme(legend.justification = "top") +
+  geom_density_ridges(alpha = 0.75,
+                      jittered_points = TRUE,
+                       position = "raincloud",
+                      point_size = 0.05,
+                      point_alpha = 0.2) +
+  scale_fill_brewer(palette = "Set1") +
+  NULL
+
+plot_
+
+```
+
+```{r Biomass_bio}
+
+illu <- complete_dat %>%
+  mutate(Environment = paste(Location, Year, sep = "_"),
+         Treatment = fct_relevel(Treatment, "HN_WF", "HN_WF_D", "HN_NF", "LN_WF", "LN_NF"),
+         Environment = fct_expand(Environment, "RHH_2018", "RHH_2019"),
+         Environment = fct_expand(Environment, "GGE_2019", after = 4))
+
+plot_ <- ggplot(illu) + aes(x = Biomass_bio, y = Environment, fill = Treatment) +
+  theme_classic() +
+  theme(legend.justification = "top") +
+  geom_density_ridges(alpha = 0.75,
+                      jittered_points = TRUE,
+                       position = "raincloud",
+                      point_size = 0.05,
+                      point_alpha = 0.2) +
+  scale_fill_brewer(palette = "Set1") +
+  NULL
+
+plot_
+
+```
+
+```{r TKW_plot}
+
+illu <- complete_dat %>%
+  mutate(Environment = paste(Location, Year, sep = "_"),
+         Treatment = fct_relevel(Treatment, "HN_WF", "HN_WF_D", "HN_NF", "LN_WF", "LN_NF"),
+         Environment = fct_expand(Environment, "RHH_2018", "RHH_2019"),
+         Environment = fct_expand(Environment, "GGE_2019", after = 4))
+
+plot_ <- ggplot(illu) + aes(x = TKW_plot, y = Environment, fill = Treatment) +
+  theme_classic() +
+  theme(legend.justification = "top") +
+  geom_density_ridges(alpha = 0.75,
+                      jittered_points = TRUE,
+                       position = "raincloud",
+                      point_size = 0.05,
+                      point_alpha = 0.2) +
+  scale_fill_brewer(palette = "Set1") +
+  NULL
+
+plot_
+
+```
+
+```{r TKW_bio}
+
+illu <- complete_dat %>%
+  mutate(Environment = paste(Location, Year, sep = "_"),
+         Treatment = fct_relevel(Treatment, "HN_WF", "HN_WF_D", "HN_NF", "LN_WF", "LN_NF"),
+         Environment = fct_expand(Environment, "RHH_2018", "RHH_2019"),
+         Environment = fct_expand(Environment, "GGE_2019", after = 4))
+
+plot_ <- ggplot(illu) + aes(x = TKW_bio, y = Environment, fill = Treatment) +
+  theme_classic() +
+  theme(legend.justification = "top") +
+  geom_density_ridges(alpha = 0.75,
+                      jittered_points = TRUE,
+                       position = "raincloud",
+                      point_size = 0.05,
+                      point_alpha = 0.2) +
+  scale_fill_brewer(palette = "Set1") +
+  NULL
+
+plot_
+
+```
+
+```{r Spike_number}
+
+illu <- complete_dat %>%
+  mutate(Environment = paste(Location, Year, sep = "_"),
+         Treatment = fct_relevel(Treatment, "HN_WF", "HN_WF_D", "HN_NF", "LN_WF", "LN_NF"),
+         Environment = fct_expand(Environment, "RHH_2018", "RHH_2019"),
+         Environment = fct_expand(Environment, "GGE_2019", after = 4))
+
+plot_ <- ggplot(illu) + aes(x = Spike_number, y = Environment, fill = Treatment) +
+  theme_classic() +
+  theme(legend.justification = "top") +
+  geom_density_ridges(alpha = 0.75,
+                      jittered_points = TRUE,
+                       position = "raincloud",
+                      point_size = 0.05,
+                      point_alpha = 0.2) +
+  scale_fill_brewer(palette = "Set1") +
+  NULL
+
+plot_
+
+```
+
+```{r Stripe_rust}
+
+illu <- complete_dat %>%
+  mutate(Environment = paste(Location, Year, sep = "_"),
+         Treatment = fct_relevel(Treatment, "HN_WF", "HN_WF_D", "HN_NF", "LN_WF", "LN_NF"),
+         Environment = fct_expand(Environment, "RHH_2018", "RHH_2019"),
+         Environment = fct_expand(Environment, "GGE_2019", after = 4))
+
+plot_ <- ggplot(illu) + aes(x = Stripe_rust, y = Environment, fill = Treatment) +
+  theme_classic() +
+  theme(legend.justification = "top") +
+  geom_density_ridges(alpha = 0.75,
+                      jittered_points = TRUE,
+                       position = "raincloud",
+                      point_size = 0.05,
+                      point_alpha = 0.2) +
+  scale_fill_brewer(palette = "Set1") +
+  NULL
+
+plot_
+
+```
+
+```{r Powdery_mildew}
+
+illu <- complete_dat %>%
+  mutate(Environment = paste(Location, Year, sep = "_"),
+         Treatment = fct_relevel(Treatment, "HN_WF", "HN_WF_D", "HN_NF", "LN_WF", "LN_NF"),
+         Environment = fct_expand(Environment, "RHH_2018", "RHH_2019"),
+         Environment = fct_expand(Environment, "GGE_2019", after = 4))
+
+plot_ <- ggplot(illu) + aes(x = Powdery_mildew, y = Environment, fill = Treatment) +
+  theme_classic() +
+  theme(legend.justification = "top") +
+  geom_density_ridges(alpha = 0.75,
+                      jittered_points = TRUE,
+                       position = "raincloud",
+                      point_size = 0.05,
+                      point_alpha = 0.2) +
+  scale_fill_brewer(palette = "Set1") +
+  NULL
+
+plot_
+
+```
+
+```{r Leaf_rust}
+
+illu <- complete_dat %>%
+  mutate(Environment = paste(Location, Year, sep = "_"),
+         Treatment = fct_relevel(Treatment, "HN_WF", "HN_WF_D", "HN_NF", "LN_WF", "LN_NF"),
+         Environment = fct_expand(Environment, "RHH_2018", "RHH_2019"),
+         Environment = fct_expand(Environment, "GGE_2019", after = 4))
+
+plot_ <- ggplot(illu) + aes(x = Leaf_rust, y = Environment, fill = Treatment) +
+  theme_classic() +
+  theme(legend.justification = "top") +
+  geom_density_ridges(alpha = 0.75,
+                      jittered_points = TRUE,
+                       position = "raincloud",
+                      point_size = 0.05,
+                      point_alpha = 0.2) +
+  scale_fill_brewer(palette = "Set1") +
+  NULL
+
+plot_
+
+```
+
+```{r Septoria}
+
+illu <- complete_dat %>%
+  mutate(Environment = paste(Location, Year, sep = "_"),
+         Treatment = fct_relevel(Treatment, "HN_WF", "HN_WF_D", "HN_NF", "LN_WF", "LN_NF"),
+         Environment = fct_expand(Environment, "RHH_2018", "RHH_2019"),
+         Environment = fct_expand(Environment, "GGE_2019", after = 4))
+
+plot_ <- ggplot(illu) + aes(x = Septoria, y = Environment, fill = Treatment) +
+  theme_classic() +
+  theme(legend.justification = "top") +
+  geom_density_ridges(alpha = 0.75,
+                      jittered_points = TRUE,
+                       position = "raincloud",
+                      point_size = 0.05,
+                      point_alpha = 0.2) +
+  scale_fill_brewer(palette = "Set1") +
+  NULL
+
+plot_
+
+```
+
+```{r DTR}
+
+illu <- complete_dat %>%
+  mutate(Environment = paste(Location, Year, sep = "_"),
+         Treatment = fct_relevel(Treatment, "HN_WF", "HN_WF_D", "HN_NF", "LN_WF", "LN_NF"),
+         Environment = fct_expand(Environment, "RHH_2018", "RHH_2019"),
+         Environment = fct_expand(Environment, "GGE_2019", after = 4))
+
+plot_ <- ggplot(illu) + aes(x = DTR, y = Environment, fill = Treatment) +
+  theme_classic() +
+  theme(legend.justification = "top") +
+  geom_density_ridges(alpha = 0.75,
+                      jittered_points = TRUE,
+                       position = "raincloud",
+                      point_size = 0.05,
+                      point_alpha = 0.2) +
+  scale_fill_brewer(palette = "Set1") +
+  NULL
+
+plot_
+
+```
+
+```{r Fusarium}
+
+illu <- complete_dat %>%
+  mutate(Environment = paste(Location, Year, sep = "_"),
+         Treatment = fct_relevel(Treatment, "HN_WF", "HN_WF_D", "HN_NF", "LN_WF", "LN_NF"),
+         Environment = fct_expand(Environment, "RHH_2018", "RHH_2019"),
+         Environment = fct_expand(Environment, "GGE_2019", after = 4))
+
+plot_ <- ggplot(illu) + aes(x = Fusarium, y = Environment, fill = Treatment) +
+  theme_classic() +
+  theme(legend.justification = "top") +
+  geom_density_ridges(alpha = 0.75,
+                      jittered_points = TRUE,
+                       position = "raincloud",
+                      point_size = 0.05,
+                      point_alpha = 0.2) +
+  scale_fill_brewer(palette = "Set1") +
+  NULL
+
+plot_
+
+```
+
+```{r Sedimentation}
+
+illu <- complete_dat %>%
+  mutate(Environment = paste(Location, Year, sep = "_"),
+         Treatment = fct_relevel(Treatment, "HN_WF", "HN_WF_D", "HN_NF", "LN_WF", "LN_NF"),
+         Environment = fct_expand(Environment, "RHH_2018", "RHH_2019"),
+         Environment = fct_expand(Environment, "GGE_2019", after = 4))
+
+plot_ <- ggplot(illu) + aes(x = Sedimentation, y = Environment, fill = Treatment) +
+  theme_classic() +
+  theme(legend.justification = "top") +
+  geom_density_ridges(alpha = 0.75,
+                      jittered_points = TRUE,
+                       position = "raincloud",
+                      point_size = 0.05,
+                      point_alpha = 0.2) +
+  scale_fill_brewer(palette = "Set1") +
+  NULL
+
+plot_
+
+```
+
+```{r Falling_number}
+
+illu <- complete_dat %>%
+  mutate(Environment = paste(Location, Year, sep = "_"),
+         Treatment = fct_relevel(Treatment, "HN_WF", "HN_WF_D", "HN_NF", "LN_WF", "LN_NF"),
+         Environment = fct_expand(Environment, "RHH_2018", "RHH_2019"),
+         Environment = fct_expand(Environment, "GGE_2019", after = 4))
+
+plot_ <- ggplot(illu) + aes(x = Falling_number, y = Environment, fill = Treatment) +
+  theme_classic() +
+  theme(legend.justification = "top") +
+  geom_density_ridges(alpha = 0.75,
+                      jittered_points = TRUE,
+                       position = "raincloud",
+                      point_size = 0.05,
+                      point_alpha = 0.2) +
+  scale_fill_brewer(palette = "Set1") +
+  NULL
+
+plot_
+
+```
+
+```{r Crude_protein}
+
+illu <- complete_dat %>%
+  mutate(Environment = paste(Location, Year, sep = "_"),
+         Treatment = fct_relevel(Treatment, "HN_WF", "HN_WF_D", "HN_NF", "LN_WF", "LN_NF"),
+         Environment = fct_expand(Environment, "RHH_2018", "RHH_2019"),
+         Environment = fct_expand(Environment, "GGE_2019", after = 4))
+
+plot_ <- ggplot(illu) + aes(x = Crude_protein, y = Environment, fill = Treatment) +
+  theme_classic() +
+  theme(legend.justification = "top") +
+  geom_density_ridges(alpha = 0.75,
+                      jittered_points = TRUE,
+                       position = "raincloud",
+                      point_size = 0.05,
+                      point_alpha = 0.2) +
+  scale_fill_brewer(palette = "Set1") +
+  NULL
+
+plot_
+
+```
+
+
