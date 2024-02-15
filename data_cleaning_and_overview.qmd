@@ -1,9 +1,5 @@
 ---
 title: "Data Publication of BRIWECS Consortium"
-author:   
-  - Till Rose   
-  - Tien-Cheng Wang
-  - Tsu-Wei Chen
 date: "`r Sys.Date()`"
 bibliography: bibliography.bibtex.bib
 csl: european-journal-of-agronomy.csl
@@ -18,8 +14,7 @@ crossref:
   eq-prefix: Eq.
 format:
  html:
-  mermaid:
-    theme: neutral
+  embed-resources: true
 ---
 
 ```{r setup, include=FALSE}
@@ -34,10 +29,12 @@ library("ggpmisc")
 # library("ggfx")
 library("ggridges")
 library("patchwork")
+library("ggcorrplot")
+library("paletteer")
 
 ```
 
-```{r import, cache = TRUE}
+```{r import}
 
 
 complete_dat <- list.files(path = "data/locations",
@@ -46,16 +43,13 @@ complete_dat <- list.files(path = "data/locations",
   map_df(~read_csv2(., col_types = cols(.default = "c")))
 
 
-zulass_list <- read_delim("data/Sortenliste_2017.csv", delim = ";")
-zulass_list_2 <- read_delim("data/Sortiment_Jahre.csv")
-
 ```
 
 ```{r tidy}
 
 
 complete_dat <- complete_dat %>% 
-  dplyr::select(-ReifeHoehe, -Kernel_number_bio, -Sorte, -`StrawYield_dt/ha`, -HI, -SPAD, -Straw_N, -Flag_Leaf_Weight, -Flag_Leaf_N, -Flag_Leaf_C, -Subblock, -Spikes_per_ear, -Subtrial) %>% 
+  dplyr::select(-ReifeHoehe, -Kernel_number_bio, -Sorte, -`StrawYield_dt/ha`, -Subblock, -Subtrial) %>% 
   mutate(Row = as.integer(Row),
          Column = as.integer(Column),
          BRISONr = str_replace(BRISONr, "BRISONR", "BRISONr"),
@@ -70,7 +64,7 @@ complete_dat <- complete_dat %>%
          BBCH87 = as.integer(BBCH87),
          Plantheight = as.integer(Plantheight),
          Plantheight = ifelse(Plantheight > 150, NA, Plantheight),
-         Seedyield = signif(as.double(Seedyield), digits = 3),
+         Seedyield = signif(as.double(Seedyield), digits = 4),
          Seedyield = ifelse(Seedyield < 0, NA, Seedyield),
          Seedyield_bio = signif(as.double(Seedyield_bio), digits = 4),
          Seedyield_bio = ifelse(Seedyield_bio > 2000, NA, Seedyield_bio),
@@ -93,9 +87,34 @@ complete_dat <- complete_dat %>%
          Falling_number = signif(as.double(Falling_number), digits = 3),
          Crude_protein = signif(as.double(Crude_protein), digits = 3),
          Crude_protein = ifelse(Crude_protein < 5, NA, Crude_protein),
-         HI = Seedyield_bio / Biomass_bio,
-         HI = ifelse(HI > 0.8, NA, HI)) %>% 
+         Harvest_Index = signif(as.double(Harvest_Index), digits = 3),
+         Harvest_Index = ifelse(is.na(Harvest_Index), Seedyield_bio / Biomass_bio, Harvest_Index),
+         Harvest_Index = ifelse(Harvest_Index > 0.8, NA, Harvest_Index)) %>% 
   filter(Treatment != "LLN_WF")
+
+## Filter Harvest Index by Standard Deviation
+complete_dat <- complete_dat %>% 
+  group_by(Year, Location, Treatment, BRISONr) %>% 
+    mutate(HI_sd = sd(Harvest_Index, na.rm = TRUE),
+           HI_mean = mean(Harvest_Index, na.rm = TRUE)) %>% 
+  ungroup() %>% 
+  mutate(Harvest_Index = ifelse(Harvest_Index < HI_mean - 2*HI_sd, NA, Harvest_Index),
+         Harvest_Index = ifelse(Harvest_Index > HI_mean + 2*HI_sd, NA, Harvest_Index))
+
+
+## Filter Spike Number by Standard Deviation
+complete_dat <- complete_dat %>% 
+  group_by(Year, Location, Treatment, BRISONr) %>% 
+    mutate(Spike_number_sd = sd(Spike_number, na.rm = TRUE),
+           Spike_number_mean = mean(Spike_number, na.rm = TRUE)) %>% 
+  ungroup() %>% 
+  mutate(Spike_number = ifelse(Spike_number < Spike_number_mean - 2*Spike_number_sd, NA, Spike_number),
+         Spike_number = ifelse(Spike_number > Spike_number_mean + 2*Spike_number_sd, NA, Spike_number))
+
+
+complete_dat <- complete_dat %>% 
+  mutate_all(~ifelse(is.nan(.), NA, .))
+
 
 ```
 
@@ -107,6 +126,7 @@ complete_dat <- complete_dat %>%
 ```
 
 ## Yield and Yield Components
+
 ```{r Seedyield}
 
 illu <- complete_dat %>% 
@@ -130,6 +150,34 @@ plot_ <- ggplot(illu) + aes(x = Seedyield, y = Environment, fill = Treatment) +
 plot_
 
 ```
+
+```{r Seedyield_Cor, fig.asp=1.2}
+
+illu <- complete_dat %>% 
+  mutate(Environment = paste(Location, Year, sep = "_")) %>% 
+  # filter(Treatment == "HN_WF") %>%
+  group_by(BRISONr, Environment) %>% 
+    summarize(Seedyield = mean(Seedyield, na.rm = TRUE)) %>% 
+  ungroup() %>% 
+  mutate_all(~ifelse(is.nan(.), NA, .)) %>% 
+  pivot_wider(names_from = Environment, values_from = Seedyield) %>%
+  dplyr::select(-BRISONr) %>% 
+  dplyr::select(order(colnames(.)))
+
+illu_cor <- cor(illu, use = "pairwise.complete.obs")
+
+plot_ <- ggcorrplot(illu_cor) +
+  ggtitle("Seedyield") +
+  theme_minimal() +
+  guides(x = guide_axis(angle = 45)) +
+  scale_fill_paletteer_c(palette = "scico::bam", limits = c(-1, 1)) +
+  xlab("") +
+  ylab("")
+
+plot_
+
+```
+
 ```{r Seedyield_bio}
 
 illu <- complete_dat %>%
@@ -147,6 +195,58 @@ plot_ <- ggplot(illu) + aes(x = Seedyield_bio, y = Environment, fill = Treatment
                       point_size = 0.05,
                       point_alpha = 0.2) +
   scale_fill_brewer(palette = "Set1") +
+  NULL
+
+plot_
+
+```
+
+```{r Seedyield_bio_Cor, fig.asp=1.2}
+
+illu <- complete_dat %>% 
+  mutate(Environment = paste(Location, Year, sep = "_")) %>% 
+  # filter(Treatment == "HN_WF") %>%
+  group_by(BRISONr, Environment) %>% 
+    summarize(Seedyield_bio = mean(Seedyield_bio, na.rm = TRUE)) %>% 
+  ungroup() %>% 
+  mutate_all(~ifelse(is.nan(.), NA, .)) %>% 
+  pivot_wider(names_from = Environment, values_from = Seedyield_bio) %>%
+  dplyr::select(-BRISONr) %>% 
+  dplyr::select(order(colnames(.)))
+
+illu_cor <- cor(illu, use = "pairwise.complete.obs")
+
+plot_ <- ggcorrplot(illu_cor) +
+  ggtitle("Seedyield_bio") +
+  theme_minimal() +
+  guides(x = guide_axis(angle = 45)) +
+  scale_fill_paletteer_c(palette = "scico::bam", limits = c(-1, 1)) +
+  xlab("") +
+  ylab("")
+
+plot_
+
+```
+
+```{r Seedyield_bio_combine_Comp, fig.asp=1.6}
+illu <- complete_dat %>% 
+  mutate(Environment = paste(Location, Year, sep = "_")) %>% 
+  # filter(Treatment == "HN_WF") %>%
+  group_by(BRISONr, Environment) %>% 
+    summarize(Seedyield_bio = mean(Seedyield_bio, na.rm = TRUE),
+              Seedyield = mean(Seedyield, na.rm = TRUE)) %>% 
+  ungroup()
+
+
+plot_ <- ggplot(illu) + aes(x = Seedyield*10, y = Seedyield_bio) + 
+  ggtitle("Comparison Combine Harvest and Hand Harvest") +
+  facet_wrap(~Environment, ncol = 5) +
+  theme_minimal() +
+  geom_abline(intercept = 0, slope = 1) +
+  geom_point(shape = 21, colour = "white", fill = "grey40", stroke = 0.2) +
+  geom_smooth(method = "lm", se = FALSE, colour = "orangered2") +
+  stat_poly_eq(aes(label =  paste(..rr.label.., sep = "~~~~")), parse = TRUE, geom = "text_npc", formula = y~x, size = 4) +
+  coord_equal() +
   NULL
 
 plot_
@@ -176,7 +276,34 @@ plot_
 
 ```
 
-```{r HI}
+```{r Biomass_bio_Cor, fig.asp=1.2}
+
+illu <- complete_dat %>% 
+  mutate(Environment = paste(Location, Year, sep = "_")) %>% 
+  # filter(Treatment == "HN_WF") %>%
+  group_by(BRISONr, Environment) %>% 
+    summarize(Biomass_bio = mean(Biomass_bio, na.rm = TRUE)) %>% 
+  ungroup() %>% 
+  mutate_all(~ifelse(is.nan(.), NA, .)) %>% 
+  pivot_wider(names_from = Environment, values_from = Biomass_bio) %>%
+  dplyr::select(-BRISONr) %>% 
+  dplyr::select(order(colnames(.)))
+
+illu_cor <- cor(illu, use = "pairwise.complete.obs")
+
+plot_ <- ggcorrplot(illu_cor) +
+  ggtitle("Biomass_bio") +
+  theme_minimal() +
+  guides(x = guide_axis(angle = 45)) +
+  scale_fill_paletteer_c(palette = "scico::bam", limits = c(-1, 1)) +
+  xlab("") +
+  ylab("")
+
+plot_
+
+```
+
+```{r Harvest_Index}
 
 illu <- complete_dat %>% 
   mutate(Environment = paste(Location, Year, sep = "_"),
@@ -184,7 +311,7 @@ illu <- complete_dat %>%
          Environment = fct_expand(Environment, "RHH_2018", "RHH_2019"),
          Environment = fct_expand(Environment, "GGE_2019", after = 4))
 
-plot_ <- ggplot(illu) + aes(x = HI, y = Environment, fill = Treatment) +
+plot_ <- ggplot(illu) + aes(x = Harvest_Index, y = Environment, fill = Treatment) +
   theme_classic() +
   theme(legend.justification = "top") +
   geom_density_ridges(alpha = 0.75,
@@ -198,6 +325,35 @@ plot_ <- ggplot(illu) + aes(x = HI, y = Environment, fill = Treatment) +
 plot_
 
 ```
+
+```{r Harvest_Index_Cor, fig.asp=1.2}
+
+illu <- complete_dat %>% 
+  mutate(Environment = paste(Location, Year, sep = "_")) %>% 
+  # filter(Treatment == "HN_WF") %>%
+  group_by(BRISONr, Environment) %>% 
+    summarize(Harvest_Index = mean(Harvest_Index, na.rm = TRUE)) %>% 
+  ungroup() %>% 
+  mutate_all(~ifelse(is.nan(.), NA, .)) %>% 
+  pivot_wider(names_from = Environment, values_from = Harvest_Index) %>%
+  dplyr::select(-BRISONr) %>% 
+  dplyr::select(order(colnames(.)))
+
+illu_cor <- cor(illu, use = "pairwise.complete.obs")
+
+plot_ <- ggcorrplot(illu_cor) +
+  ggtitle("Harvest_Index") +
+  theme_minimal() +
+  guides(x = guide_axis(angle = 45)) +
+  scale_fill_paletteer_c(palette = "scico::bam", limits = c(-1, 1)) +
+  xlab("") +
+  ylab("")
+
+plot_
+
+ 
+```
+
 ```{r TKW_plot}
 
 illu <- complete_dat %>%
@@ -219,6 +375,34 @@ plot_ <- ggplot(illu) + aes(x = TKW_plot, y = Environment, fill = Treatment) +
 
 plot_
 
+```
+
+```{r TKW_plot_Cor, fig.asp=1.2}
+
+illu <- complete_dat %>% 
+  mutate(Environment = paste(Location, Year, sep = "_")) %>% 
+  # filter(Treatment == "HN_WF") %>%
+  group_by(BRISONr, Environment) %>% 
+    summarize(TKW_plot = mean(TKW_plot, na.rm = TRUE)) %>% 
+  ungroup() %>% 
+  mutate_all(~ifelse(is.nan(.), NA, .)) %>% 
+  pivot_wider(names_from = Environment, values_from = TKW_plot) %>%
+  dplyr::select(-BRISONr) %>% 
+  dplyr::select(order(colnames(.)))
+
+illu_cor <- cor(illu, use = "pairwise.complete.obs")
+
+plot_ <- ggcorrplot(illu_cor) +
+  ggtitle("TKW_plot") +
+  theme_minimal() +
+  guides(x = guide_axis(angle = 45)) +
+  scale_fill_paletteer_c(palette = "scico::bam", limits = c(-1, 1)) +
+  xlab("") +
+  ylab("")
+
+plot_
+
+ 
 ```
 
 ```{r TKW_bio}
@@ -244,12 +428,6 @@ plot_
 
 ```
 
-
-
-
-
-
-
 ```{r Spike_number}
 
 illu <- complete_dat %>%
@@ -272,6 +450,35 @@ plot_ <- ggplot(illu) + aes(x = Spike_number, y = Environment, fill = Treatment)
 plot_
 
 ```
+
+```{r Spike_number_Cor, fig.asp=1.2}
+
+illu <- complete_dat %>% 
+  mutate(Environment = paste(Location, Year, sep = "_")) %>% 
+  # filter(Treatment == "HN_WF") %>%
+  group_by(BRISONr, Environment) %>% 
+    summarize(Spike_number = mean(Spike_number, na.rm = TRUE)) %>% 
+  ungroup() %>% 
+  mutate_all(~ifelse(is.nan(.), NA, .)) %>% 
+  pivot_wider(names_from = Environment, values_from = Spike_number) %>%
+  dplyr::select(-BRISONr) %>% 
+  dplyr::select(order(colnames(.)))
+
+illu_cor <- cor(illu, use = "pairwise.complete.obs")
+
+plot_ <- ggcorrplot(illu_cor) +
+  ggtitle("Spike_number") +
+  theme_minimal() +
+  guides(x = guide_axis(angle = 45)) +
+  scale_fill_paletteer_c(palette = "scico::bam", limits = c(-1, 1)) +
+  xlab("") +
+  ylab("")
+
+plot_
+
+ 
+```
+
 ```{r Plantheight}
 
 illu <- complete_dat %>%
@@ -295,7 +502,36 @@ plot_
 
 ```
 
+```{r Plantheight_Cor, fig.asp=1.2}
+
+illu <- complete_dat %>% 
+  mutate(Environment = paste(Location, Year, sep = "_")) %>% 
+  # filter(Treatment == "HN_WF") %>%
+  group_by(BRISONr, Environment) %>% 
+    summarize(Plantheight = mean(Plantheight, na.rm = TRUE)) %>% 
+  ungroup() %>% 
+  mutate_all(~ifelse(is.nan(.), NA, .)) %>% 
+  pivot_wider(names_from = Environment, values_from = Plantheight) %>%
+  dplyr::select(-BRISONr) %>% 
+  dplyr::select(order(colnames(.)))
+
+illu_cor <- cor(illu, use = "pairwise.complete.obs")
+
+plot_ <- ggcorrplot(illu_cor) +
+  ggtitle("Plantheight") +
+  theme_minimal() +
+  guides(x = guide_axis(angle = 45)) +
+  scale_fill_paletteer_c(palette = "scico::bam", limits = c(-1, 1)) +
+  xlab("") +
+  ylab("")
+
+plot_
+
+ 
+```
+
 ## Phenology
+
 ```{r Emergence_date}
 
 illu <- complete_dat %>%
@@ -343,6 +579,34 @@ plot_
 
 ```
 
+```{r BBCH59_Cor, fig.asp=1.2}
+
+illu <- complete_dat %>% 
+  mutate(Environment = paste(Location, Year, sep = "_")) %>% 
+  # filter(Treatment == "HN_WF") %>%
+  group_by(BRISONr, Environment) %>% 
+    summarize(BBCH59 = mean(BBCH59, na.rm = TRUE)) %>% 
+  ungroup() %>% 
+  mutate_all(~ifelse(is.nan(.), NA, .)) %>% 
+  pivot_wider(names_from = Environment, values_from = BBCH59) %>%
+  dplyr::select(-BRISONr) %>% 
+  dplyr::select(order(colnames(.)))
+
+illu_cor <- cor(illu, use = "pairwise.complete.obs")
+
+plot_ <- ggcorrplot(illu_cor) +
+  ggtitle("BBCH59") +
+  theme_minimal() +
+  guides(x = guide_axis(angle = 45)) +
+  scale_fill_paletteer_c(palette = "scico::bam", limits = c(-1, 1)) +
+  xlab("") +
+  ylab("")
+
+plot_
+
+ 
+```
+
 ```{r BBCH87}
 
 illu <- complete_dat %>% 
@@ -366,7 +630,36 @@ plot_
 
 ```
 
+```{r BBCH87_Cor, fig.asp=1.2}
+
+illu <- complete_dat %>% 
+  mutate(Environment = paste(Location, Year, sep = "_")) %>% 
+  # filter(Treatment == "HN_WF") %>%
+  group_by(BRISONr, Environment) %>% 
+    summarize(BBCH87 = mean(BBCH87, na.rm = TRUE)) %>% 
+  ungroup() %>% 
+  mutate_all(~ifelse(is.nan(.), NA, .)) %>% 
+  pivot_wider(names_from = Environment, values_from = BBCH87) %>%
+  dplyr::select(-BRISONr) %>% 
+  dplyr::select(order(colnames(.)))
+
+illu_cor <- cor(illu, use = "pairwise.complete.obs")
+
+plot_ <- ggcorrplot(illu_cor) +
+  ggtitle("BBCH87") +
+  theme_minimal() +
+  guides(x = guide_axis(angle = 45)) +
+  scale_fill_paletteer_c(palette = "scico::bam", limits = c(-1, 1)) +
+  xlab("") +
+  ylab("")
+
+plot_
+
+ 
+```
+
 ## Pathogens
+
 ```{r Stripe_rust}
 
 illu <- complete_dat %>%
@@ -505,8 +798,8 @@ plot_
 
 ```
 
-
 ## Yield Quality
+
 ```{r Sedimentation}
 
 illu <- complete_dat %>%
@@ -525,6 +818,33 @@ plot_ <- ggplot(illu) + aes(x = Sedimentation, y = Environment, fill = Treatment
                       point_alpha = 0.2) +
   scale_fill_brewer(palette = "Set1") +
   NULL
+
+plot_
+
+```
+
+```{r Sedimentation_Cor, fig.asp=1.2}
+
+illu <- complete_dat %>% 
+  mutate(Environment = paste(Location, Year, sep = "_")) %>% 
+  # filter(Treatment == "HN_WF") %>%
+  group_by(BRISONr, Environment) %>% 
+    summarize(Sedimentation = mean(Sedimentation, na.rm = TRUE)) %>% 
+  ungroup() %>% 
+  mutate_all(~ifelse(is.nan(.), NA, .)) %>% 
+  pivot_wider(names_from = Environment, values_from = Sedimentation) %>%
+  dplyr::select(-BRISONr) %>% 
+  dplyr::select(order(colnames(.)))
+
+illu_cor <- cor(illu, use = "pairwise.complete.obs")
+
+plot_ <- ggcorrplot(illu_cor) +
+  ggtitle("Sedimentation") +
+  theme_minimal() +
+  guides(x = guide_axis(angle = 45)) +
+  scale_fill_paletteer_c(palette = "scico::bam", limits = c(-1, 1)) +
+  xlab("") +
+  ylab("")
 
 plot_
 
@@ -553,6 +873,33 @@ plot_
 
 ```
 
+```{r Falling_number_Cor, fig.asp=1.2}
+
+illu <- complete_dat %>% 
+  mutate(Environment = paste(Location, Year, sep = "_")) %>% 
+  # filter(Treatment == "HN_WF") %>%
+  group_by(BRISONr, Environment) %>% 
+    summarize(Falling_number = mean(Falling_number, na.rm = TRUE)) %>% 
+  ungroup() %>% 
+  mutate_all(~ifelse(is.nan(.), NA, .)) %>% 
+  pivot_wider(names_from = Environment, values_from = Falling_number) %>%
+  dplyr::select(-BRISONr) %>% 
+  dplyr::select(order(colnames(.)))
+
+illu_cor <- cor(illu, use = "pairwise.complete.obs")
+
+plot_ <- ggcorrplot(illu_cor) +
+  ggtitle("Falling_number") +
+  theme_minimal() +
+  guides(x = guide_axis(angle = 45)) +
+  scale_fill_paletteer_c(palette = "scico::bam", limits = c(-1, 1)) +
+  xlab("") +
+  ylab("")
+
+plot_
+
+```
+
 ```{r Crude_protein}
 
 illu <- complete_dat %>%
@@ -576,7 +923,35 @@ plot_
 
 ```
 
+```{r Crude_protein_Cor, fig.asp=1.2}
+
+illu <- complete_dat %>% 
+  mutate(Environment = paste(Location, Year, sep = "_")) %>% 
+  # filter(Treatment == "HN_WF") %>%
+  group_by(BRISONr, Environment) %>% 
+    summarize(Crude_protein = mean(Crude_protein, na.rm = TRUE)) %>% 
+  ungroup() %>% 
+  mutate_all(~ifelse(is.nan(.), NA, .)) %>% 
+  pivot_wider(names_from = Environment, values_from = Crude_protein) %>%
+  dplyr::select(-BRISONr) %>% 
+  dplyr::select(order(colnames(.)))
+
+illu_cor <- cor(illu, use = "pairwise.complete.obs")
+
+plot_ <- ggcorrplot(illu_cor) +
+  ggtitle("Crude_protein") +
+  theme_minimal() +
+  guides(x = guide_axis(angle = 45)) +
+  scale_fill_paletteer_c(palette = "scico::bam", limits = c(-1, 1)) +
+  xlab("") +
+  ylab("")
+
+plot_
+
+```
+
 ## Management
+
 ```{r Sowing_date}
 
 illu <- complete_dat %>%
@@ -595,9 +970,18 @@ theme(legend.justification = "top") +
                       point_alpha = 0.2,
                       scale = 0) +
   scale_fill_brewer(palette = "Set1") +
+  scale_x_continuous(limits = c(250, 350)) +
   NULL
 
 plot_
 
 ```
 
+```{r export}
+
+export_dat <- complete_dat %>% 
+  dplyr::select(BRISONr, Treatment, Block, Row, Column, Year, Location, Sowing_date, Emergence_date, BBCH59, BBCH87, Plantheight, Seedyield, Seedyield_bio, Biomass_bio, Harvest_Index, TKW_plot, TKW_bio, Spike_number, Stripe_rust, Powdery_mildew, Leaf_rust, Septoria, DTR, Fusarium, Falling_number, Crude_protein, Sedimentation)
+
+write_csv2(export_dat, "output/BRIWECS_data_publication.csv")
+
+```
