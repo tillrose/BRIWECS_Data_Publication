@@ -983,11 +983,12 @@ plot_
 export_dat <- complete_dat %>% 
   dplyr::select(BRISONr, Treatment, Block, Row, Column, Year, Location, Sowing_date, Emergence_date, BBCH59, BBCH87, Plantheight, Seedyield, Seedyield_bio, Biomass_bio, Harvest_Index, TKW_plot, TKW_bio, Spike_number, Stripe_rust, Powdery_mildew, Leaf_rust, Septoria, DTR, Fusarium, Falling_number, Crude_protein, Sedimentation)
 
-write_csv2(export_dat, "output/BRIWECS_data_publication.csv")
+write_delim(export_dat, "output/BRIWECS_data_publication.csv", delim = ";")
 
 ```
 
 ## Weather
+
 ```{r weather_import}
 
 weather_dat <- list.files(path = "data/weather",
@@ -1079,7 +1080,6 @@ plot_1
 
 ```
 
-
 ```{r Cumulated_Weather_GlobRad}
 
 illu <- weather_dat %>% 
@@ -1132,13 +1132,3 @@ plot_1
 
 
 ```
-
-
-
-
-
-
-
-
-
-
