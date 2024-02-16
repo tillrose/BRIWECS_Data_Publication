@@ -1,0 +1,1038 @@
+---
+title: "Data Publication of BRIWECS Consortium"
+date: "`r Sys.Date()`"
+chunk_output_type: console
+html-math-method: katex
+number-sections: true
+toc: true
+toc-expand: 4
+toc-depth: 4
+toc-location: left
+crossref:
+  eq-prefix: Eq.
+format:
+ html:
+  embed-resources: true
+---
+
+```{r setup, include=FALSE}
+
+knitr::opts_chunk$set(echo=FALSE, warning=FALSE, message=FALSE)
+
+library("ggplot2")
+library("tidyverse")
+library("viridis")
+library("ggpmisc")
+# library("Hmisc")
+# library("ggfx")
+library("ggridges")
+library("patchwork")
+library("ggcorrplot")
+library("paletteer")
+library("ggrepel")
+
+```
+
+```{r import}
+
+complete_dat <- read_delim("output/BRIWECS_data_publication.csv")
+
+```
+
+## Yield and Yield Components
+
+```{r Seedyield}
+
+illu <- complete_dat %>% 
+  mutate(Environment = paste(Location, Year, sep = "_"),
+         Treatment = fct_relevel(Treatment, "HN_WF", "HN_WF_D", "HN_NF", "LN_WF", "LN_NF"),
+         Environment = fct_expand(Environment, "RHH_2018", "RHH_2019"),
+         Environment = fct_expand(Environment, "GGE_2019", after = 4))
+
+plot_ <- ggplot(illu) + aes(x = Seedyield, y = Environment, fill = Treatment) +
+  theme_classic() +
+  theme(legend.justification = "top") +
+  geom_density_ridges(alpha = 0.75,
+                      jittered_points = TRUE,
+                       position = "raincloud",
+                      point_size = 0.05,
+                      point_alpha = 0.2) +
+  scale_fill_brewer(palette = "Set1") +
+  scale_y_discrete(drop=FALSE) +
+  NULL
+
+plot_
+
+```
+
+```{r Seedyield_Cor, fig.asp=1.2}
+
+illu <- complete_dat %>% 
+  mutate(Environment = paste(Location, Year, sep = "_")) %>% 
+  # filter(Treatment == "HN_WF") %>%
+  group_by(BRISONr, Environment) %>% 
+    summarize(Seedyield = mean(Seedyield, na.rm = TRUE)) %>% 
+  ungroup() %>% 
+  mutate_all(~ifelse(is.nan(.), NA, .)) %>% 
+  pivot_wider(names_from = Environment, values_from = Seedyield) %>%
+  dplyr::select(-BRISONr) %>% 
+  dplyr::select(order(colnames(.)))
+
+illu_cor <- cor(illu, use = "pairwise.complete.obs")
+
+plot_ <- ggcorrplot(illu_cor) +
+  ggtitle("Seedyield") +
+  theme_minimal() +
+  guides(x = guide_axis(angle = 45)) +
+  scale_fill_paletteer_c(palette = "scico::bam", limits = c(-1, 1)) +
+  xlab("") +
+  ylab("")
+
+plot_
+
+```
+
+```{r Seedyield_bio}
+
+illu <- complete_dat %>%
+  mutate(Environment = paste(Location, Year, sep = "_"),
+         Treatment = fct_relevel(Treatment, "HN_WF", "HN_WF_D", "HN_NF", "LN_WF", "LN_NF"),
+         Environment = fct_expand(Environment, "RHH_2018", "RHH_2019"),
+         Environment = fct_expand(Environment, "GGE_2019", after = 4))
+
+plot_ <- ggplot(illu) + aes(x = Seedyield_bio, y = Environment, fill = Treatment) +
+  theme_classic() +
+  theme(legend.justification = "top") +
+  geom_density_ridges(alpha = 0.75,
+                      jittered_points = TRUE,
+                       position = "raincloud",
+                      point_size = 0.05,
+                      point_alpha = 0.2) +
+  scale_fill_brewer(palette = "Set1") +
+  NULL
+
+plot_
+
+```
+
+```{r Seedyield_bio_Cor, fig.asp=1.2}
+
+illu <- complete_dat %>% 
+  mutate(Environment = paste(Location, Year, sep = "_")) %>% 
+  # filter(Treatment == "HN_WF") %>%
+  group_by(BRISONr, Environment) %>% 
+    summarize(Seedyield_bio = mean(Seedyield_bio, na.rm = TRUE)) %>% 
+  ungroup() %>% 
+  mutate_all(~ifelse(is.nan(.), NA, .)) %>% 
+  pivot_wider(names_from = Environment, values_from = Seedyield_bio) %>%
+  dplyr::select(-BRISONr) %>% 
+  dplyr::select(order(colnames(.)))
+
+illu_cor <- cor(illu, use = "pairwise.complete.obs")
+
+plot_ <- ggcorrplot(illu_cor) +
+  ggtitle("Seedyield_bio") +
+  theme_minimal() +
+  guides(x = guide_axis(angle = 45)) +
+  scale_fill_paletteer_c(palette = "scico::bam", limits = c(-1, 1)) +
+  xlab("") +
+  ylab("")
+
+plot_
+
+```
+
+```{r Seedyield_bio_combine_Comp, fig.asp=1.6}
+illu <- complete_dat %>% 
+  mutate(Environment = paste(Location, Year, sep = "_")) %>% 
+  # filter(Treatment == "HN_WF") %>%
+  group_by(BRISONr, Environment) %>% 
+    summarize(Seedyield_bio = mean(Seedyield_bio, na.rm = TRUE),
+              Seedyield = mean(Seedyield, na.rm = TRUE)) %>% 
+  ungroup()
+
+
+plot_ <- ggplot(illu) + aes(x = Seedyield*10, y = Seedyield_bio) + 
+  ggtitle("Comparison Combine Harvest and Hand Harvest") +
+  facet_wrap(~Environment, ncol = 5) +
+  theme_minimal() +
+  geom_abline(intercept = 0, slope = 1) +
+  geom_point(shape = 21, colour = "white", fill = "grey40", stroke = 0.2) +
+  geom_smooth(method = "lm", se = FALSE, colour = "orangered2") +
+  stat_poly_eq(aes(label =  paste(..rr.label.., sep = "~~~~")), parse = TRUE, geom = "text_npc", formula = y~x, size = 4) +
+  coord_equal() +
+  NULL
+
+plot_
+
+```
+
+```{r Biomass_bio}
+
+illu <- complete_dat %>%
+  mutate(Environment = paste(Location, Year, sep = "_"),
+         Treatment = fct_relevel(Treatment, "HN_WF", "HN_WF_D", "HN_NF", "LN_WF", "LN_NF"),
+         Environment = fct_expand(Environment, "RHH_2018", "RHH_2019"),
+         Environment = fct_expand(Environment, "GGE_2019", after = 4))
+
+plot_ <- ggplot(illu) + aes(x = Biomass_bio, y = Environment, fill = Treatment) +
+  theme_classic() +
+  theme(legend.justification = "top") +
+  geom_density_ridges(alpha = 0.75,
+                      jittered_points = TRUE,
+                       position = "raincloud",
+                      point_size = 0.05,
+                      point_alpha = 0.2) +
+  scale_fill_brewer(palette = "Set1") +
+  NULL
+
+plot_
+
+```
+
+```{r Biomass_bio_Cor, fig.asp=1.2}
+
+illu <- complete_dat %>% 
+  mutate(Environment = paste(Location, Year, sep = "_")) %>% 
+  # filter(Treatment == "HN_WF") %>%
+  group_by(BRISONr, Environment) %>% 
+    summarize(Biomass_bio = mean(Biomass_bio, na.rm = TRUE)) %>% 
+  ungroup() %>% 
+  mutate_all(~ifelse(is.nan(.), NA, .)) %>% 
+  pivot_wider(names_from = Environment, values_from = Biomass_bio) %>%
+  dplyr::select(-BRISONr) %>% 
+  dplyr::select(order(colnames(.)))
+
+illu_cor <- cor(illu, use = "pairwise.complete.obs")
+
+plot_ <- ggcorrplot(illu_cor) +
+  ggtitle("Biomass_bio") +
+  theme_minimal() +
+  guides(x = guide_axis(angle = 45)) +
+  scale_fill_paletteer_c(palette = "scico::bam", limits = c(-1, 1)) +
+  xlab("") +
+  ylab("")
+
+plot_
+
+```
+
+```{r Harvest_Index}
+
+illu <- complete_dat %>% 
+  mutate(Environment = paste(Location, Year, sep = "_"),
+         Treatment = fct_relevel(Treatment, "HN_WF", "HN_WF_D", "HN_NF", "LN_WF", "LN_NF"),
+         Environment = fct_expand(Environment, "RHH_2018", "RHH_2019"),
+         Environment = fct_expand(Environment, "GGE_2019", after = 4))
+
+plot_ <- ggplot(illu) + aes(x = Harvest_Index, y = Environment, fill = Treatment) +
+  theme_classic() +
+  theme(legend.justification = "top") +
+  geom_density_ridges(alpha = 0.75,
+                      jittered_points = TRUE,
+                       position = "raincloud",
+                      point_size = 0.05,
+                      point_alpha = 0.2) +
+  scale_fill_brewer(palette = "Set1") +
+  NULL
+
+plot_
+
+```
+
+```{r Harvest_Index_Cor, fig.asp=1.2}
+
+illu <- complete_dat %>% 
+  mutate(Environment = paste(Location, Year, sep = "_")) %>% 
+  # filter(Treatment == "HN_WF") %>%
+  group_by(BRISONr, Environment) %>% 
+    summarize(Harvest_Index = mean(Harvest_Index, na.rm = TRUE)) %>% 
+  ungroup() %>% 
+  mutate_all(~ifelse(is.nan(.), NA, .)) %>% 
+  pivot_wider(names_from = Environment, values_from = Harvest_Index) %>%
+  dplyr::select(-BRISONr) %>% 
+  dplyr::select(order(colnames(.)))
+
+illu_cor <- cor(illu, use = "pairwise.complete.obs")
+
+plot_ <- ggcorrplot(illu_cor) +
+  ggtitle("Harvest_Index") +
+  theme_minimal() +
+  guides(x = guide_axis(angle = 45)) +
+  scale_fill_paletteer_c(palette = "scico::bam", limits = c(-1, 1)) +
+  xlab("") +
+  ylab("")
+
+plot_
+
+ 
+```
+
+```{r TKW_plot}
+
+illu <- complete_dat %>%
+  mutate(Environment = paste(Location, Year, sep = "_"),
+         Treatment = fct_relevel(Treatment, "HN_WF", "HN_WF_D", "HN_NF", "LN_WF", "LN_NF"),
+         Environment = fct_expand(Environment, "RHH_2018", "RHH_2019"),
+         Environment = fct_expand(Environment, "GGE_2019", after = 4))
+
+plot_ <- ggplot(illu) + aes(x = TKW_plot, y = Environment, fill = Treatment) +
+  theme_classic() +
+  theme(legend.justification = "top") +
+  geom_density_ridges(alpha = 0.75,
+                      jittered_points = TRUE,
+                       position = "raincloud",
+                      point_size = 0.05,
+                      point_alpha = 0.2) +
+  scale_fill_brewer(palette = "Set1") +
+  NULL
+
+plot_
+
+```
+
+```{r TKW_plot_Cor, fig.asp=1.2}
+
+illu <- complete_dat %>% 
+  mutate(Environment = paste(Location, Year, sep = "_")) %>% 
+  # filter(Treatment == "HN_WF") %>%
+  group_by(BRISONr, Environment) %>% 
+    summarize(TKW_plot = mean(TKW_plot, na.rm = TRUE)) %>% 
+  ungroup() %>% 
+  mutate_all(~ifelse(is.nan(.), NA, .)) %>% 
+  pivot_wider(names_from = Environment, values_from = TKW_plot) %>%
+  dplyr::select(-BRISONr) %>% 
+  dplyr::select(order(colnames(.)))
+
+illu_cor <- cor(illu, use = "pairwise.complete.obs")
+
+plot_ <- ggcorrplot(illu_cor) +
+  ggtitle("TKW_plot") +
+  theme_minimal() +
+  guides(x = guide_axis(angle = 45)) +
+  scale_fill_paletteer_c(palette = "scico::bam", limits = c(-1, 1)) +
+  xlab("") +
+  ylab("")
+
+plot_
+
+ 
+```
+
+```{r TKW_bio}
+
+illu <- complete_dat %>%
+  mutate(Environment = paste(Location, Year, sep = "_"),
+         Treatment = fct_relevel(Treatment, "HN_WF", "HN_WF_D", "HN_NF", "LN_WF", "LN_NF"),
+         Environment = fct_expand(Environment, "RHH_2018", "RHH_2019"),
+         Environment = fct_expand(Environment, "GGE_2019", after = 4))
+
+plot_ <- ggplot(illu) + aes(x = TKW_bio, y = Environment, fill = Treatment) +
+  theme_classic() +
+  theme(legend.justification = "top") +
+  geom_density_ridges(alpha = 0.75,
+                      jittered_points = TRUE,
+                       position = "raincloud",
+                      point_size = 0.05,
+                      point_alpha = 0.2) +
+  scale_fill_brewer(palette = "Set1") +
+  NULL
+
+plot_
+
+```
+
+```{r Spike_number}
+
+illu <- complete_dat %>%
+  mutate(Environment = paste(Location, Year, sep = "_"),
+         Treatment = fct_relevel(Treatment, "HN_WF", "HN_WF_D", "HN_NF", "LN_WF", "LN_NF"),
+         Environment = fct_expand(Environment, "RHH_2018", "RHH_2019"),
+         Environment = fct_expand(Environment, "GGE_2019", after = 4))
+
+plot_ <- ggplot(illu) + aes(x = Spike_number, y = Environment, fill = Treatment) +
+  theme_classic() +
+  theme(legend.justification = "top") +
+  geom_density_ridges(alpha = 0.75,
+                      jittered_points = TRUE,
+                       position = "raincloud",
+                      point_size = 0.05,
+                      point_alpha = 0.2) +
+  scale_fill_brewer(palette = "Set1") +
+  NULL
+
+plot_
+
+```
+
+```{r Spike_number_Cor, fig.asp=1.2}
+
+illu <- complete_dat %>% 
+  mutate(Environment = paste(Location, Year, sep = "_")) %>% 
+  # filter(Treatment == "HN_WF") %>%
+  group_by(BRISONr, Environment) %>% 
+    summarize(Spike_number = mean(Spike_number, na.rm = TRUE)) %>% 
+  ungroup() %>% 
+  mutate_all(~ifelse(is.nan(.), NA, .)) %>% 
+  pivot_wider(names_from = Environment, values_from = Spike_number) %>%
+  dplyr::select(-BRISONr) %>% 
+  dplyr::select(order(colnames(.)))
+
+illu_cor <- cor(illu, use = "pairwise.complete.obs")
+
+plot_ <- ggcorrplot(illu_cor) +
+  ggtitle("Spike_number") +
+  theme_minimal() +
+  guides(x = guide_axis(angle = 45)) +
+  scale_fill_paletteer_c(palette = "scico::bam", limits = c(-1, 1)) +
+  xlab("") +
+  ylab("")
+
+plot_
+
+ 
+```
+
+```{r Plantheight}
+
+illu <- complete_dat %>%
+  mutate(Environment = paste(Location, Year, sep = "_"),
+         Treatment = fct_relevel(Treatment, "HN_WF", "HN_WF_D", "HN_NF", "LN_WF", "LN_NF"),
+         Environment = fct_expand(Environment, "RHH_2018", "RHH_2019"),
+         Environment = fct_expand(Environment, "GGE_2019", after = 4))
+
+plot_ <- ggplot(illu) + aes(x = Plantheight, y = Environment, fill = Treatment) +
+  theme_classic() +
+  theme(legend.justification = "top") +
+  geom_density_ridges(alpha = 0.75,
+                      jittered_points = TRUE,
+                       position = "raincloud",
+                      point_size = 0.05,
+                      point_alpha = 0.2) +
+  scale_fill_brewer(palette = "Set1") +
+  NULL
+
+plot_
+
+```
+
+```{r Plantheight_Cor, fig.asp=1.2}
+
+illu <- complete_dat %>% 
+  mutate(Environment = paste(Location, Year, sep = "_")) %>% 
+  # filter(Treatment == "HN_WF") %>%
+  group_by(BRISONr, Environment) %>% 
+    summarize(Plantheight = mean(Plantheight, na.rm = TRUE)) %>% 
+  ungroup() %>% 
+  mutate_all(~ifelse(is.nan(.), NA, .)) %>% 
+  pivot_wider(names_from = Environment, values_from = Plantheight) %>%
+  dplyr::select(-BRISONr) %>% 
+  dplyr::select(order(colnames(.)))
+
+illu_cor <- cor(illu, use = "pairwise.complete.obs")
+
+plot_ <- ggcorrplot(illu_cor) +
+  ggtitle("Plantheight") +
+  theme_minimal() +
+  guides(x = guide_axis(angle = 45)) +
+  scale_fill_paletteer_c(palette = "scico::bam", limits = c(-1, 1)) +
+  xlab("") +
+  ylab("")
+
+plot_
+
+ 
+```
+
+## Phenology
+
+```{r Emergence_date}
+
+illu <- complete_dat %>%
+  mutate(Environment = paste(Location, Year, sep = "_"),
+         Treatment = fct_relevel(Treatment, "HN_WF", "HN_WF_D", "HN_NF", "LN_WF", "LN_NF"),
+         Environment = fct_expand(Environment, "RHH_2018", "RHH_2019"),
+         Environment = fct_expand(Environment, "GGE_2019", after = 4))
+
+plot_ <- ggplot(illu) + aes(x = Emergence_date, y = Environment, fill = Treatment) +
+  theme_classic() +
+  theme(legend.justification = "top") +
+  geom_density_ridges(alpha = 0.75,
+                      jittered_points = TRUE,
+                       position = "raincloud",
+                      point_size = 0.05,
+                      point_alpha = 0.2,
+                      scale = 0) +
+  scale_fill_brewer(palette = "Set1") +
+  NULL
+
+plot_
+
+```
+
+```{r BBCH59}
+
+illu <- complete_dat %>% 
+  mutate(Environment = paste(Location, Year, sep = "_"),
+         Treatment = fct_relevel(Treatment, "HN_WF", "HN_WF_D", "HN_NF", "LN_WF", "LN_NF"),
+         Environment = fct_expand(Environment, "RHH_2018", "RHH_2019"),
+         Environment = fct_expand(Environment, "GGE_2019", after = 4))
+
+plot_ <- ggplot(illu) + aes(x = BBCH59, y = Environment, fill = Treatment) +
+  theme_classic() +
+  theme(legend.justification = "top") +
+  geom_density_ridges(alpha = 0.75,
+                      jittered_points = TRUE,
+                       position = "raincloud",
+                      point_size = 0.05,
+                      point_alpha = 0.2) +
+  scale_fill_brewer(palette = "Set1") +
+  NULL
+
+plot_
+
+```
+
+```{r BBCH59_Cor, fig.asp=1.2}
+
+illu <- complete_dat %>% 
+  mutate(Environment = paste(Location, Year, sep = "_")) %>% 
+  # filter(Treatment == "HN_WF") %>%
+  group_by(BRISONr, Environment) %>% 
+    summarize(BBCH59 = mean(BBCH59, na.rm = TRUE)) %>% 
+  ungroup() %>% 
+  mutate_all(~ifelse(is.nan(.), NA, .)) %>% 
+  pivot_wider(names_from = Environment, values_from = BBCH59) %>%
+  dplyr::select(-BRISONr) %>% 
+  dplyr::select(order(colnames(.)))
+
+illu_cor <- cor(illu, use = "pairwise.complete.obs")
+
+plot_ <- ggcorrplot(illu_cor) +
+  ggtitle("BBCH59") +
+  theme_minimal() +
+  guides(x = guide_axis(angle = 45)) +
+  scale_fill_paletteer_c(palette = "scico::bam", limits = c(-1, 1)) +
+  xlab("") +
+  ylab("")
+
+plot_
+
+ 
+```
+
+```{r BBCH87}
+
+illu <- complete_dat %>% 
+  mutate(Environment = paste(Location, Year, sep = "_"),
+         Treatment = fct_relevel(Treatment, "HN_WF", "HN_WF_D", "HN_NF", "LN_WF", "LN_NF"),
+         Environment = fct_expand(Environment, "RHH_2018", "RHH_2019"),
+         Environment = fct_expand(Environment, "GGE_2019", after = 4))
+
+plot_ <- ggplot(illu) + aes(x = BBCH87, y = Environment, fill = Treatment) +
+  theme_classic() +
+  theme(legend.justification = "top") +
+  geom_density_ridges(alpha = 0.75,
+                      jittered_points = TRUE,
+                       position = "raincloud",
+                      point_size = 0.05,
+                      point_alpha = 0.2) +
+  scale_fill_brewer(palette = "Set1") +
+  NULL
+
+plot_
+
+```
+
+```{r BBCH87_Cor, fig.asp=1.2}
+
+illu <- complete_dat %>% 
+  mutate(Environment = paste(Location, Year, sep = "_")) %>% 
+  # filter(Treatment == "HN_WF") %>%
+  group_by(BRISONr, Environment) %>% 
+    summarize(BBCH87 = mean(BBCH87, na.rm = TRUE)) %>% 
+  ungroup() %>% 
+  mutate_all(~ifelse(is.nan(.), NA, .)) %>% 
+  pivot_wider(names_from = Environment, values_from = BBCH87) %>%
+  dplyr::select(-BRISONr) %>% 
+  dplyr::select(order(colnames(.)))
+
+illu_cor <- cor(illu, use = "pairwise.complete.obs")
+
+plot_ <- ggcorrplot(illu_cor) +
+  ggtitle("BBCH87") +
+  theme_minimal() +
+  guides(x = guide_axis(angle = 45)) +
+  scale_fill_paletteer_c(palette = "scico::bam", limits = c(-1, 1)) +
+  xlab("") +
+  ylab("")
+
+plot_
+
+ 
+```
+
+## Pathogens
+
+```{r Stripe_rust}
+
+illu <- complete_dat %>%
+  mutate(Environment = paste(Location, Year, sep = "_"),
+         Treatment = fct_relevel(Treatment, "HN_WF", "HN_WF_D", "HN_NF", "LN_WF", "LN_NF"),
+         Environment = fct_expand(Environment, "RHH_2018", "RHH_2019"),
+         Environment = fct_expand(Environment, "GGE_2019", after = 4))
+
+plot_ <- ggplot(illu) + aes(x = Stripe_rust, y = Environment, fill = Treatment) +
+  theme_classic() +
+  theme(legend.justification = "top") +
+  geom_density_ridges(alpha = 0.75,
+                      jittered_points = TRUE,
+                       position = "raincloud",
+                      point_size = 0.05,
+                      point_alpha = 0.2) +
+  scale_fill_brewer(palette = "Set1") +
+  NULL
+
+plot_
+
+```
+
+```{r Powdery_mildew}
+
+illu <- complete_dat %>%
+  mutate(Environment = paste(Location, Year, sep = "_"),
+         Treatment = fct_relevel(Treatment, "HN_WF", "HN_WF_D", "HN_NF", "LN_WF", "LN_NF"),
+         Environment = fct_expand(Environment, "RHH_2018", "RHH_2019"),
+         Environment = fct_expand(Environment, "GGE_2019", after = 4))
+
+plot_ <- ggplot(illu) + aes(x = Powdery_mildew, y = Environment, fill = Treatment) +
+  theme_classic() +
+  theme(legend.justification = "top") +
+  geom_density_ridges(alpha = 0.75,
+                      jittered_points = TRUE,
+                       position = "raincloud",
+                      point_size = 0.05,
+                      point_alpha = 0.2) +
+  scale_fill_brewer(palette = "Set1") +
+  NULL
+
+plot_
+
+```
+
+```{r Leaf_rust}
+
+illu <- complete_dat %>%
+  mutate(Environment = paste(Location, Year, sep = "_"),
+         Treatment = fct_relevel(Treatment, "HN_WF", "HN_WF_D", "HN_NF", "LN_WF", "LN_NF"),
+         Environment = fct_expand(Environment, "RHH_2018", "RHH_2019"),
+         Environment = fct_expand(Environment, "GGE_2019", after = 4))
+
+plot_ <- ggplot(illu) + aes(x = Leaf_rust, y = Environment, fill = Treatment) +
+  theme_classic() +
+  theme(legend.justification = "top") +
+  geom_density_ridges(alpha = 0.75,
+                      jittered_points = TRUE,
+                       position = "raincloud",
+                      point_size = 0.05,
+                      point_alpha = 0.2) +
+  scale_fill_brewer(palette = "Set1") +
+  NULL
+
+plot_
+
+```
+
+```{r Septoria}
+
+illu <- complete_dat %>%
+  mutate(Environment = paste(Location, Year, sep = "_"),
+         Treatment = fct_relevel(Treatment, "HN_WF", "HN_WF_D", "HN_NF", "LN_WF", "LN_NF"),
+         Environment = fct_expand(Environment, "RHH_2018", "RHH_2019"),
+         Environment = fct_expand(Environment, "GGE_2019", after = 4))
+
+plot_ <- ggplot(illu) + aes(x = Septoria, y = Environment, fill = Treatment) +
+  theme_classic() +
+  theme(legend.justification = "top") +
+  geom_density_ridges(alpha = 0.75,
+                      jittered_points = TRUE,
+                       position = "raincloud",
+                      point_size = 0.05,
+                      point_alpha = 0.2) +
+  scale_fill_brewer(palette = "Set1") +
+  NULL
+
+plot_
+
+```
+
+```{r DTR}
+
+illu <- complete_dat %>%
+  mutate(Environment = paste(Location, Year, sep = "_"),
+         Treatment = fct_relevel(Treatment, "HN_WF", "HN_WF_D", "HN_NF", "LN_WF", "LN_NF"),
+         Environment = fct_expand(Environment, "RHH_2018", "RHH_2019"),
+         Environment = fct_expand(Environment, "GGE_2019", after = 4))
+
+plot_ <- ggplot(illu) + aes(x = DTR, y = Environment, fill = Treatment) +
+  theme_classic() +
+  theme(legend.justification = "top") +
+  geom_density_ridges(alpha = 0.75,
+                      jittered_points = TRUE,
+                       position = "raincloud",
+                      point_size = 0.05,
+                      point_alpha = 0.2) +
+  scale_fill_brewer(palette = "Set1") +
+  NULL
+
+plot_
+
+```
+
+```{r Fusarium}
+
+illu <- complete_dat %>%
+  mutate(Environment = paste(Location, Year, sep = "_"),
+         Treatment = fct_relevel(Treatment, "HN_WF", "HN_WF_D", "HN_NF", "LN_WF", "LN_NF"),
+         Environment = fct_expand(Environment, "RHH_2018", "RHH_2019"),
+         Environment = fct_expand(Environment, "GGE_2019", after = 4))
+
+plot_ <- ggplot(illu) + aes(x = Fusarium, y = Environment, fill = Treatment) +
+  theme_classic() +
+  theme(legend.justification = "top") +
+  geom_density_ridges(alpha = 0.75,
+                      jittered_points = TRUE,
+                       position = "raincloud",
+                      point_size = 0.05,
+                      point_alpha = 0.2) +
+  scale_fill_brewer(palette = "Set1") +
+  NULL
+
+plot_
+
+```
+
+## Yield Quality
+
+```{r Sedimentation}
+
+illu <- complete_dat %>%
+  mutate(Environment = paste(Location, Year, sep = "_"),
+         Treatment = fct_relevel(Treatment, "HN_WF", "HN_WF_D", "HN_NF", "LN_WF", "LN_NF"),
+         Environment = fct_expand(Environment, "RHH_2018", "RHH_2019"),
+         Environment = fct_expand(Environment, "GGE_2019", after = 4))
+
+plot_ <- ggplot(illu) + aes(x = Sedimentation, y = Environment, fill = Treatment) +
+  theme_classic() +
+  theme(legend.justification = "top") +
+  geom_density_ridges(alpha = 0.75,
+                      jittered_points = TRUE,
+                       position = "raincloud",
+                      point_size = 0.05,
+                      point_alpha = 0.2) +
+  scale_fill_brewer(palette = "Set1") +
+  NULL
+
+plot_
+
+```
+
+```{r Sedimentation_Cor, fig.asp=1.2}
+
+illu <- complete_dat %>% 
+  mutate(Environment = paste(Location, Year, sep = "_")) %>% 
+  # filter(Treatment == "HN_WF") %>%
+  group_by(BRISONr, Environment) %>% 
+    summarize(Sedimentation = mean(Sedimentation, na.rm = TRUE)) %>% 
+  ungroup() %>% 
+  mutate_all(~ifelse(is.nan(.), NA, .)) %>% 
+  pivot_wider(names_from = Environment, values_from = Sedimentation) %>%
+  dplyr::select(-BRISONr) %>% 
+  dplyr::select(order(colnames(.)))
+
+illu_cor <- cor(illu, use = "pairwise.complete.obs")
+
+plot_ <- ggcorrplot(illu_cor) +
+  ggtitle("Sedimentation") +
+  theme_minimal() +
+  guides(x = guide_axis(angle = 45)) +
+  scale_fill_paletteer_c(palette = "scico::bam", limits = c(-1, 1)) +
+  xlab("") +
+  ylab("")
+
+plot_
+
+```
+
+```{r Falling_number}
+
+illu <- complete_dat %>%
+  mutate(Environment = paste(Location, Year, sep = "_"),
+         Treatment = fct_relevel(Treatment, "HN_WF", "HN_WF_D", "HN_NF", "LN_WF", "LN_NF"),
+         Environment = fct_expand(Environment, "RHH_2018", "RHH_2019"),
+         Environment = fct_expand(Environment, "GGE_2019", after = 4))
+
+plot_ <- ggplot(illu) + aes(x = Falling_number, y = Environment, fill = Treatment) +
+  theme_classic() +
+  theme(legend.justification = "top") +
+  geom_density_ridges(alpha = 0.75,
+                      jittered_points = TRUE,
+                       position = "raincloud",
+                      point_size = 0.05,
+                      point_alpha = 0.2) +
+  scale_fill_brewer(palette = "Set1") +
+  NULL
+
+plot_
+
+```
+
+```{r Falling_number_Cor, fig.asp=1.2}
+
+illu <- complete_dat %>% 
+  mutate(Environment = paste(Location, Year, sep = "_")) %>% 
+  # filter(Treatment == "HN_WF") %>%
+  group_by(BRISONr, Environment) %>% 
+    summarize(Falling_number = mean(Falling_number, na.rm = TRUE)) %>% 
+  ungroup() %>% 
+  mutate_all(~ifelse(is.nan(.), NA, .)) %>% 
+  pivot_wider(names_from = Environment, values_from = Falling_number) %>%
+  dplyr::select(-BRISONr) %>% 
+  dplyr::select(order(colnames(.)))
+
+illu_cor <- cor(illu, use = "pairwise.complete.obs")
+
+plot_ <- ggcorrplot(illu_cor) +
+  ggtitle("Falling_number") +
+  theme_minimal() +
+  guides(x = guide_axis(angle = 45)) +
+  scale_fill_paletteer_c(palette = "scico::bam", limits = c(-1, 1)) +
+  xlab("") +
+  ylab("")
+
+plot_
+
+```
+
+```{r Crude_protein}
+
+illu <- complete_dat %>%
+  mutate(Environment = paste(Location, Year, sep = "_"),
+         Treatment = fct_relevel(Treatment, "HN_WF", "HN_WF_D", "HN_NF", "LN_WF", "LN_NF"),
+         Environment = fct_expand(Environment, "RHH_2018", "RHH_2019"),
+         Environment = fct_expand(Environment, "GGE_2019", after = 4))
+
+plot_ <- ggplot(illu) + aes(x = Crude_protein, y = Environment, fill = Treatment) +
+  theme_classic() +
+  theme(legend.justification = "top") +
+  geom_density_ridges(alpha = 0.75,
+                      jittered_points = TRUE,
+                       position = "raincloud",
+                      point_size = 0.05,
+                      point_alpha = 0.2) +
+  scale_fill_brewer(palette = "Set1") +
+  NULL
+
+plot_
+
+```
+
+```{r Crude_protein_Cor, fig.asp=1.2}
+
+illu <- complete_dat %>% 
+  mutate(Environment = paste(Location, Year, sep = "_")) %>% 
+  # filter(Treatment == "HN_WF") %>%
+  group_by(BRISONr, Environment) %>% 
+    summarize(Crude_protein = mean(Crude_protein, na.rm = TRUE)) %>% 
+  ungroup() %>% 
+  mutate_all(~ifelse(is.nan(.), NA, .)) %>% 
+  pivot_wider(names_from = Environment, values_from = Crude_protein) %>%
+  dplyr::select(-BRISONr) %>% 
+  dplyr::select(order(colnames(.)))
+
+illu_cor <- cor(illu, use = "pairwise.complete.obs")
+
+plot_ <- ggcorrplot(illu_cor) +
+  ggtitle("Crude_protein") +
+  theme_minimal() +
+  guides(x = guide_axis(angle = 45)) +
+  scale_fill_paletteer_c(palette = "scico::bam", limits = c(-1, 1)) +
+  xlab("") +
+  ylab("")
+
+plot_
+
+```
+
+## Management
+
+```{r Sowing_date}
+
+illu <- complete_dat %>%
+  mutate(Environment = paste(Location, Year, sep = "_"),
+         Treatment = fct_relevel(Treatment, "HN_WF", "HN_WF_D", "HN_NF", "LN_WF", "LN_NF"),
+         Environment = fct_expand(Environment, "RHH_2018", "RHH_2019"),
+         Environment = fct_expand(Environment, "GGE_2019", after = 4))
+
+plot_ <- ggplot(illu) + aes(x = Sowing_date, y = Environment, fill = Treatment) +
+  theme_classic() +
+theme(legend.justification = "top") +
+  geom_density_ridges(alpha = 0.75,
+                      jittered_points = TRUE,
+                       position = "raincloud",
+                      point_size = 0.05,
+                      point_alpha = 0.2,
+                      scale = 0) +
+  scale_fill_brewer(palette = "Set1") +
+  scale_x_continuous(limits = c(250, 350)) +
+  NULL
+
+plot_
+
+```
+
+## Weather
+
+```{r weather_import}
+
+weather_dat <- list.files(path = "data/weather",
+                           pattern="*.csv",
+                           full.names = T) %>%
+  map_df(~read_csv2(.))
+
+
+
+```
+
+```{r weather_transform}
+
+season_join <- expand_grid(Year = 2015:2020, Date = seq(from = as_date("2014-09-01"), to = as_date("2015-08-31"), by = 1)) %>% 
+  mutate(Month = month(Date),
+         Date = ifelse(Month <= 8, `year<-`(Date, Year), `year<-`(Date, Year - 1)),
+         Date = as_date(Date)) %>% 
+  dplyr::select(-Month)
+
+sowing_date <- complete_dat %>% 
+  dplyr::select(Location, Year, Sowing_date) %>% 
+  mutate(Date = as_date(paste(Year - 1, "01", "01", sep = "-")),
+         Sowing_date = Date + Sowing_date) %>% 
+  dplyr::select(Location, Year, Sowing_date) %>% 
+  group_by(Location, Year) %>% 
+    summarize(Sowing_date = mean(Sowing_date, na.rm = TRUE)) %>% 
+  ungroup()
+
+weather_dat <- weather_dat %>% 
+  left_join(season_join) %>% 
+  left_join(sowing_date) %>% 
+  mutate(Month = month(Date)) %>% 
+  filter(!is.na(Sowing_date),
+         Month != 7,
+         Month != 8,
+         Date > Sowing_date)
+
+```
+
+```{r Cumulated_Weather_Precipitation}
+
+illu <- weather_dat %>% 
+  filter(Month < 8,
+         Month > 2) %>% 
+  group_by(Location, Year) %>% 
+    arrange(Date) %>% 
+    mutate(Precipitation.Cumsum_mm_d = cumsum(Precipitation_mm_d),
+           Date_max = max(Date)) %>% 
+  ungroup() %>% 
+  mutate(Date_Fake = ifelse(Month <= 8, `year<-`(Date, 2015), `year<-`(Date, 2014)),
+         Date_Fake = as_date(Date_Fake),
+         Environment = paste(Location, Year, sep = "_"),
+         label = ifelse(Date == Date_max, Environment, NA)) %>% 
+  group_by(Date_Fake) %>% 
+    mutate(Precipitation.Cumsum.Mean_mm_d = mean(Precipitation.Cumsum_mm_d, na.rm = TRUE)) %>% 
+  ungroup()
+
+
+
+plot_1 <- ggplot(illu) + aes(x = Date_Fake, y = Precipitation.Cumsum_mm_d - Precipitation.Cumsum.Mean_mm_d, colour = Environment) +
+  ggtitle("March to harvest") +
+  theme_classic() +
+  theme(plot.margin = margin(0.1, 3, 0.1, 0.1, "cm")) +
+  geom_hline(yintercept = 0, colour = "grey", size = 2) +
+  geom_line() +
+  geom_text_repel(aes(label = label),
+                  direction = "y",
+                  hjust = 0,
+                  size = 3,
+                  segment.alpha = .5,
+                  nudge_x = 10,
+                  segment.linetype = "dotted",
+                  xlim = c(-Inf, Inf),
+                  max.overlaps = 20) +
+  labs(x = "Date",
+       y = quote(Precipitation[Cumsum]~Mean~Deviation~~'['*mm*']')) +
+  scale_colour_viridis_d(option = "turbo") +
+  guides(colour = FALSE) +
+  # scale_x_date(limits = c(ymd("2014-06-30"), ymd("2015-06-30"))) +
+  coord_cartesian(
+    xlim = c(ymd("2015-03-01"), ymd("2015-06-30")),
+    ylim = c(-200, 200),
+    clip = "off",
+    expand = 0
+  ) +
+  NULL
+
+plot_1
+
+```
+
+```{r Cumulated_Weather_GlobRad}
+
+illu <- weather_dat %>% 
+  filter(Month < 8,
+         Month > 2) %>% 
+  group_by(Location, Year) %>% 
+    arrange(Date) %>% 
+    mutate(Global.Radiation.CumSum_MJ_m2_d = cumsum(Global.Radiation_MJ_m2_d),
+           Date_max = max(Date)) %>% 
+  ungroup() %>% 
+  mutate(Date_Fake = ifelse(Month <= 8, `year<-`(Date, 2015), `year<-`(Date, 2014)),
+         Date_Fake = as_date(Date_Fake),
+         Environment = paste(Location, Year, sep = "_"),
+         label = ifelse(Date == Date_max, Environment, NA)) %>% 
+  group_by(Date_Fake) %>% 
+    mutate(Global.Radiation.CumSum.Mean_MJ_m2_d = mean(Global.Radiation.CumSum_MJ_m2_d, na.rm = TRUE)) %>% 
+  ungroup()
+
+
+
+plot_1 <- ggplot(illu) + aes(x = Date_Fake, y = Global.Radiation.CumSum_MJ_m2_d - Global.Radiation.CumSum.Mean_MJ_m2_d, colour = Environment) +
+  ggtitle("March to harvest") +
+  theme_classic() +
+  theme(plot.margin = margin(0.1, 3, 0.1, 0.1, "cm")) +
+  geom_hline(yintercept = 0, colour = "grey", size = 2) +
+  geom_line() +
+  geom_text_repel(aes(label = label),
+                  direction = "y",
+                  hjust = 0,
+                  size = 3,
+                  segment.alpha = .5,
+                  nudge_x = 10,
+                  segment.linetype = "dotted",
+                  xlim = c(-Inf, Inf),
+                  max.overlaps = 20) +
+  labs(x = "Date",
+       y = quote(Global~Radiation[Cumsum]~Mean~Deviation~~'['*MJ%.%m^-2*']')) +
+  scale_colour_viridis_d(option = "turbo") +
+  guides(colour = FALSE) +
+  # scale_x_date(limits = c(ymd("2014-06-30"), ymd("2015-06-30"))) +
+  coord_cartesian(
+    xlim = c(ymd("2015-03-01"), ymd("2015-06-30")),
+    ylim = c(-280, 280),
+    clip = "off",
+    expand = 0
+  ) +
+  NULL
+
+plot_1
+
+
+```
