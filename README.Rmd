@@ -4,7 +4,7 @@ always_allow_html: true
 ---
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
-!["BRWIWECS"](https://github.com/tillrose/BRIWECS_Data_Publication/blob/main/figure/BRIWECS_logo.png){fig-align="center"}
+![](https://github.com/tillrose/BRIWECS_Data_Publication/blob/main/figure/BRIWECS_logo.png){fig-align="center"}
 
 # BRIWECS_Data_Publication
 ## A collaborative work on a data publication for the seasons 2015–2019 of the BRIWECS consortium

@@ -1,12 +1,9 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
-<figure>
 <img
 src="https://github.com/tillrose/BRIWECS_Data_Publication/blob/main/figure/BRIWECS_logo.png"
-data-fig-align="center" alt="“BRWIWECS”" />
-<figcaption aria-hidden="true">“BRWIWECS”</figcaption>
-</figure>
+data-fig-align="center" />
 
 # BRIWECS_Data_Publication
 
