@@ -52,7 +52,8 @@ complete_dat <- complete_dat %>%
          Crude_protein = ifelse(Crude_protein < 5, NA, Crude_protein),
          Harvest_Index = signif(as.double(Harvest_Index), digits = 3),
          Harvest_Index = ifelse(is.na(Harvest_Index), Seedyield_bio / Biomass_bio, Harvest_Index),
-         Harvest_Index = ifelse(Harvest_Index > 0.8, NA, Harvest_Index)) %>% 
+         Harvest_Index = ifelse(Harvest_Index > 0.8, NA, Harvest_Index),
+         Harvest_Index = ifelse(Harvest_Index < 0.1, NA, Harvest_Index)) %>% 
   filter(Treatment != "LLN_WF")
 
 ## Filter Harvest Index by Standard Deviation
