@@ -30,6 +30,7 @@ library("patchwork")
 library("ggcorrplot")
 library("paletteer")
 library("ggrepel")
+library("factoextra")
 
 ```
 
@@ -890,6 +891,43 @@ theme(legend.justification = "top") +
 plot_
 
 ```
+
+## Principal Component Analyses to detect problematic data sets
+```{r PCA}
+
+reduced_select <- complete_dat %>% 
+  filter(Treatment == "HN_WF") %>% 
+  mutate(Environment = paste(Location, Year, sep = "_")) %>% 
+  dplyr::select(Environment, Seedyield, Harvest_Index, TKW_plot, Spike_number) %>% 
+  drop_na() %>% 
+  group_by(Environment) %>% 
+    summarize_all(.funs = mean) %>% 
+  ungroup() %>% 
+  dplyr::select(-Environment)
+
+row.names(reduced_select) <- complete_dat %>% 
+  filter(Treatment == "HN_WF") %>% 
+  mutate(Environment = paste(Location, Year, sep = "_")) %>% 
+  dplyr::select(Environment, Seedyield, Harvest_Index, TKW_plot, Spike_number) %>% 
+  drop_na() %>% 
+  group_by(Environment) %>% 
+    summarize_all(.funs = mean) %>% 
+  ungroup() %>% 
+  pull(Environment)
+
+res.pca <- prcomp(reduced_select, scale = TRUE)
+
+
+fviz_eig(res.pca)
+
+fviz_pca_ind(res.pca,
+             col.ind = "cos2", # Color by the quality of representation
+             gradient.cols = c("#00AFBB", "#E7B800", "#FC4E07"),
+             repel = TRUE     # Avoid text overlapping
+            )
+
+```
+
 
 ## Weather
 
