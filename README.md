@@ -13,7 +13,7 @@ GPL-3](https://img.shields.io/badge/License-GPL3-orange)](https://www.r-project.
 
 <img
 src="https://github.com/tillrose/BRIWECS_Data_Publication/blob/main/figure/BRIWECS_logo.png"
-data-fig-align="center" />
+data-fig-align="right" />
 
 <img
 src="https://github.com/tillrose/BRIWECS_Data_Publication/blob/main/figure/data_number.png"
