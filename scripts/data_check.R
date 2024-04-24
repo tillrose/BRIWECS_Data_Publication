@@ -10,10 +10,10 @@ long <- raw %>%
   filter(!is.na(Trait)) 
 
 with(long,Trait[grepl("a-z",Trait)])
-tiff(filename="figure/data_number.tiff",
+png(filename="figure/data_number.png",
      type="cairo",
      units="cm",
-     compression = "lzw",
+     # compression = "lzw",
      width=10,
      height=8,
      pointsize=6,
@@ -33,10 +33,10 @@ long %>%
 dev.off()
 
 
-tiff(filename="figure/data_point.tiff",
+png(filename="figure/data_point.png",
      type="cairo",
      units="cm",
-     compression = "lzw",
+     # compression = "lzw",
      width=30,
      height=15,
      pointsize=6,
