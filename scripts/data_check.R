@@ -26,9 +26,10 @@ long %>%
   geom_segment( aes(xend=trait, yend=0)) +
   geom_point( size=4, color="orange") +
   coord_flip() +
+  ggtitle(sprintf("total number of observation: %s",nrow(long)))+
   xlab("")+ylab("Number of observations")+
   geom_text(aes(y=n+2000, label=n),size=3)+
-  toolPhD::theme_phd_facet(b=10)
+  toolPhD::theme_phd_facet(b=10,l=5)
 dev.off()
 
 
