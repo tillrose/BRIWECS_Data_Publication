@@ -16,9 +16,9 @@ src="https://github.com/tillrose/BRIWECS_Data_Publication/blob/main/figure/BRIWE
 data-fig-align="center" />
 
 <img
-src="grid::grid.raster(%20tiff::readTIFF(%20https://github.com/tillrose/BRIWECS_Data_Publication/blob/main/figure/data_number.tiff%20))"
+src="https://github.com/tillrose/BRIWECS_Data_Publication/blob/main/figure/data_number.png"
 data-fig-align="center" />
 
 <img
-src="https://github.com/tillrose/BRIWECS_Data_Publication/blob/main/figure/data_point.tiff"
+src="https://github.com/tillrose/BRIWECS_Data_Publication/blob/main/figure/data_point.png"
 data-fig-align="center" />
