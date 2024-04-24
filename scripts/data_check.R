@@ -28,7 +28,7 @@ long %>%
   coord_flip() +
   ggtitle(sprintf("total number of observation: %s",nrow(long)))+
   xlab("")+ylab("Number of observations")+
-  geom_text(aes(y=n+2000, label=n),size=3)+
+  geom_text(aes(y=n+2000, label=n),size=2)+
   toolPhD::theme_phd_facet(b=10,r=10,plot.title = element_text(size=10))
 dev.off()
 
