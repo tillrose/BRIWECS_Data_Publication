@@ -1,18 +1,19 @@
 rm(list=ls())
+pacman::p_load(dplyr,purrr,rlang)
 mana_list<- 
   list.files("data/management",full.names = T)
 
 # management -------------------------------------------------------------------------
-condi1 <- rlang::quo(!(Notice=='Notice')&!is.na(Notice))
-condi2 <- rlang::quo(!'Plant protection'=='Plant protection'|!Notice==0)
-condi3 <- rlang::quo(!Infection_data=='Infection_data'|!is.na(Infection_data))
+condi1 <- list(quo(!Notice=='Notice'),quo(!is.na(Amount)))
+condi2 <- list(quo(!`Plant protection`=='Plant protection'),quo(!Notice==0))
+condi3 <- list(quo(!Infection_data=='Infection_data'),quo(!is.na(Infection_data)))
 condi_list <- list(condi1,condi2,condi3)
 
-Management<- imap(mana_list,~{
+Management<- map(mana_list,~{
   locat_year <- strsplit(.x,"/") %>% 
     unlist() %>% .[3] %>%
     gsub("(Management_information_|.xlsx)","",.,perl = T)
-  print(.y)
+  # print(.y)
   tmp<- xlsx::read.xlsx(.x,stringsAsFactors = F,sheetIndex = 1)
   row_id <- grep("^Managements$",tmp[,1],ignore.case = F,perl =T)
   
@@ -20,25 +21,53 @@ Management<- imap(mana_list,~{
                    tmp[min(row_id+1),])
   col_end <- c(col_start[2:3]-1,col_start[3]+1)
   new_colnam <- as.character(unlist(tmp[row_id+1,])) 
+  new_colnam[grepl("Treatment",new_colnam)] <- "Treatment"
+  new_colnam[grepl("Amount",new_colnam)] <- "Amount"
+
   map(1:3,function(col_id){
     col_range <- seq(col_start[col_id],
                      col_end[col_id],1)
+    if(col_id>1){
+      col_range <- c(1,col_range)
+    }
+    
     tmp2 <- tmp[row_id+2:nrow(tmp),col_range]%>%
       `colnames<-`(new_colnam[col_range])%>% 
+       mutate(Treatment=stringr::str_extract(Treatment,"\\((.*?)\\)") %>% 
+                gsub("(\\(|\\))","",.) %>% 
+                gsub("Trockenstress","D",.)
+                
+                ) %>% 
     # colnames(tmp2) <- new_colnam[col_range]
     # tmp2 <-  tmp2%>% 
       rename_with(~ "Date", matches("(?i)date")) %>% 
-      filter(!!condi_list[[col_id]]) 
+      filter(!!condi_list[[col_id]][[1]],!!condi_list[[col_id]][[2]]) 
     if(col_id<3){
       tmp2<-tmp2  %>% 
         mutate(Date=as.Date(as.numeric(Date),origin='1900-01-01'))
     }
     tmp2<-tmp2  %>% 
-      mutate(Locat_Year=locat_year)
+      mutate(Locat_Year=locat_year,
+             across(.fns = ~ tidyr::replace_na(as.character(.x), ""))) %>% 
+      tidyr::separate(Locat_Year,c("Location","Year"),sep="_")
     return(tmp2)
   })
 })
 
+nitrogen <- Management  %>% map_dfr(.,~{.x[[1]]}) 
+plant <- Management  %>% map_dfr(.,~{.x[[2]]}) %>% rename(Chemical=Notice)
+disease <- Management  %>% map_dfr(.,~{.x[[3]]})%>% rename(Note=Date)
+
+xlsx::write.xlsx(nitrogen%>%
+                   relocate(Location,Year,Treatment) %>%
+                   arrange(Location,Year,Treatment),
+                 "output/fertilizer.xlsx",row.names = F)
+xlsx::write.xlsx(plant%>% relocate(Location,Year,Treatment) %>%
+                   arrange(Location,Year,Treatment),
+                 "output/plant_protection.xlsx",row.names = F)
+xlsx::write.xlsx(disease %>% relocate(Location,Year,Treatment) %>%
+                   arrange(Location,Year,Treatment),
+                 "output/diseaase_record.xlsx",row.names = F)
 # soil --------------------------------------------------------------------
 tar.vec <- c("Type of soil",
              "Preceding crop",
@@ -63,24 +92,21 @@ soildf<- map_dfr(mana_list,~{
     na.omit()
   res <- data.frame(tmp$type %>% t()) 
   names(res) <- tmp$soil
-  fold <- strsplit(.x,"/") %>% unlist() %>% .[3]
-  if(fold=="KIE"){
-    locat <- strsplit(.x,"/") %>% unlist() %>% .[6] %>%  strsplit(.,"_") %>% unlist() %>% .[1]
-  }else{
-    locat <- fold
-  }
+  fold <- strsplit(.x,"/") %>% unlist() %>% .[3] %>% 
+    gsub("(Management_information_|.xlsx)","",.,perl = T)
+  locat <-  strsplit(fold,"_") %>% unlist() %>% .[1]
   res%>%  
     mutate(Location= locat,
-           Year=strsplit(.x,"/") %>% unlist() %>% .[4])
+           Year=strsplit(fold,"_") %>% unlist() %>% .[2])
 })
 names(soildf)[1] <- "Typesoil"
 names(soildf)[grepl('Sand',names(soildf))] <- 'Sand'
-soilt<- xlsx::read.xlsx(file="raw_data/google_ai_soil_table.xlsx",stringsAsFactors=F,sheetIndex = 1) 
+soilt<- xlsx::read.xlsx(file="data/soil_translate.xlsx",stringsAsFactors=F,sheetIndex = 1) 
 names(soilt)[1] <- "Typesoil"
 names(soildf) <- gsub("( |\\/|\\(|\\))",".",names(soildf)) %>% 
   gsub("Zwischen.*","",.)
 
-a <- left_join(soildf,soilt) %>% 
+soil_merge <- left_join(soildf,soilt) %>% 
   mutate(
     across(c(Clay:organical.content,Sand),function(x)gsub("(%|NA)","",x)),
     across(P2O5:K2O,function(x)gsub("(\\(|mg/100g|\\))","",x)),
@@ -89,11 +115,13 @@ a <- left_join(soildf,soilt) %>%
                              as.numeric(organical.content)*100,
                              organical.content)
   ) %>% 
-  mutate_all(., list(~na_if(.,"")))
+  mutate(across(.fns = ~ tidyr::replace_na(as.character(.x), ""))) %>% 
+  select(-`Catch.crop..`)
 
-cid <- c(names(a)[grepl("(Year|Location|soiltype|pH)",names(a))],
-         names(a)[grepl("(Clay|Silt|Sand)",names(a))],
-         names(a)[grepl("(Water|Nutri|crop|organic|C.N)",names(a))])
-
+cid <- c(names(soil_merge)[grepl("(Year|Location|soiltype|pH)",names(soil_merge))],
+         names(soil_merge)[grepl("(Clay|Silt|Sand)",names(soil_merge))],
+         names(soil_merge)[grepl("(Water|Nutri|crop|organic|C.N)",names(soil_merge))])
+soil_merge <- soil_merge[,cid]%>%
+  relocate(Location,Year,soiltype,Clay,Silt,Sand)
 # names(a)[grepl("(Clay|Silt|Sand|pH|Year|Location|soiltype|Water|Nutri|crop)",names(a))]
-xlsx::write.xlsx(a[,cid],"data/soil.xlsx",row.names = F)
+xlsx::write.xlsx(soil_merge,"output/soil.xlsx",row.names = F)
