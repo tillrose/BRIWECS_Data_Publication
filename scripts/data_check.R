@@ -63,14 +63,15 @@ long %>%
   ggrepel::geom_text_repel(aes(label=n),
                            size=2.7,
                            hjust=0,
-                           point.padding = 1,
-                           segment.linetype = 5,
-                           nudge_y=.1,
-                           direction="y"
+                           box.padding = -.1,
+                           point.padding = 0,
+                           nudge_y=0,
+                           # nudge_x=0,
+                           direction="x"
   )+
-  scale_y_log10(
+  scale_y_continuous(
     labels =label_number(scale_cut = cut_short_scale()),
-    expand = expansion(mult = 0.5)
+    limits=c(0,36000)
   )+
   toolPhD::theme_phd_facet(b=10,r=10,plot.title = element_text(size=10))
 dev.off()
@@ -81,7 +82,7 @@ png(filename="figure/data_point.png",
      units="cm",
      # compression = "lzw",
      width=30,
-     height=15,
+     height=30,
      pointsize=6,
      res=600,# dpi,
      family="Arial")
@@ -89,19 +90,20 @@ long %>%
   arrange(Location,desc(Year),Treatment)%>%
   mutate(BRISONr=gsub("BRISONr_","",BRISONr) %>% as.numeric,
          Env=interaction(Location,Year,Treatment) %>% factor(.,levels=unique(.)) ,
-         trait=gsub("\\_","\n",trait)
+         trait=gsub("\\_"," ",trait)
   )%>%   
   ggplot( aes(x=BRISONr, y=Env)) +
   geom_point(size=0.05,shape=1,stroke=.3,color="orange")+
-  ggh4x::facet_nested(~trait,
-                      # nrow = 1,
-                      nest_line = element_line(colour = "black"),
-                      space = 'free',
-                      scale="free_x")+
+  facet_wrap(~trait,ncol=8)+
+  # ggh4x::facet_nested(~trait,
+  #                     # nrow = 1,
+  #                     nest_line = element_line(colour = "black"),
+  #                     space = 'free',
+  #                     scale="free_x")+
   theme_test()+
-  theme(axis.text.y= element_text(size=4),
-        axis.text.x= element_text(size=6,angle = 90,hjust=1),
-        strip.text = element_text(size=5),
+  theme(axis.text.x= element_text(size=8),
+        axis.text.y= element_text(size=3,angle = 0,hjust=1),
+        strip.text = element_text(size=10),
         strip.background = element_blank())+
   ylab("combination of ExM")+
   xlab("genotype identifier (G)")
