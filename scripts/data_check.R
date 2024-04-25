@@ -49,7 +49,7 @@ long %>%
          trait=gsub("\\_","\n",trait)
   )%>%   
   ggplot( aes(x=BRISONr, y=Env)) +
-  geom_point(size=0.05,shape=1,stroke=.3)+
+  geom_point(size=0.05,shape=1,stroke=.3,color="orange")+
   ggh4x::facet_nested(~trait,
                       # nrow = 1,
                       nest_line = element_line(colour = "black"),
@@ -61,7 +61,7 @@ long %>%
         strip.text = element_text(size=5),
         strip.background = element_blank())+
   ylab("combination of ExM")+
-  xlab("genotype identifier")
+  xlab("genotype identifier G)")
 dev.off()
 
 # get some number for summary statistics -------------------------------------------------------------------------
