@@ -14,8 +14,8 @@ png(filename="figure/data_number.png",
      type="cairo",
      units="cm",
      # compression = "lzw",
-     width=10,
-     height=8,
+     width=12,
+     height=10,
      pointsize=6,
      res=600,# dpi,
      family="Arial")
@@ -28,7 +28,7 @@ long %>%
   coord_flip() +
   ggtitle(sprintf("total number of observation: %s",nrow(long)))+
   xlab("")+ylab("Number of observations")+
-  geom_text(aes(y=n+2000, label=n),size=2)+
+  geom_text(aes(y=n+2000, label=n),size=2.7)+
   toolPhD::theme_phd_facet(b=10,r=10,plot.title = element_text(size=10))
 dev.off()
 
