@@ -45,6 +45,11 @@ Management<- map(mana_list,~{
     if(col_id<3){
       tmp2<-tmp2  %>% 
         mutate(Date=as.Date(as.numeric(Date),origin='1900-01-01'))
+    }else{
+      tmp2<-tmp2  %>% 
+      mutate(Date=case_when(stringr::str_detect(Date, "^\\d{5}$")~as.Date(as.numeric(Date),origin='1900-01-01') %>% as.character(),
+              T~Date              
+      ))
     }
     tmp2<-tmp2  %>% 
       mutate(Locat_Year=locat_year,
