@@ -1,18 +1,14 @@
-
+rm(list=ls())
 #### setup ####
 library("tidyverse")
-
-
 ##### import #####
 complete_dat <- list.files(path = "data/locations",
                            pattern="*.csv",
                            full.names = T) %>%
   map_df(~read_csv2(., col_types = cols(.default = "c")))
-
-
 ##### tidy and filter #####
 complete_dat <- complete_dat %>% 
-  dplyr::select(-ReifeHoehe, -Kernel_number_bio, -Sorte, -`StrawYield_dt/ha`, -Subblock, -Subtrial) %>% 
+  dplyr::select(-ReifeHoehe,-Kernel_number_bio , -Sorte, -`StrawYield_dt/ha`, -Subblock, -Subtrial) %>% 
   mutate(Row = as.integer(Row),
          Column = as.integer(Column),
          BRISONr = str_replace(BRISONr, "BRISONR", "BRISONr"),
@@ -53,7 +49,16 @@ complete_dat <- complete_dat %>%
          Harvest_Index = signif(as.double(Harvest_Index), digits = 3),
          Harvest_Index = ifelse(is.na(Harvest_Index), Seedyield_bio / Biomass_bio, Harvest_Index),
          Harvest_Index = ifelse(Harvest_Index > 0.8, NA, Harvest_Index),
-         Harvest_Index = ifelse(Harvest_Index < 0.1, NA, Harvest_Index)) %>% 
+         Harvest_Index = ifelse(Harvest_Index < 0.1, NA, Harvest_Index),
+         # !!! new added derived traits
+         KperSpike=case_when(is.na(TKW_bio)~ 1000*Seedyield_bio/(TKW_plot*Spike_number),
+                             T~ 1000*Seedyield_bio/(TKW_bio*Spike_number)),
+         TKW = ifelse(is.na(TKW_plot), TKW_bio, TKW_plot), 
+         Kernel= Seedyield*1000/TKW,# set yield back to grain and divide by tkw
+         Biomass = Seedyield/Harvest_Index,
+         Straw = Biomass*(1-Harvest_Index),
+         Protein_yield=Seedyield*Crude_protein/100
+         ) %>% 
   filter(Treatment != "LLN_WF")
 
 ## Filter Harvest Index by Standard Deviation
@@ -75,15 +80,17 @@ complete_dat <- complete_dat %>%
   mutate(Spike_number = ifelse(Spike_number < Spike_number_mean - 2*Spike_number_sd, NA, Spike_number),
          Spike_number = ifelse(Spike_number > Spike_number_mean + 2*Spike_number_sd, NA, Spike_number))
 
-
 complete_dat <- complete_dat %>% 
   mutate_all(~ifelse(is.nan(.), NA, .))
 
-
 ##### export #####
 export_dat <- complete_dat %>% 
-  dplyr::select(BRISONr, Treatment, Block, Row, Column, Year, Location, Sowing_date, Emergence_date, BBCH59, BBCH87, Plantheight, Seedyield, Seedyield_bio, Biomass_bio, Harvest_Index, TKW_plot, TKW_bio, Spike_number, Stripe_rust, Powdery_mildew, Leaf_rust, Septoria, DTR, Fusarium, Falling_number, Crude_protein, Sedimentation)
-
+  dplyr::select(BRISONr, Treatment, Block, Row, Column, Year, Location, Sowing_date,
+                Emergence_date, BBCH59, BBCH87, Plantheight, Seedyield, Seedyield_bio,
+                Biomass_bio, Harvest_Index, TKW_plot, TKW_bio, Spike_number, Stripe_rust,
+                Powdery_mildew, Leaf_rust, Septoria, DTR, Fusarium, Falling_number, Crude_protein, Sedimentation,
+                # !!! new added
+                KperSpike,Kernel,Biomass,Straw,Protein_yield
+                )
+# ------------------------------------------------------------------------
 write_delim(export_dat, "output/BRIWECS_data_publication.csv", delim = ";")
-
-
