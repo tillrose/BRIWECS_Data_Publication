@@ -1,5 +1,7 @@
 rm(list=ls())
 pacman::p_load(purrr,dplyr,toolPhD,ggplot2,scales)
+unit<- xlsx::read.xlsx("metadata/Unit.xlsx",sheetIndex = 1) %>% 
+  rename(Trait=trait) %>% select(-Full.name)
 raw <- read.csv2("output/BRIWECS_data_publication.csv") %>% 
   mutate(across(BBCH59:Protein_yield,as.numeric))
 
@@ -16,7 +18,12 @@ fig1_sub <- raw %>%
          Environment = forcats::fct_expand(Environment, "RHH_2018", "RHH_2019"),
          Environment = forcats::fct_expand(Environment, "GGE_2019", after = 4)) %>%
   select(Environment,Treatment,Seedyield,Harvest_Index,Kernel,Straw) %>% 
-  tidyr::pivot_longer(Seedyield:Straw,values_to = "trait",names_to="Trait") 
+  tidyr::pivot_longer(Seedyield:Straw,values_to = "trait",names_to="Trait")%>%
+  left_join(unit) %>% 
+  mutate(unit=case_when(!is.na(unit)~paste0("(",unit,")"),
+                        T~""),
+         Nam=paste(Trait,"\n",unit)
+         )
 # data range density -------------------------------------------------------------------------
 # raw$Treatment %>% unique()
 # range 
@@ -41,7 +48,7 @@ fig1 <- fig1_sub %>%
   scale_fill_viridis_d() +
   scale_color_viridis_d() +
   scale_y_discrete(drop=FALSE) +
-  ggh4x::facet_nested(~Trait,nest_line=T, 
+  ggh4x::facet_nested(~Nam,nest_line=T, 
                       switch = "x",# place strip to bottom
                       scales = "free_x",
                       independent = "x")
