@@ -5,7 +5,14 @@ library("tidyverse")
 complete_dat <- list.files(path = "data/locations",
                            pattern="*.csv",
                            full.names = T) %>%
-  map_df(~read_csv2(., col_types = cols(.default = "c")))
+  map_df(~read_csv2(., col_types = cols(.default = "c")))%>% 
+  # for consistency of location and treatment naming rules
+  mutate(
+    Treatment = stringr::str_replace_all(Treatment, "(D{1,2})", "IR"),# irrigation
+    Treatment=case_when(Location=="DKI"~paste0(Treatment,"_RO"),# rain out shelter
+                        T~Treatment),
+    Location=gsub("DKI","KIE",Location)
+  )
 ##### tidy and filter #####
 complete_dat <- complete_dat %>% 
   dplyr::select(-ReifeHoehe,-Kernel_number_bio , -Sorte, -`StrawYield_dt/ha`, -Subblock, -Subtrial) %>% 
@@ -14,7 +21,6 @@ complete_dat <- complete_dat %>%
          BRISONr = str_replace(BRISONr, "BRISONR", "BRISONr"),
          Year = as.integer(Year),
          Location = ifelse(Location == "KAD", "KAL", Location),
-         Treatment = ifelse(Treatment == "HN_WF_DD", "HN_WF_D", Treatment),
          Block = ifelse(Block == "1", "B1", Block),
          Block = ifelse(Block == "2", "B2", Block),
          Sowing_date = as.integer(Sowing_date),
@@ -91,6 +97,7 @@ export_dat <- complete_dat %>%
                 Powdery_mildew, Leaf_rust, Septoria, DTR, Fusarium, Falling_number, Crude_protein, Sedimentation,
                 # !!! new added
                 KperSpike,Kernel,Biomass,Straw,Protein_yield
-                )
+                ) %>% 
+  mutate(across(BBCH59:Protein_yield,as.numeric)) 
 # ------------------------------------------------------------------------
 write_delim(export_dat, "output/BRIWECS_data_publication.csv", delim = ";")
