@@ -18,3 +18,7 @@ data-fig-align="right" />
 <img
 src="https://github.com/tillrose/BRIWECS_Data_Publication/blob/main/figure/fig1.png"
 data-fig-align="center" />
+
+<img
+src="https://github.com/tillrose/BRIWECS_Data_Publication/blob/main/figure/data_point.png"
+data-fig-align="center" />

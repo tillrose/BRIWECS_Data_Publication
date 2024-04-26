@@ -15,3 +15,4 @@ always_allow_html: true
 
 ![](https://github.com/tillrose/BRIWECS_Data_Publication/blob/main/figure/fig1.png){fig-align="center"}
 
+![](https://github.com/tillrose/BRIWECS_Data_Publication/blob/main/figure/data_point.png){fig-align="center"}
