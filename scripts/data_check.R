@@ -10,48 +10,55 @@ long <- raw  %>%
   filter(!is.na(Trait)) 
 
 # with(long,Trait[grepl("a-z",Trait)])
-
-# data range -------------------------------------------------------------------------
-illu <- raw %>% 
-
+fig1_sub <- raw %>% 
   mutate(Environment = paste(Location, Year, sep = "_"),
-         Treatment = forcats::fct_relevel(Treatment, "HN_WF", "HN_WF_D", "HN_NF", "LN_WF", "LN_NF"),
+         Treatment = forcats::fct_relevel(Treatment, "HN_WF", "HN_WF_IR","HN_WF_RO","HN_NF", "LN_WF", "LN_NF"),
          Environment = forcats::fct_expand(Environment, "RHH_2018", "RHH_2019"),
-         Environment = forcats::fct_expand(Environment, "GGE_2019", after = 4)) %>% 
-  select(Environment,Treatment,Seedyield,Harvest_Index,)
+         Environment = forcats::fct_expand(Environment, "GGE_2019", after = 4)) %>%
+  select(Environment,Treatment,Seedyield,Harvest_Index,Kernel,Straw) %>% 
+  tidyr::pivot_longer(Seedyield:Straw,values_to = "trait",names_to="Trait") 
+# data range density -------------------------------------------------------------------------
+# raw$Treatment %>% unique()
+# range 
+fig1_sub %>% 
+  group_by(Trait) %>% summarise(m=min(trait,na.rm = T),
+                                       M=max(trait,na.rm = T))
+# density plot
+fig1 <- fig1_sub %>% 
+  ggplot() +
+  aes(x = trait, 
+      y = Environment, fill = Treatment,color=Treatment) +
+  theme_classic() +
+  theme(legend.position  = "bottom",
+        axis.title.x = element_blank(),
+        strip.background = element_blank()) +
+  ggridges::geom_density_ridges(
+    alpha = 0.7,
+    scale=1,# height
+    rel_min_height=0.005# width higher when value is small
+  ) +
+  ylab("Location x Year")+
+  scale_fill_viridis_d() +
+  scale_color_viridis_d() +
+  scale_y_discrete(drop=FALSE) +
+  ggh4x::facet_nested(~Trait,nest_line=T, 
+                      switch = "x",# place strip to bottom
+                      scales = "free_x",
+                      independent = "x")
 
-# plot_ <- 
-plot_ls <- map(c("Seedyield",
-                 "",
-                 "",
-                 ""),
-               function(trait){
-  ggplot(illu) +
-    aes(x = Seedyield, 
-        y = Environment, fill = Treatment) +
-    theme_classic() +
-    theme(legend.justification = "top") +
-    ggridges::geom_density_ridges(alpha = 0.75,
-                                  jittered_points = TRUE,
-                                  position = "raincloud",
-                                  point_size = 0.05,
-                                  point_alpha = 0.2) +
-    scale_fill_brewer(palette = "Set1") +
-    scale_y_discrete(drop=FALSE) 
-})
-
-
-# number of observation -------------------------------------------------------------------------
-png(filename="figure/data_number.png",
+png(filename="figure/data_range.png",
     type="cairo",
     units="cm",
-    # compression = "lzw",
     width=16,
     height=14,
     pointsize=6,
     res=600,# dpi,
     family="Arial")
-long %>% 
+
+print(fig1)
+dev.off()
+# number of observation -------------------------------------------------------------------------
+fig2 <- long %>% 
   group_by(trait) %>% summarise(n=n()) %>% 
   mutate(trait = forcats::fct_reorder(trait, n)) %>%
   ggplot( aes(x=trait, y=n)) +
@@ -74,18 +81,64 @@ long %>%
     limits=c(0,36000)
   )+
   toolPhD::theme_phd_facet(b=10,r=10,plot.title = element_text(size=10))
+png(filename="figure/data_number.png",
+    type="cairo",
+    units="cm",
+    # compression = "lzw",
+    width=16,
+    height=14,
+    pointsize=6,
+    res=600,# dpi,
+    family="Arial")
+print(fig2)
 dev.off()
+
+# -------------------------------------------------------------------------
+cp <- cowplot::plot_grid(fig1+
+                           theme(legend.key.size = unit(.5,"line"),
+                                 legend.position = "top",
+                                 legend.text = element_text(size=4),
+                                 legend.title=element_text(size=5),
+                                 axis.title = element_text(size=6),
+                                 strip.text = element_text(size=6),
+                                 plot.margin = margin(r=0,l=0),
+                                 axis.text=element_text(size=5))+
+                           guides(colour = guide_legend(nrow = 1),
+                                  fill = guide_legend(nrow = 1)),
+                         fig2+
+                           theme_classic() +
+                           theme(
+                             strip.background = element_blank(),
+                             plot.title = element_text(size=6),
+                             plot.margin = margin(t=20,r=3,l=0),
+                             # strip.text = element_text(size=6),
+                             axis.title = element_text(size=6),
+                             axis.text.x=element_text(size=5),
+                             axis.text.y=element_text(size=5)),
+                         nrow=1,labels = c("A","B"),align = "hv")
+png(filename="figure/fig1.png",
+    type="cairo",
+    units="cm",
+    # compression = "lzw",
+    width=18,
+    height=12,
+    pointsize=3,
+    res=600,# dpi,
+    family="Arial")
+print(cp)
+dev.off()
+
 # all data points -------------------------------------------------------------------------
 
 png(filename="figure/data_point.png",
-     type="cairo",
-     units="cm",
-     # compression = "lzw",
-     width=30,
-     height=30,
-     pointsize=6,
-     res=600,# dpi,
-     family="Arial")
+    type="cairo",
+    units="cm",
+    # compression = "lzw",
+    width=30,
+    height=30,
+    pointsize=6,
+    res=600,# dpi,
+    family="Arial")
 long %>%
   arrange(Location,desc(Year),Treatment)%>%
   mutate(BRISONr=gsub("BRISONr_","",BRISONr) %>% as.numeric,
