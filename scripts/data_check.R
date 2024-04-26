@@ -46,17 +46,17 @@ fig1 <- fig1_sub %>%
                       scales = "free_x",
                       independent = "x")
 
-png(filename="figure/data_range.png",
-    type="cairo",
-    units="cm",
-    width=16,
-    height=14,
-    pointsize=6,
-    res=600,# dpi,
-    family="Arial")
-
-print(fig1)
-dev.off()
+# png(filename="figure/data_range.png",
+#     type="cairo",
+#     units="cm",
+#     width=16,
+#     height=14,
+#     pointsize=6,
+#     res=600,# dpi,
+#     family="Arial")
+# 
+# print(fig1)
+# dev.off()
 # number of observation -------------------------------------------------------------------------
 fig2 <- long %>% 
   group_by(trait) %>% summarise(n=n()) %>% 
@@ -81,17 +81,17 @@ fig2 <- long %>%
     limits=c(0,36000)
   )+
   toolPhD::theme_phd_facet(b=10,r=10,plot.title = element_text(size=10))
-png(filename="figure/data_number.png",
-    type="cairo",
-    units="cm",
-    # compression = "lzw",
-    width=16,
-    height=14,
-    pointsize=6,
-    res=600,# dpi,
-    family="Arial")
-print(fig2)
-dev.off()
+# png(filename="figure/data_number.png",
+#     type="cairo",
+#     units="cm",
+#     # compression = "lzw",
+#     width=16,
+#     height=14,
+#     pointsize=6,
+#     res=600,# dpi,
+#     family="Arial")
+# print(fig2)
+# dev.off()
 
 # -------------------------------------------------------------------------
 cp <- cowplot::plot_grid(fig1+
@@ -129,17 +129,7 @@ print(cp)
 dev.off()
 
 # all data points -------------------------------------------------------------------------
-
-png(filename="figure/data_point.png",
-    type="cairo",
-    units="cm",
-    # compression = "lzw",
-    width=30,
-    height=30,
-    pointsize=6,
-    res=600,# dpi,
-    family="Arial")
-long %>%
+figdata <- long %>%
   arrange(Location,desc(Year),Treatment)%>%
   mutate(BRISONr=gsub("BRISONr_","",BRISONr) %>% as.numeric,
          Env=interaction(Location,Year,Treatment) %>% factor(.,levels=unique(.)) ,
@@ -147,12 +137,9 @@ long %>%
   )%>%   
   ggplot( aes(x=BRISONr, y=Env)) +
   geom_point(size=0.05,shape=1,stroke=.3,color="orange")+
-  facet_wrap(~trait,ncol=8)+
-  # ggh4x::facet_nested(~trait,
-  #                     # nrow = 1,
-  #                     nest_line = element_line(colour = "black"),
-  #                     space = 'free',
-  #                     scale="free_x")+
+  facet_wrap(~trait,
+             labeller = stickylabeller::label_glue('({.L}) {trait}'),
+             ncol=8)+
   theme_test()+
   theme(axis.text.x= element_text(size=8),
         axis.text.y= element_text(size=3,angle = 0,hjust=1),
@@ -160,18 +147,29 @@ long %>%
         strip.background = element_blank())+
   ylab("combination of ExM")+
   xlab("genotype identifier (G)")
+
+
+png(filename="figure/data_point.png",
+    type="cairo",
+    units="cm",
+    width=30,
+    height=30,
+    pointsize=6,
+    res=600,# dpi,
+    family="Arial")
+figdata
 dev.off()
 
 # get some number for summary statistics -------------------------------------------------------------------------
-# how many traits in total 
-long%>% 
-  nrow()
-# how many unique environments combination 
-long %>% 
-  select(Treatment,Year,Location) %>% view_df()
-
-long %>% 
-  toolPhD::df_ue(coln=c(Treatment,Year,Location))
-
-long %>% 
-  toolPhD::df_ue(coln=c(trait))
+# # how many traits in total 
+# long%>% 
+#   nrow()
+# # how many unique environments combination 
+# long %>% 
+#   select(Treatment,Year,Location) %>% toolPhD::view_df()
+# 
+# long %>% 
+#   toolPhD::df_ue(coln=c(Treatment,Year,Location))
+# 
+# long %>% 
+#   toolPhD::df_ue(coln=c(trait))
