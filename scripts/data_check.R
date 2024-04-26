@@ -1,10 +1,10 @@
 rm(list=ls())
 pacman::p_load(purrr,dplyr,toolPhD,ggplot2,scales)
-raw <- read.csv2("output/BRIWECS_data_publication.csv")
+raw <- read.csv2("output/BRIWECS_data_publication.csv") %>% 
+  mutate(across(BBCH59:Protein_yield,as.numeric))
 
 # preprocessing -------------------------------------------------------------------------
-long <- raw %>%
-  mutate(across(BBCH59:Protein_yield,as.numeric)) %>% 
+long <- raw  %>% 
   tidyr::pivot_longer(BBCH59:Protein_yield,
                       names_to="trait",values_to = "Trait") %>% 
   filter(!is.na(Trait)) 
