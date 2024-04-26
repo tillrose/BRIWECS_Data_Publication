@@ -13,7 +13,5 @@ always_allow_html: true
 
 ![](https://github.com/tillrose/BRIWECS_Data_Publication/blob/main/figure/BRIWECS_logo.png){fig-align="right"}
 
-![](https://github.com/tillrose/BRIWECS_Data_Publication/blob/main/figure/data_number.png){fig-align="center"}
-
-![](https://github.com/tillrose/BRIWECS_Data_Publication/blob/main/figure/data_point.png){fig-align="center"}
+![](https://github.com/tillrose/BRIWECS_Data_Publication/blob/main/figure/fig1.png){fig-align="center"}
 
