@@ -92,7 +92,7 @@ DTR
 0~100
 </td>
 <td style="text-align:left;">
-% non-infected leaves
+% leaf area
 </td>
 </tr>
 <tr>
@@ -114,7 +114,7 @@ Fusarium
 0~27
 </td>
 <td style="text-align:left;">
-% non-infected spikes
+% spike
 </td>
 </tr>
 <tr>
@@ -157,7 +157,7 @@ Leaf_rust
 0~90
 </td>
 <td style="text-align:left;">
-% non-infected leaves
+% leaf area
 </td>
 </tr>
 <tr>
@@ -179,7 +179,7 @@ Powdery_mildew
 0~100
 </td>
 <td style="text-align:left;">
-% non-infected leaves
+% leaf area
 </td>
 </tr>
 <tr>
@@ -234,7 +234,7 @@ Septoria
 0~80
 </td>
 <td style="text-align:left;">
-% non-infected leaves
+% leaf area
 </td>
 </tr>
 <tr>
@@ -267,7 +267,7 @@ Stripe_rust
 0~100
 </td>
 <td style="text-align:left;">
-% non-infected leaves
+% leaf area
 </td>
 </tr>
 <tr>
