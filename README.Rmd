@@ -37,7 +37,7 @@ left_join(unit ,by='trait')%>%
   view_group(.,"trait",c("Trait","unit")) %>%
   # t(.) %>%
   kbl(caption = "Table1. trait range and unit") %>%
-  kable_classic_2(full_width = F)
+  kable_classic_2(full_width = F, position = "float_right")
 
 # data.frame(a=c(1,2),
 #            b=c('$x^{2}$',"m^2")  ) %>% kableExtra::kable(.,escape=F)
