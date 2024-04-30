@@ -1,5 +1,6 @@
 rm(list=ls())
 pacman::p_load(purrr,dplyr,toolPhD,ggplot2,scales)
+# devtools::install_github("rensa/stickylabeller")
 unit<- xlsx::read.xlsx("metadata/Unit.xlsx",sheetIndex = 1) %>% 
   rename(Trait=trait) %>% select(-Full.name)
 raw <- read.csv2("output/BRIWECS_data_publication.csv") %>% 

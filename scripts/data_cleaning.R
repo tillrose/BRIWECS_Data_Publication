@@ -65,7 +65,8 @@ complete_dat <- complete_dat %>%
          Straw = Biomass*(1-Harvest_Index),
          Protein_yield=Seedyield*Crude_protein/100
          ) %>% 
-  filter(Treatment != "LLN_WF")
+  filter(Treatment != "LLN_WF",
+         !BRISONr%in%c("BRISONr_?","BRISONr_NA"))
 
 ## Filter Harvest Index by Standard Deviation
 complete_dat <- complete_dat %>% 
