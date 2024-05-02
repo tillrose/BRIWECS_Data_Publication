@@ -1,11 +1,12 @@
 rm(list=ls())
 #### setup ####
-library("tidyverse")
+pacman::p_load(dplyr,purrr)
 ##### import #####
 complete_dat <- list.files(path = "data/locations",
                            pattern="*.csv",
                            full.names = T) %>%
   map_df(~read_csv2(., col_types = cols(.default = "c")))%>% 
+  suppressMessages() %>% 
   # for consistency of location and treatment naming rules
   mutate(
     Treatment = stringr::str_replace_all(Treatment, "(D{1,2})", "IR"),# irrigation
@@ -42,10 +43,10 @@ complete_dat <- complete_dat %>%
          Spike_number = signif(as.double(Spike_number), digits = 3),
          Spike_number = ifelse(Spike_number > 1500, NA, Spike_number),
          Stripe_rust = as.integer(Stripe_rust),
-         Powdery_mildew = as.integer(Powdery_mildew),
+         Powdery_mildew = as.integer(Powdery_mildew) %>% suppressWarnings(),
          Leaf_rust = as.integer(Leaf_rust),
          Leaf_rust = ifelse(Leaf_rust < 0, NA, Leaf_rust),
-         Septoria = as.integer(Septoria),
+         Septoria = as.integer(Septoria)%>% suppressWarnings(),
          DTR = as.integer(DTR),
          Fusarium = as.integer(Fusarium),
          Sedimentation = signif(as.double(Sedimentation), digits = 3),

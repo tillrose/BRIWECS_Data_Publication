@@ -20,7 +20,7 @@ fig1_sub <- raw %>%
          Environment = forcats::fct_expand(Environment, "GGE_2019", after = 4)) %>%
   select(Environment,Treatment,Seedyield,Harvest_Index,Kernel,Straw) %>% 
   tidyr::pivot_longer(Seedyield:Straw,values_to = "trait",names_to="Trait")%>%
-  left_join(unit) %>% 
+  left_join(unit,by="Trait") %>% 
   mutate(unit=case_when(!is.na(unit)~paste0("(",unit,")"),
                         T~""),
          Nam=paste(Trait,"\n",unit)
@@ -123,7 +123,8 @@ cp <- cowplot::plot_grid(fig1+
                              axis.title = element_text(size=6),
                              axis.text.x=element_text(size=5),
                              axis.text.y=element_text(size=5)),
-                         nrow=1,labels = c("A","B"),align = "hv")
+                         nrow=1,labels = c("A","B"),align = "hv")%>% 
+  suppressWarnings() %>% suppressMessages()
 png(filename="figure/fig1.png",
     type="cairo",
     units="cm",

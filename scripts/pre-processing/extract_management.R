@@ -44,12 +44,12 @@ Management<- map(mana_list,~{
       filter(!!condi_list[[col_id]][[1]],!!condi_list[[col_id]][[2]]) 
     if(col_id<3){
       tmp2<-tmp2  %>% 
-        mutate(Date=as.Date(as.numeric(Date),origin='1900-01-01'))
+        mutate(Date=as.Date(as.numeric(Date),origin='1900-01-01')) %>% suppressWarnings()
     }else{
       tmp2<-tmp2  %>% 
       mutate(Date=case_when(stringr::str_detect(Date, "^\\d{5}$")~as.Date(as.numeric(Date),origin='1900-01-01') %>% as.character(),
               T~Date              
-      ))
+      ))%>% suppressWarnings()
     }
     tmp2<-tmp2  %>% 
       mutate(Locat_Year=locat_year,
@@ -111,7 +111,7 @@ names(soilt)[1] <- "Typesoil"
 names(soildf) <- gsub("( |\\/|\\(|\\))",".",names(soildf)) %>% 
   gsub("Zwischen.*","",.)
 
-soil_merge <- left_join(soildf,soilt) %>% 
+soil_merge <- left_join(soildf,soilt,by="Typesoil") %>% 
   mutate(
     across(c(Clay:organical.content,Sand),function(x)gsub("(%|NA)","",x)),
     across(P2O5:K2O,function(x)gsub("(\\(|mg/100g|\\))","",x)),
