@@ -164,7 +164,7 @@ png(filename="figure/data_point.png",
     width=30,
     height=30,
     pointsize=6,
-    res=600,# dpi,
+    res=650,# dpi,
     family="Arial")
 figdata
 dev.off()
