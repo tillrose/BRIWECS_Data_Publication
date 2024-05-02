@@ -11,6 +11,53 @@ pkgdown](https://img.shields.io/badge/data-overview-blue)](https://tillrose.gith
 [![License:
 GPL-3](https://img.shields.io/badge/License-GPL3-orange)](https://www.r-project.org/Licenses/)
 
+<img
+src="https://github.com/tillrose/BRIWECS_Data_Publication/blob/main/figure/BRIWECS_logo.png"
+data-fig-align="right" />
+
+    ##                                   levelName
+    ## 1  Root                                    
+    ## 2   ¦--data                                
+    ## 3   ¦   ¦--Sortenliste_2017.csv            
+    ## 4   ¦   ¦--Sortiment_Jahre.csv             
+    ## 5   ¦   ¦--cultivar_info.csv               
+    ## 6   ¦   ¦--locations                       
+    ## 7   ¦   ¦   °--34 files                    
+    ## 8   ¦   ¦--management                      
+    ## 9   ¦   ¦   °--25 files                    
+    ## 10  ¦   ¦--soil_translate.xlsx             
+    ## 11  ¦   °--weather                         
+    ## 12  ¦       ¦--DWD_Intpol_2014_2024_GGE.csv
+    ## 13  ¦       ¦--DWD_Intpol_2014_2024_HAN.csv
+    ## 14  ¦       ¦--DWD_Intpol_2014_2024_KAL.csv
+    ## 15  ¦       ¦--DWD_Intpol_2014_2024_KIE.csv
+    ## 16  ¦       ¦--DWD_Intpol_2014_2024_QLB.csv
+    ## 17  ¦       °--DWD_Intpol_2014_2024_RHH.csv
+    ## 18  ¦--metadata                            
+    ## 19  ¦   ¦--BRIWECS_BRISONr_information.csv 
+    ## 20  ¦   °--Unit.xlsx                       
+    ## 21  ¦--scripts                             
+    ## 22  ¦   ¦--data_check.R                    
+    ## 23  ¦   ¦--data_cleaning.R                 
+    ## 24  ¦   ¦--data_raincloud.R                
+    ## 25  ¦   ¦--extract_management.R            
+    ## 26  ¦   °--fun                             
+    ## 27  ¦       °--set_up.R                    
+    ## 28  ¦--output                              
+    ## 29  ¦   ¦--BRIWECS_data_publication.csv    
+    ## 30  ¦   ¦--diseaase_record.xlsx            
+    ## 31  ¦   ¦--fertilizer.xlsx                 
+    ## 32  ¦   ¦--plant_protection.xlsx           
+    ## 33  ¦   °--soil.xlsx                       
+    ## 34  ¦--figure                              
+    ## 35  ¦   ¦--BRIWECS_logo.png                
+    ## 36  ¦   ¦--data_point.png                  
+    ## 37  ¦   °--fig1.png                        
+    ## 38  °--docs                                
+    ## 39      °--site_libs                       
+    ## 40          ¦--bootstrap                   
+    ## 41          °--clipboard
+
 <table class=" lightable-classic-2" style="font-family: &quot;Arial Narrow&quot;, &quot;Source Sans Pro&quot;, sans-serif; width: auto !important; float: right; margin-left: 10px;">
 <caption>
 Table1. trait name, range and unit
@@ -369,10 +416,6 @@ g
 </tr>
 </tbody>
 </table>
-
-<img
-src="https://github.com/tillrose/BRIWECS_Data_Publication/blob/main/figure/BRIWECS_logo.png"
-data-fig-align="right" />
 
 <img
 src="https://github.com/tillrose/BRIWECS_Data_Publication/blob/main/figure/fig1.png"
