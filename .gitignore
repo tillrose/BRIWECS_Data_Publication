@@ -12,7 +12,7 @@
 # Example code in package build process
 *-Ex.R
 .nojekyll
-README_files/*
+
 
 # Output files from R CMD build
 /*.tar.gz
