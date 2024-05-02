@@ -12,7 +12,7 @@
 # Example code in package build process
 *-Ex.R
 .nojekyll
-
+.DS_store
 
 # Output files from R CMD build
 /*.tar.gz
