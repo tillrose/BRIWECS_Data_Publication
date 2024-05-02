@@ -8,8 +8,7 @@
 [![Website -
 pkgdown](https://img.shields.io/badge/data-overview-blue)](https://tillrose.github.io/BRIWECS_Data_Publication/data_overview.html)
 [![Project-website](https://img.shields.io/badge/Project-website-darkgreen)](https://www.igps.uni-hannover.de/de/forschung/forschungsprojekte/detailansicht/projects/forschungsverbund-briwecs)
-[![License:
-GPL-3](https://img.shields.io/badge/License-GPL3-orange)](https://www.r-project.org/Licenses/)
+<!-- [![License: GPL-3](https://img.shields.io/badge/License-GPL3-orange)](https://www.r-project.org/Licenses/) -->
 
 <img
 src="https://github.com/tillrose/BRIWECS_Data_Publication/blob/main/figure/BRIWECS_logo.png"

@@ -9,8 +9,8 @@ always_allow_html: true
 
 ## A collaborative work on a data publication for the seasons 2015–2019 of the BRIWECS consortium
 
-[![Website - pkgdown](https://img.shields.io/badge/data-overview-blue)](https://tillrose.github.io/BRIWECS_Data_Publication/data_overview.html) [![Project-website](https://img.shields.io/badge/Project-website-darkgreen)](https://www.igps.uni-hannover.de/de/forschung/forschungsprojekte/detailansicht/projects/forschungsverbund-briwecs) [![License: GPL-3](https://img.shields.io/badge/License-GPL3-orange)](https://www.r-project.org/Licenses/)
-
+[![Website - pkgdown](https://img.shields.io/badge/data-overview-blue)](https://tillrose.github.io/BRIWECS_Data_Publication/data_overview.html) [![Project-website](https://img.shields.io/badge/Project-website-darkgreen)](https://www.igps.uni-hannover.de/de/forschung/forschungsprojekte/detailansicht/projects/forschungsverbund-briwecs)
+<!-- [![License: GPL-3](https://img.shields.io/badge/License-GPL3-orange)](https://www.r-project.org/Licenses/) -->
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 suppressWarnings(library(dplyr));
@@ -39,14 +39,15 @@ left_join(unit ,by='trait')%>%
 ```
 
 ![](https://github.com/tillrose/BRIWECS_Data_Publication/blob/main/figure/BRIWECS_logo.png){fig-align="right"}
-```{r,echo=F,fig.width=9, fig.height=4,warning=F}
+```{r,echo=F,fig.width=14, fig.height=10,warning=F}
 dirs <- list.dirs(path = ".", full.names = TRUE, recursive = TRUE) 
 
-r.target <- paste(c(".git",".Rproj.user",".quarto"),
+r.target <- paste(c(".git",".Rproj.user",".quarto","gfm","docs"),
                   collapse='|')
 dirs <- dirs[!grepl(r.target,dirs)]
 
-e.target <- c("./data","./figure","./metadata","./output","./scripts")
+e.target <- c("./data","./figure",
+              "./metadata","./output","./scripts")
 dirs <- 
   purrr::map(e.target,~{
     list.files(.x,all.files = T,recursive = T,full.names = T)
@@ -62,7 +63,7 @@ x <- lapply(strsplit(dirst, "/"),
   group_by(V1,V2,V3) %>%
   reframe(V4 = case_when(n() > 8~sprintf("%s files",n()),
                            T~V4)) %>% 
-  mutate(V2=factor(V2,levels=c("data","metadata","scripts","output","figure","docs"))) %>% 
+  mutate(V2=factor(V2,levels=c("data","metadata","scripts","output","figure"))) %>% 
   arrange(desc(V2)) %>% suppressWarnings()
 
 x$pathString <- apply(x, 1, function(x) paste(trimws(na.omit(x)), collapse="/"))
@@ -80,8 +81,8 @@ do.call('rbind',
   mutate(label = gsub('^.*/(.*)$', '\\1', name)) %>%
   ggraph(layout = 'tree') + 
   geom_edge_diagonal(color = 'gray') +
-  geom_node_point(shape = 21, size=2,fill = 'lightblue') +
-  geom_node_text(aes(label = label), size = 2.5, nudge_x = 0.5) +
+  geom_node_point(shape = 21, size=3,fill = 'orange') +
+  geom_node_text(aes(label = label), size = 3.1, nudge_x = 0.5) +
   coord_flip(clip = 'off') +
   scale_y_reverse() +
   theme_graph()
