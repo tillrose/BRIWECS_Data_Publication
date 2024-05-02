@@ -39,7 +39,7 @@ left_join(unit ,by='trait')%>%
 ```
 
 ![](https://github.com/tillrose/BRIWECS_Data_Publication/blob/main/figure/BRIWECS_logo.png){fig-align="right"}
-```{r,echo=F,fig.width=14, fig.height=10,warning=F}
+```{r,echo=F,fig.width=8, fig.height=10,warning=F}
 dirs <- list.dirs(path = ".", full.names = TRUE, recursive = TRUE) 
 
 r.target <- paste(c(".git",".Rproj.user",".quarto","gfm","docs"),
@@ -61,7 +61,7 @@ x <- lapply(strsplit(dirst, "/"),
   plyr::rbind.fill(.) %>%
   filter(!is.na(V2)) %>% 
   group_by(V1,V2,V3) %>%
-  reframe(V4 = case_when(n() > 8~sprintf("%s files",n()),
+  reframe(V4 = case_when(n() > 5~sprintf("%s files",n()-1),
                            T~V4)) %>% 
   mutate(V2=factor(V2,levels=c("data","metadata","scripts","output","figure"))) %>% 
   arrange(desc(V2)) %>% suppressWarnings()
@@ -81,8 +81,8 @@ do.call('rbind',
   mutate(label = gsub('^.*/(.*)$', '\\1', name)) %>%
   ggraph(layout = 'tree') + 
   geom_edge_diagonal(color = 'gray') +
-  geom_node_point(shape = 21, size=3,fill = 'orange') +
-  geom_node_text(aes(label = label), size = 3.1, nudge_x = 0.5) +
+  geom_node_point(shape = 21, size=5,fill = 'orange') +
+  geom_node_text(aes(label = label), size = 4, nudge_x = 0.5) +
   coord_flip(clip = 'off') +
   scale_y_reverse() +
   theme_graph()
