@@ -14,9 +14,12 @@ always_allow_html: true
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 suppressWarnings(library(dplyr));
-suppressWarnings(library(ggplot2));
+# suppressWarnings(library(ggplot2));
 library(kableExtra);library(knitr);library(toolPhD)
-library(data.tree)
+# library(data.tree);
+library(igraph)
+suppressWarnings(library(tidygraph))
+suppressWarnings(library(ggraph))
 options(dplyr.summarise.inform = FALSE)
 unit<- xlsx::read.xlsx("./metadata/Unit.xlsx",sheetIndex = 1) %>%
   mutate(unit=gsub('\\#','Nbr ',unit),
@@ -36,7 +39,7 @@ left_join(unit ,by='trait')%>%
 ```
 
 ![](https://github.com/tillrose/BRIWECS_Data_Publication/blob/main/figure/BRIWECS_logo.png){fig-align="right"}
-```{r,echo=F}
+```{r,echo=F,fig.width=9, fig.height=4,warning=F}
 dirs <- list.dirs(path = ".", full.names = TRUE, recursive = TRUE) 
 
 r.target <- paste(c(".git",".Rproj.user",".quarto"),
@@ -60,10 +63,28 @@ x <- lapply(strsplit(dirst, "/"),
   reframe(V4 = case_when(n() > 8~sprintf("%s files",n()),
                            T~V4)) %>% 
   mutate(V2=factor(V2,levels=c("data","metadata","scripts","output","figure","docs"))) %>% 
-  arrange(V2) %>% suppressWarnings()
+  arrange(desc(V2)) %>% suppressWarnings()
 
 x$pathString <- apply(x, 1, function(x) paste(trimws(na.omit(x)), collapse="/"))
-(mytree <- data.tree::as.Node(x))
+
+do.call('rbind', 
+        strsplit(x$pathString, '/') %>%
+  lapply(function(a) sapply(seq_along(a),
+                            function(y) paste(a[1:y], collapse = '/'))) %>% 
+  lapply(function(b) cbind(head(b, -1), tail(b, -1)))
+) %>% 
+  as.data.frame() %>%
+  unique() %>%
+  graph_from_data_frame() %>%
+  as_tbl_graph() %>%
+  mutate(label = gsub('^.*/(.*)$', '\\1', name)) %>%
+  ggraph(layout = 'tree') + 
+  geom_edge_diagonal(color = 'gray') +
+  geom_node_point(shape = 21, size=2,fill = 'lightblue') +
+  geom_node_text(aes(label = label), size = 2.5, nudge_x = 0.5) +
+  coord_flip(clip = 'off') +
+  scale_y_reverse() +
+  theme_graph()
 
 ```
 
