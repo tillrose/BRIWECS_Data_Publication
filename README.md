@@ -8,12 +8,26 @@
 [![Website -
 pkgdown](https://img.shields.io/badge/data-overview-blue)](https://tillrose.github.io/BRIWECS_Data_Publication/data_overview.html)
 [![Project-website](https://img.shields.io/badge/Project-website-darkgreen)](https://www.igps.uni-hannover.de/de/forschung/forschungsprojekte/detailansicht/projects/forschungsverbund-briwecs)
+
 <!-- [![License: GPL-3](https://img.shields.io/badge/License-GPL3-orange)](https://www.r-project.org/Licenses/) -->
 
 <img
 src="https://github.com/tillrose/BRIWECS_Data_Publication/blob/main/figure/BRIWECS_logo.png"
 data-fig-align="right" />
+
+## insturctution
+
+1.  open `BRIWECS_Data_Publication.RProject`
+2.  open `scripts/run.R`
+3.  run all `Ctrl + Alt + R` <img
+    src="https://github.com/tillrose/BRIWECS_Data_Publication/blob/main/figure/Instruction.PNG"
+    data-fig-align="center" />
+
+## directory tree
+
 ![](README_files/figure-gfm/unnamed-chunk-1-1.png)<!-- -->
+
+## unit table
 
 <table class=" lightable-classic-2" style="font-family: &quot;Arial Narrow&quot;, &quot;Source Sans Pro&quot;, sans-serif; width: auto !important; float: right; margin-left: 10px;">
 <caption>
@@ -373,6 +387,8 @@ g
 </tr>
 </tbody>
 </table>
+
+## overview picture
 
 <img
 src="https://github.com/tillrose/BRIWECS_Data_Publication/blob/main/figure/fig1.png"
