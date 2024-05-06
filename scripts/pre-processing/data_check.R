@@ -25,6 +25,8 @@ fig1_sub <- raw %>%
                         T~""),
          Nam=paste(Trait,"\n",unit)
          )
+# fig1_sub$Environment %>% unique() %>% length()
+# long$trait %>% unique() %>% length()
 # data range density -------------------------------------------------------------------------
 # raw$Treatment %>% unique()
 # range 
@@ -32,10 +34,10 @@ fig1_sub %>%
   group_by(Trait) %>% summarise(m=min(trait,na.rm = T),
                                        M=max(trait,na.rm = T))
 # density plot
-fig1 <- fig1_sub %>% 
+fig1 <- fig1_sub %>% mutate(Management=Treatment) %>% 
   ggplot() +
   aes(x = trait, 
-      y = Environment, fill = Treatment,color=Treatment) +
+      y = Environment, fill = Management,color=Management) +
   theme_classic() +
   theme(legend.position  = "bottom",
         axis.title.x = element_blank(),
@@ -74,7 +76,7 @@ fig2 <- long %>%
   geom_point( size=4, color="orange") +
   coord_flip() +
   ggtitle(sprintf("total number of observation: %s",nrow(long)))+
-  xlab("")+ylab("Number of observations")+
+  xlab("")+ylab("number of observations")+
   ggrepel::geom_text_repel(aes(label=n),
                            size=2.7,
                            hjust=0,
@@ -158,16 +160,16 @@ figdata <- long %>%
   xlab("genotype identifier (G)")
 
 
-png(filename="figure/data_point.png",
-    type="cairo",
-    units="cm",
-    width=30,
-    height=30,
-    pointsize=6,
-    res=650,# dpi,
-    family="Arial")
-figdata
-dev.off()
+# png(filename="figure/data_point.png",
+#     type="cairo",
+#     units="cm",
+#     width=30,
+#     height=30,
+#     pointsize=6,
+#     res=650,# dpi,
+#     family="Arial")
+# figdata
+# dev.off()
 
 # get some number for summary statistics -------------------------------------------------------------------------
 # # how many traits in total 
