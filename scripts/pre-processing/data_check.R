@@ -49,6 +49,8 @@ fig1 <- fig1_sub %>% mutate(Management=Treatment) %>%
     scale=1,# height
     rel_min_height=0.005# width higher when value is small
   ) +
+  scale_x_continuous(
+    labels =label_number(scale_cut = cut_short_scale()))+
   ylab("Location x Year")+
   scale_fill_viridis_d() +
   scale_color_viridis_d() +
@@ -72,6 +74,7 @@ fig1 <- fig1_sub %>% mutate(Management=Treatment) %>%
 # number of observation -------------------------------------------------------------------------
 fig2 <- long %>% 
   group_by(trait,sample.source) %>% summarise(n=n()) %>% 
+  group_by(sample.source) %>% 
   mutate(trait = forcats::fct_reorder(trait, n)) %>%
   ggplot( aes(x=trait, y=n)) +
   geom_segment( aes(xend=trait, yend=0)) +
@@ -98,7 +101,7 @@ fig2 <- long %>%
     labels =label_number(scale_cut = cut_short_scale()),
     limits=c(0,36000)
   )+
-  toolPhD::theme_phd_facet(b=10,r=10,strp.txt.siz = 10,
+  toolPhD::theme_phd_facet(b=10,r=10,strp.txt.siz = 8,
                            plot.title = element_text(size=10))
 # png(filename="figure/data_number.png",
 #     type="cairo",
@@ -128,7 +131,7 @@ cp <- cowplot::plot_grid(fig1+
                            theme_classic() +
                            theme(
                              strip.background = element_blank(),
-                             plot.title = element_text(size=6),
+                             plot.title = element_text(size=8),
                              plot.margin = margin(t=20,r=3,l=0),
                              # strip.text = element_text(size=6),
                              axis.title = element_text(size=6),
