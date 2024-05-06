@@ -10,7 +10,9 @@ raw <- read.csv2("output/BRIWECS_data_publication.csv") %>%
 long <- raw  %>% 
   tidyr::pivot_longer(BBCH59:Protein_yield,
                       names_to="trait",values_to = "Trait") %>% 
-  filter(!is.na(Trait)) 
+  filter(!is.na(Trait)) %>% 
+  left_join(unit %>% select(Trait,sample.source)%>% 
+              rename(trait=Trait),by="trait")
 
 # with(long,Trait[grepl("a-z",Trait)])
 fig1_sub <- raw %>% 
@@ -69,12 +71,18 @@ fig1 <- fig1_sub %>% mutate(Management=Treatment) %>%
 # dev.off()
 # number of observation -------------------------------------------------------------------------
 fig2 <- long %>% 
-  group_by(trait) %>% summarise(n=n()) %>% 
+  group_by(trait,sample.source) %>% summarise(n=n()) %>% 
   mutate(trait = forcats::fct_reorder(trait, n)) %>%
   ggplot( aes(x=trait, y=n)) +
   geom_segment( aes(xend=trait, yend=0)) +
   geom_point( size=4, color="orange") +
   coord_flip() +
+  ggh4x::facet_nested(sample.source~.,
+                      nest_line=T, 
+                      switch = "y",# place strip to bottom
+                      scales = "free_y",space ="free_y"
+                      # independent = "y"
+  )+
   ggtitle(sprintf("total number of observation: %s",nrow(long)))+
   xlab("")+ylab("number of observations")+
   ggrepel::geom_text_repel(aes(label=n),
@@ -90,7 +98,8 @@ fig2 <- long %>%
     labels =label_number(scale_cut = cut_short_scale()),
     limits=c(0,36000)
   )+
-  toolPhD::theme_phd_facet(b=10,r=10,plot.title = element_text(size=10))
+  toolPhD::theme_phd_facet(b=10,r=10,strp.txt.siz = 10,
+                           plot.title = element_text(size=10))
 # png(filename="figure/data_number.png",
 #     type="cairo",
 #     units="cm",
@@ -113,8 +122,8 @@ cp <- cowplot::plot_grid(fig1+
                                  strip.text = element_text(size=6),
                                  plot.margin = margin(r=0,l=0),
                                  axis.text=element_text(size=5))+
-                           guides(colour = guide_legend(nrow = 1),
-                                  fill = guide_legend(nrow = 1)),
+                           guides(colour = guide_legend(nrow = 2),
+                                  fill = guide_legend(nrow = 2)),
                          fig2+
                            theme_classic() +
                            theme(
