@@ -1,6 +1,6 @@
 rm(list=ls())
 #### setup ####
-pacman::p_load(dplyr,purrr)
+pacman::p_load(dplyr,purrr,readr)
 ##### import #####
 complete_dat <- list.files(path = "data/locations",
                            pattern="*.csv",
@@ -9,8 +9,15 @@ complete_dat <- list.files(path = "data/locations",
   suppressMessages() %>% 
   # for consistency of location and treatment naming rules
   mutate(
-    Treatment = stringr::str_replace_all(Treatment, "(D{1,2})", "IR"),# irrigation
+    Treatment = stringr::str_replace_all(Treatment, "(D{1,2})", "D"),# replace DD or D to D
+    Treatment=case_when(Location=="GGE"& 
+                          # Year%in%c(2015,2016,2018,2019)&#
+                          (!grepl("D",Treatment))~paste0(Treatment,"_IR"),# irrigation when not with D text
+                        T~Treatment),
     Treatment=case_when(Location=="DKI"~paste0(Treatment,"_RO"),# rain out shelter
+                        T~Treatment),
+    Treatment = stringr::str_replace_all(Treatment, "_(D{1,2})", ""), # replace D 
+    Treatment=case_when(!grepl("(IR|RO)$",Treatment)~paste0(Treatment,"_RF"),# the rest all replace with 
                         T~Treatment),
     Location=gsub("DKI","KIE",Location)
   )
@@ -65,7 +72,7 @@ complete_dat <- complete_dat %>%
          Biomass = Seedyield/Harvest_Index,
          Straw = Biomass*(1-Harvest_Index),
          Protein_yield=Seedyield*Crude_protein/100
-         ) %>% 
+  ) %>% 
   filter(Treatment != "LLN_WF",
          !BRISONr%in%c("BRISONr_?","BRISONr_NA"))
 
@@ -99,7 +106,7 @@ export_dat <- complete_dat %>%
                 Powdery_mildew, Leaf_rust, Septoria, DTR, Fusarium, Falling_number, Crude_protein, Sedimentation,
                 # !!! new added
                 KperSpike,Kernel,Biomass,Straw,Protein_yield
-                ) %>% 
+  ) %>% 
   mutate(across(BBCH59:Protein_yield,as.numeric)) 
 # ------------------------------------------------------------------------
 write_delim(export_dat, "output/BRIWECS_data_publication.csv", delim = ";")
