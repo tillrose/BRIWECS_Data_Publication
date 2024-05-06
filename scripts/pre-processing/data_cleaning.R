@@ -1,6 +1,6 @@
 rm(list=ls())
 #### setup ####
-pacman::p_load(dplyr,purrr,readr)
+pacman::p_load(dplyr,purrr,readr,stringr)
 ##### import #####
 complete_dat <- list.files(path = "data/locations",
                            pattern="*.csv",
@@ -17,7 +17,7 @@ complete_dat <- list.files(path = "data/locations",
     Treatment=case_when(Location=="DKI"~paste0(Treatment,"_RO"),# rain out shelter
                         T~Treatment),
     Treatment = stringr::str_replace_all(Treatment, "_(D{1,2})", ""), # replace D 
-    Treatment=case_when(!grepl("(IR|RO)$",Treatment)~paste0(Treatment,"_RF"),# the rest all replace with 
+    Treatment=case_when(!grepl("(IR|RO)$",Treatment,perl = T)~paste0(Treatment,"_RF"),# the rest all replace with 
                         T~Treatment),
     Location=gsub("DKI","KIE",Location)
   )
@@ -73,7 +73,7 @@ complete_dat <- complete_dat %>%
          Straw = Biomass*(1-Harvest_Index),
          Protein_yield=Seedyield*Crude_protein/100
   ) %>% 
-  filter(Treatment != "LLN_WF",
+  filter(Treatment != "LLN_WF_RF",
          !BRISONr%in%c("BRISONr_?","BRISONr_NA"))
 
 ## Filter Harvest Index by Standard Deviation
