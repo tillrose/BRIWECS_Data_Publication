@@ -2,7 +2,10 @@ rm(list=ls())
 pacman::p_load(purrr,dplyr,toolPhD,ggplot2,scales)
 # devtools::install_github("rensa/stickylabeller")
 unit<- xlsx::read.xlsx("metadata/Unit.xlsx",sheetIndex = 1) %>% 
-  rename(Trait=trait) %>% select(-Full.name)
+  rename(Trait=trait) %>% select(-Full.name)%>% 
+  mutate(unit=case_when(is.na(unit)~" ",
+                        grepl("\\#",unit)~gsub("\\#","Nbr.",unit),
+                        T~unit))
 raw <- read.csv2("output/BRIWECS_data_publication.csv") %>% 
   mutate(across(BBCH59:Protein_yield,as.numeric))
 
@@ -11,7 +14,7 @@ long <- raw  %>%
   tidyr::pivot_longer(BBCH59:Protein_yield,
                       names_to="trait",values_to = "Trait") %>% 
   filter(!is.na(Trait)) %>% 
-  left_join(unit %>% select(Trait,sample.source)%>% 
+  left_join(unit %>% select(Trait,sample.source,unit)%>% 
               rename(trait=Trait),by="trait")
 
 # with(long,Trait[grepl("a-z",Trait)])
@@ -26,7 +29,7 @@ fig1_sub <- raw %>%
   mutate(unit=case_when(!is.na(unit)~paste0("(",unit,")"),
                         T~""),
          Nam=paste(Trait,"\n",unit)
-         )
+  )
 # fig1_sub$Environment %>% unique() %>% length()
 # long$trait %>% unique() %>% length()
 # data range density -------------------------------------------------------------------------
@@ -34,7 +37,7 @@ fig1_sub <- raw %>%
 # range 
 fig1_sub %>% 
   group_by(Trait) %>% summarise(m=min(trait,na.rm = T),
-                                       M=max(trait,na.rm = T))
+                                M=max(trait,na.rm = T))
 # density plot
 fig1 <- fig1_sub %>% mutate(Management=Treatment) %>% 
   ggplot() +
@@ -159,17 +162,17 @@ figdata <- long %>%
          trait=gsub("\\_"," ",trait)
   )%>%   
   ggplot( aes(x=BRISONr, y=Env)) +
-  geom_point(size=0.05,shape=1,stroke=.3,color="orange")+
-  facet_wrap(~trait,
-             labeller = stickylabeller::label_glue('({.L}) {trait}'),
+  geom_point(size=0.3,shape=1,stroke=.1,color="orange")+
+  facet_wrap(~trait+unit,
+             labeller = stickylabeller::label_glue('({.L}) {trait}\n{unit}'),
              ncol=8)+
   theme_test()+
   theme(axis.text.x= element_text(size=8),
-        axis.text.y= element_text(size=3,angle = 0,hjust=1),
-        strip.text = element_text(size=10),
+        axis.text.y= element_text(size=2,angle = 0,hjust=1),
+        strip.text = element_text(size=6),
         strip.background = element_blank())+
-  ylab("combination of ExM")+
-  xlab("genotype identifier (G)")
+  ylab("combination of LxYxM")+
+  xlab("genotypes (G)")
 
 
 png(filename="figure/data_point.png",
@@ -177,10 +180,10 @@ png(filename="figure/data_point.png",
     units="cm",
     width=30,
     height=30,
-    pointsize=6,
+    pointsize=5,
     res=650,# dpi,
     family="Arial")
-figdata
+figdata %>% print()
 dev.off()
 
 # get some number for summary statistics -------------------------------------------------------------------------
