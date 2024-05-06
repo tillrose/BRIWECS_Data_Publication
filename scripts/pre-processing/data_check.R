@@ -160,16 +160,16 @@ figdata <- long %>%
   xlab("genotype identifier (G)")
 
 
-# png(filename="figure/data_point.png",
-#     type="cairo",
-#     units="cm",
-#     width=30,
-#     height=30,
-#     pointsize=6,
-#     res=650,# dpi,
-#     family="Arial")
-# figdata
-# dev.off()
+png(filename="figure/data_point.png",
+    type="cairo",
+    units="cm",
+    width=30,
+    height=30,
+    pointsize=6,
+    res=650,# dpi,
+    family="Arial")
+figdata
+dev.off()
 
 # get some number for summary statistics -------------------------------------------------------------------------
 # # how many traits in total 
