@@ -1,7 +1,10 @@
 rm(list=ls())
 pacman::p_load(purrr,dplyr,toolPhD,ggplot2,scales)
 # devtools::install_github("rensa/stickylabeller")
-unit<- xlsx::read.xlsx("metadata/Unit.xlsx",sheetIndex = 1)
+unit<- xlsx::read.xlsx("metadata/Unit.xlsx",sheetIndex = 1) %>% 
+  mutate(unit=case_when(is.na(unit)~" ",
+                        grepl("\\#",unit)~gsub("\\#","Nbr.",unit),
+                        T~unit))
 raw <- read.csv2("output/BRIWECS_data_publication.csv") %>% 
   mutate(across(BBCH59:Protein_yield,as.numeric))
 
@@ -24,13 +27,13 @@ fig1_sub <- raw %>%
   mutate(unit=case_when(!is.na(unit)~paste0("(",unit,")"),
                         T~""),
          Nam=paste(Trait,"\n",unit)
-         )
+  )
 # data range density -------------------------------------------------------------------------
 # raw$Treatment %>% unique()
 # range 
 fig1_sub %>% 
   group_by(Trait) %>% summarise(m=min(trait,na.rm = T),
-                                       M=max(trait,na.rm = T))
+                                M=max(trait,na.rm = T))
 # density plot
 fig1 <- fig1_sub %>% rename(Management=Treatment) %>% 
   ggplot() +
@@ -76,8 +79,14 @@ fig2 <- long %>%
   geom_segment( aes(xend=trait, yend=0)) +
   geom_point( size=4, color="orange") +
   coord_flip() +
+  ggh4x::facet_nested(sample.source~.,
+                      nest_line=T, 
+                      switch = "y",# place strip to bottom
+                      scales = "free_y",space ="free_y"
+                      # independent = "y"
+  )+
   ggtitle(sprintf("total number of observation: %s",nrow(long)))+
-  xlab("")+ylab("Number of observations")+
+  xlab("")+ylab("number of observations")+
   ggrepel::geom_text_repel(aes(label=n),
                            size=2.7,
                            hjust=0,
@@ -91,7 +100,8 @@ fig2 <- long %>%
     labels =label_number(scale_cut = cut_short_scale()),
     limits=c(0,36000)
   )+
-  toolPhD::theme_phd_facet(b=10,r=10,plot.title = element_text(size=10))
+  toolPhD::theme_phd_facet(b=10,r=10,strp.txt.siz = 8,
+                           plot.title = element_text(size=10))
 # png(filename="figure/data_number.png",
 #     type="cairo",
 #     units="cm",
@@ -114,13 +124,13 @@ cp <- cowplot::plot_grid(fig1+
                                  strip.text = element_text(size=6),
                                  plot.margin = margin(r=0,l=0),
                                  axis.text=element_text(size=5))+
-                           guides(colour = guide_legend(nrow = 1),
-                                  fill = guide_legend(nrow = 1)),
+                           guides(colour = guide_legend(nrow = 2),
+                                  fill = guide_legend(nrow = 2)),
                          fig2+
                            theme_classic() +
                            theme(
                              strip.background = element_blank(),
-                             plot.title = element_text(size=6),
+                             plot.title = element_text(size=8),
                              plot.margin = margin(t=20,r=3,l=0),
                              # strip.text = element_text(size=6),
                              axis.title = element_text(size=6),
@@ -148,17 +158,17 @@ figdata <- long %>%
          trait=gsub("\\_"," ",trait)
   )%>%   
   ggplot( aes(x=BRISONr, y=Env)) +
-  geom_point(size=0.05,shape=1,stroke=.3,color="orange")+
-  facet_wrap(~trait,
-             labeller = stickylabeller::label_glue('({.L}) {trait}'),
+  geom_point(size=0.3,shape=1,stroke=.1,color="orange")+
+  facet_wrap(~trait+unit,
+             labeller = stickylabeller::label_glue('({.L}) {trait}\n{unit}'),
              ncol=8)+
   theme_test()+
   theme(axis.text.x= element_text(size=8),
-        axis.text.y= element_text(size=3,angle = 0,hjust=1),
-        strip.text = element_text(size=10),
+        axis.text.y= element_text(size=2,angle = 0,hjust=1),
+        strip.text = element_text(size=6),
         strip.background = element_blank())+
-  ylab("combination of ExM")+
-  xlab("genotype identifier (G)")
+  ylab("combination of LxYxM")+
+  xlab("genotypes (G)")
 
 
 png(filename="figure/data_point.png",
@@ -166,7 +176,7 @@ png(filename="figure/data_point.png",
     units="cm",
     width=30,
     height=30,
-    pointsize=6,
+    pointsize=5,
     res=650,# dpi,
     family="Arial")
 figdata
