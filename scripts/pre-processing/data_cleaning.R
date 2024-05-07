@@ -1,6 +1,6 @@
 rm(list=ls())
 #### setup ####
-pacman::p_load(dplyr,purrr)
+pacman::p_load(dplyr,purrr, readr, stringr)
 ##### import #####
 complete_dat <- list.files(path = "data/locations",
                            pattern="*.csv",
@@ -75,8 +75,8 @@ complete_dat <- complete_dat %>%
   mutate(HI_sd = sd(Harvest_Index, na.rm = TRUE),
          HI_mean = mean(Harvest_Index, na.rm = TRUE)) %>% 
   ungroup() %>% 
-  mutate(Harvest_Index = ifelse(Harvest_Index < HI_mean - 2*HI_sd, NA, Harvest_Index),
-         Harvest_Index = ifelse(Harvest_Index > HI_mean + 2*HI_sd, NA, Harvest_Index))
+  mutate(Harvest_Index = ifelse(Harvest_Index < HI_mean - 4*HI_sd, NA, Harvest_Index),
+         Harvest_Index = ifelse(Harvest_Index > HI_mean + 4*HI_sd, NA, Harvest_Index))
 
 
 ## Filter Spike Number by Standard Deviation
@@ -85,8 +85,8 @@ complete_dat <- complete_dat %>%
   mutate(Spike_number_sd = sd(Spike_number, na.rm = TRUE),
          Spike_number_mean = mean(Spike_number, na.rm = TRUE)) %>% 
   ungroup() %>% 
-  mutate(Spike_number = ifelse(Spike_number < Spike_number_mean - 2*Spike_number_sd, NA, Spike_number),
-         Spike_number = ifelse(Spike_number > Spike_number_mean + 2*Spike_number_sd, NA, Spike_number))
+  mutate(Spike_number = ifelse(Spike_number < Spike_number_mean - 4*Spike_number_sd, NA, Spike_number),
+         Spike_number = ifelse(Spike_number > Spike_number_mean + 4*Spike_number_sd, NA, Spike_number))
 
 complete_dat <- complete_dat %>% 
   mutate_all(~ifelse(is.nan(.), NA, .))
