@@ -1,6 +1,6 @@
 rm(list=ls())
 #### setup ####
-pacman::p_load(dplyr,purrr, readr, stringr)
+pacman::p_load(dplyr,purrr,readr,stringr)
 ##### import #####
 complete_dat <- list.files(path = "data/locations",
                            pattern="*.csv",
