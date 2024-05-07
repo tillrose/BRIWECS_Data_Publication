@@ -1,8 +1,7 @@
 rm(list=ls())
 pacman::p_load(purrr,dplyr,toolPhD,ggplot2,scales)
 # devtools::install_github("rensa/stickylabeller")
-unit<- xlsx::read.xlsx("metadata/Unit.xlsx",sheetIndex = 1) %>% 
-  rename(Trait=trait) %>% select(-Full.name)
+unit<- xlsx::read.xlsx("metadata/Unit.xlsx",sheetIndex = 1)
 raw <- read.csv2("output/BRIWECS_data_publication.csv") %>% 
   mutate(across(BBCH59:Protein_yield,as.numeric))
 
@@ -10,17 +9,18 @@ raw <- read.csv2("output/BRIWECS_data_publication.csv") %>%
 long <- raw  %>% 
   tidyr::pivot_longer(BBCH59:Protein_yield,
                       names_to="trait",values_to = "Trait") %>% 
-  filter(!is.na(Trait)) 
+  filter(!is.na(Trait)) %>% left_join(unit,"trait")
 
 # with(long,Trait[grepl("a-z",Trait)])
 fig1_sub <- raw %>% 
   mutate(Environment = paste(Location, Year, sep = "_"),
-         Treatment = forcats::fct_relevel(Treatment, "HN_WF", "HN_WF_IR","HN_WF_RO","HN_NF", "LN_WF", "LN_NF"),
+         Treatment = forcats::fct_relevel(Treatment, "HN_WF","HN_WF_RO","HN_WF_IR","LN_NF","HN_NF","LN_WF"),
          Environment = forcats::fct_expand(Environment, "RHH_2018", "RHH_2019"),
          Environment = forcats::fct_expand(Environment, "GGE_2019", after = 4)) %>%
-  select(Environment,Treatment,Seedyield,Harvest_Index,Kernel,Straw) %>% 
+  select(Environment,Treatment,Seedyield,Harvest_Index_bio,Kernel,Straw) %>% 
   tidyr::pivot_longer(Seedyield:Straw,values_to = "trait",names_to="Trait")%>%
-  left_join(unit,by="Trait") %>% 
+  left_join(unit %>% 
+              rename(Trait=trait) %>% select(-Full.name),by="Trait") %>% 
   mutate(unit=case_when(!is.na(unit)~paste0("(",unit,")"),
                         T~""),
          Nam=paste(Trait,"\n",unit)
@@ -32,22 +32,24 @@ fig1_sub %>%
   group_by(Trait) %>% summarise(m=min(trait,na.rm = T),
                                        M=max(trait,na.rm = T))
 # density plot
-fig1 <- fig1_sub %>% 
+fig1 <- fig1_sub %>% rename(Management=Treatment) %>% 
   ggplot() +
   aes(x = trait, 
-      y = Environment, fill = Treatment,color=Treatment) +
-  theme_classic() +
+      y = Environment, fill = Management,color=Management) +
+  # ggridges::theme_ridges()+
+  theme_classic()+
   theme(legend.position  = "bottom",
         axis.title.x = element_blank(),
         strip.background = element_blank()) +
   ggridges::geom_density_ridges(
-    alpha = 0.7,
+    alpha = 0.5,size=.3,
+    # linewidth=.2,
     scale=1,# height
     rel_min_height=0.005# width higher when value is small
   ) +
   ylab("Location x Year")+
-  scale_fill_viridis_d() +
-  scale_color_viridis_d() +
+  nord::scale_color_nord('aurora')+
+  nord::scale_fill_nord('aurora')+
   scale_y_discrete(drop=FALSE) +
   ggh4x::facet_nested(~Nam,nest_line=T, 
                       switch = "x",# place strip to bottom
@@ -67,7 +69,8 @@ fig1 <- fig1_sub %>%
 # dev.off()
 # number of observation -------------------------------------------------------------------------
 fig2 <- long %>% 
-  group_by(trait) %>% summarise(n=n()) %>% 
+  group_by(trait,sample.source) %>% summarise(n=n(),.groups = "drop") %>% 
+  group_by(sample.source) %>% 
   mutate(trait = forcats::fct_reorder(trait, n)) %>%
   ggplot( aes(x=trait, y=n)) +
   geom_segment( aes(xend=trait, yend=0)) +
