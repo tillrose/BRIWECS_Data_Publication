@@ -101,5 +101,21 @@ export_dat <- complete_dat %>%
                 KperSpike,Kernel,Biomass,Straw,Protein_yield
                 ) %>% 
   mutate(across(BBCH59:Protein_yield,as.numeric)) 
-# ------------------------------------------------------------------------
+# consistent colnames ------------------------------------------------------------------------
+# unit <- xlsx::read.xlsx("metadata/Unit.xlsx",sheetIndex = 1) %>%
+#   mutate(
+#     trait_old=trait,
+#     trait=case_when(!grepl("bio",trait_old,perl=T)&
+#                       sample.source=="biomass 50 cm cut"~paste0(trait_old,"_bio"),
+#                     T~trait_old) %>%
+#       gsub("_plot","",.))
+# xlsx::write.xlsx(unit,"metadata/Unit.xlsx",row.names = F)
+
+col_rename <- xlsx::read.xlsx("metadata/Unit.xlsx",sheetIndex = 1) %>%
+ select(trait,trait_old) %>% 
+  filter(!trait==trait_old)
+# names(raw)
+names(export_dat)[match(col_rename$trait_old,names(export_dat))] <- col_rename$trait
+
+# -------------------------------------------------------------------------
 write_delim(export_dat, "output/BRIWECS_data_publication.csv", delim = ";")
