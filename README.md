@@ -241,7 +241,7 @@ Crude_protein
 </tr>
 <tr>
 <td style="text-align:left;">
-leaf tan spot caused by Drechslera tritici-repentis
+leaf tan spot
 </td>
 <td style="text-align:left;">
 whole plot
@@ -309,7 +309,7 @@ Nbr x 10^5/ha
 </tr>
 <tr>
 <td style="text-align:left;">
-leaf rust caused by Puccinia triticina eriks.
+leaf rust
 </td>
 <td style="text-align:left;">
 whole plot
@@ -394,7 +394,7 @@ dt/ha
 </tr>
 <tr>
 <td style="text-align:left;">
-leaf spot caused by Septoria tritici
+leaf spot
 </td>
 <td style="text-align:left;">
 whole plot
@@ -428,7 +428,7 @@ dt/ha
 </tr>
 <tr>
 <td style="text-align:left;">
-stripe rust caused by Puccinia striiformis
+stripe rust
 </td>
 <td style="text-align:left;">
 whole plot
@@ -465,10 +465,24 @@ g
 
 ## overview picture
 
+<figure>
 <img
 src="https://github.com/tillrose/BRIWECS_Data_Publication/blob/main/figure/fig1.png"
-data-fig-align="center" />
+data-fig-align="center"
+alt="Fig1. An overview of MET data descriptor of winter wheat containing 24 traits collected across six locations in Germany (GGE, HAN, KAL, KIE, QLB, RHH) with nine managements (HN_WF_RO, LN_NF_IR, HN_NF_IR, HN_WF_IR, HN_WF_RF, LN_WF_IR, HN_NF_RF, LN_NF_RF and LN_WF_RF) during six years (2015-2020)." />
+<figcaption aria-hidden="true">Fig1. An overview of MET data descriptor
+of winter wheat containing 24 traits collected across six locations in
+Germany (GGE, HAN, KAL, KIE, QLB, RHH) with nine managements (HN_WF_RO,
+LN_NF_IR, HN_NF_IR, HN_WF_IR, HN_WF_RF, LN_WF_IR, HN_NF_RF, LN_NF_RF and
+LN_WF_RF) during six years (2015-2020).</figcaption>
+</figure>
 
+<figure>
 <img
 src="https://github.com/tillrose/BRIWECS_Data_Publication/blob/main/figure/data_point.png"
-data-fig-align="center" />
+data-fig-align="center"
+alt="Fig2.Scatter plot of 29 combinations of location by year by management (LxYxM) versus 228 genotypes for 24 traits." />
+<figcaption aria-hidden="true">Fig2.Scatter plot of 29 combinations of
+location by year by management (LxYxM) versus 228 genotypes for 24
+traits.</figcaption>
+</figure>
