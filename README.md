@@ -1,15 +1,9 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
-# BRIWECS_Data_Publication
-
-## A collaborative work on a data publication for the seasons 2015–2019 of the BRIWECS consortium
-
 [![Website -
 pkgdown](https://img.shields.io/badge/data-visulaization-blue)](https://tillrose.github.io/BRIWECS_Data_Publication/data_overview.html)
 [![Project-website](https://img.shields.io/badge/Project-website-darkgreen)](https://www.igps.uni-hannover.de/de/forschung/forschungsprojekte/detailansicht/projects/forschungsverbund-briwecs)
-
-<!-- [![License: GPL-3](https://img.shields.io/badge/License-GPL3-orange)](https://www.r-project.org/Licenses/) -->
 
 <figure>
 <img
@@ -19,6 +13,10 @@ alt="Breeding Innovations in Wheat for Efficient Cropping Systems (BRIWECS)." />
 <figcaption aria-hidden="true">Breeding Innovations in Wheat for
 Efficient Cropping Systems (BRIWECS).</figcaption>
 </figure>
+
+## A collaborative work on a data publication for the seasons 2015–2019 of the BRIWECS consortium
+
+<!-- [![License: GPL-3](https://img.shields.io/badge/License-GPL3-orange)](https://www.r-project.org/Licenses/) -->
 
 ## insturctution
 
