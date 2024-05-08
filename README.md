@@ -6,14 +6,19 @@
 ## A collaborative work on a data publication for the seasons 2015–2019 of the BRIWECS consortium
 
 [![Website -
-pkgdown](https://img.shields.io/badge/data-overview-blue)](https://tillrose.github.io/BRIWECS_Data_Publication/data_overview.html)
+pkgdown](https://img.shields.io/badge/data-visulaization-blue)](https://tillrose.github.io/BRIWECS_Data_Publication/data_overview.html)
 [![Project-website](https://img.shields.io/badge/Project-website-darkgreen)](https://www.igps.uni-hannover.de/de/forschung/forschungsprojekte/detailansicht/projects/forschungsverbund-briwecs)
 
 <!-- [![License: GPL-3](https://img.shields.io/badge/License-GPL3-orange)](https://www.r-project.org/Licenses/) -->
 
+<figure>
 <img
 src="https://github.com/tillrose/BRIWECS_Data_Publication/blob/main/figure/BRIWECS_logo.png"
-data-fig-align="right" />
+data-fig-align="right"
+alt="Breeding Innovations in Wheat for Efficient Cropping Systems (BRIWECS)." />
+<figcaption aria-hidden="true">Breeding Innovations in Wheat for
+Efficient Cropping Systems (BRIWECS).</figcaption>
+</figure>
 
 ## insturctution
 
@@ -31,7 +36,7 @@ data-fig-align="right" />
 
 <table class=" lightable-classic-2" style="font-family: &quot;Arial Narrow&quot;, &quot;Source Sans Pro&quot;, sans-serif; width: auto !important; float: right; margin-left: 10px;">
 <caption>
-Table 1. trait names, sources, ranges and units
+Table 1. Trait names, sources, ranges and units
 </caption>
 <thead>
 <tr>
@@ -463,7 +468,7 @@ g
 </tbody>
 </table>
 
-## overview picture
+## overview visualizations
 
 <figure>
 <img
