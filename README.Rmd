@@ -27,7 +27,7 @@ unit<- xlsx::read.xlsx("./metadata/Unit.xlsx",sheetIndex = 1) %>%
   mutate(unit=gsub('\\#','Nbr ',unit),
          unit=gsub('\\*',' x ',unit),
          unit=ifelse(is.na(unit),' ',unit)
-         )
+         ) %>% select(-trait_old)
 
 raw <- read.csv2("./output/BRIWECS_data_publication.csv") %>% 
   mutate(across(BBCH59:Protein_yield,as.numeric))
@@ -37,20 +37,24 @@ long <- raw  %>%
   filter(!is.na(Trait)) 
 tbl <- long %>%
 left_join(unit ,by='trait')%>%
-  view_group(.,"trait",c('Full.name',"Trait","unit")) 
+  view_group(.,"Full.name",c('trait',"sample.source","Trait","unit")) %>% 
+  arrange(sample.source,trait) %>% 
+  rename("trait full name"="Full.name","trait name in\ndata descriptor"="trait",
+         "sample source"="sample.source","trait range"="Trait")
+
 ```
 
-![](https://github.com/tillrose/BRIWECS_Data_Publication/blob/main/figure/BRIWECS_logo.png){fig-align="right"} 
+![](https://github.com/tillrose/BRIWECS_Data_Publication/blob/main/figure/BRIWECS_logo.png){fig-align="right"}
 
-## insturctution 
-1. open `BRIWECS_Data_Publication.RProject` 
-2. open `scripts/run.R`
-3. run all `Ctrl + Alt + R`
-![](https://github.com/tillrose/BRIWECS_Data_Publication/blob/main/figure/Instruction.PNG){fig-align="center"}
+## insturctution
+
+1.  open `BRIWECS_Data_Publication.RProject`
+2.  open `scripts/run.R`
+3.  run all `Ctrl + Alt + R` ![](https://github.com/tillrose/BRIWECS_Data_Publication/blob/main/figure/Instruction.PNG){fig-align="center"}
 
 ## directory tree
 
-```{r,echo=F,fig.width=8, fig.height=10,warning=F}
+```{r,echo=F,fig.width=10, fig.height=10,warning=F}
 dirs <- list.dirs(path = ".", full.names = TRUE, recursive = TRUE) 
 
 r.target <- paste(c(".git",".Rproj.user",".quarto","gfm","docs"),
@@ -72,7 +76,7 @@ x <- lapply(strsplit(dirst, "/"),
   plyr::rbind.fill(.) %>%
   filter(!is.na(V2)) %>% 
   group_by(V1,V2,V3) %>%
-  reframe(V4 = case_when(n() > 5~sprintf("%s files",n()-1),
+  reframe(V4 = case_when(n() > 5&(!V3=="pre-processing")~sprintf("%s files",n()-1),
                            T~V4)) %>% 
   mutate(V2=factor(V2,levels=c("data","metadata","scripts","output","figure"))) %>% 
   arrange(desc(V2)) %>% suppressWarnings()
@@ -100,15 +104,14 @@ do.call('rbind',
 
 ```
 
-## unit table
+## trait table
 
 ```{r,echo=F}
 
 
-names(tbl)[1:3]<-c('trait name','full name','trait range') 
 
 tbl%>%
-  kbl(caption = "Table1. trait name, range and unit") %>%
+  kbl(caption = "Table 1. trait names, sources, ranges and units") %>%
   kable_classic_2(full_width = F, position = "float_right")
 
 
