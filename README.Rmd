@@ -26,7 +26,8 @@ options(dplyr.summarise.inform = FALSE)
 unit<- xlsx::read.xlsx("./metadata/Unit.xlsx",sheetIndex = 1) %>%
   mutate(unit=gsub('\\#','Nbr ',unit),
          unit=gsub('\\*',' x ',unit),
-         unit=ifelse(is.na(unit),' ',unit)
+         unit=ifelse(is.na(unit),' ',unit),
+         unit=gsub("caused.*","",unit,perl=T)
          ) %>% select(-trait_old)
 
 raw <- read.csv2("./output/BRIWECS_data_publication.csv") %>% 
@@ -37,10 +38,11 @@ long <- raw  %>%
   filter(!is.na(Trait)) 
 tbl <- long %>%
 left_join(unit ,by='trait')%>%
-  view_group(.,"Full.name",c('trait',"sample.source","Trait","unit")) %>% 
+  view_group(.,"trait",c('Full.name',"sample.source","Trait","unit")) %>% 
   arrange(sample.source,trait) %>% 
+  relocate(Full.name,sample.source) %>% 
   rename("trait full name"="Full.name","trait name in\ndata descriptor"="trait",
-         "sample source"="sample.source","trait range"="Trait")
+         "trait source"="sample.source","trait range"="Trait") 
 
 ```
 

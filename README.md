@@ -39,10 +39,10 @@ Table 1. trait names, sources, ranges and units
 trait full name
 </th>
 <th style="text-align:left;">
-trait name in data descriptor
+trait source
 </th>
 <th style="text-align:left;">
-sample source
+trait name in data descriptor
 </th>
 <th style="text-align:left;">
 trait range
@@ -55,13 +55,30 @@ unit
 <tbody>
 <tr>
 <td style="text-align:left;">
-harvest index
-</td>
-<td style="text-align:left;">
-Harvest_Index_bio
+above-ground dry biomass
 </td>
 <td style="text-align:left;">
 biomass 50 cm cut
+</td>
+<td style="text-align:left;">
+Biomass_bio
+</td>
+<td style="text-align:left;">
+0~3495
+</td>
+<td style="text-align:left;">
+g/m2
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+harvest index
+</td>
+<td style="text-align:left;">
+biomass 50 cm cut
+</td>
+<td style="text-align:left;">
+Harvest_Index_bio
 </td>
 <td style="text-align:left;">
 0.1~0.8
@@ -74,10 +91,10 @@ biomass 50 cm cut
 kernels per spike
 </td>
 <td style="text-align:left;">
-KperSpike_bio
+biomass 50 cm cut
 </td>
 <td style="text-align:left;">
-biomass 50 cm cut
+KperSpike_bio
 </td>
 <td style="text-align:left;">
 3.6~146.7
@@ -91,10 +108,10 @@ Nbr
 plant height
 </td>
 <td style="text-align:left;">
-Plantheight_bio
+biomass 50 cm cut
 </td>
 <td style="text-align:left;">
-biomass 50 cm cut
+Plantheight_bio
 </td>
 <td style="text-align:left;">
 40~145
@@ -105,13 +122,30 @@ cm
 </tr>
 <tr>
 <td style="text-align:left;">
-spike number
-</td>
-<td style="text-align:left;">
-Spike_number_bio
+grain yield
 </td>
 <td style="text-align:left;">
 biomass 50 cm cut
+</td>
+<td style="text-align:left;">
+Seedyield_bio
+</td>
+<td style="text-align:left;">
+28.3~1815
+</td>
+<td style="text-align:left;">
+g/m2
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+spike number
+</td>
+<td style="text-align:left;">
+biomass 50 cm cut
+</td>
+<td style="text-align:left;">
+Spike_number_bio
 </td>
 <td style="text-align:left;">
 48~1390
@@ -122,19 +156,19 @@ Nbr /m2
 </tr>
 <tr>
 <td style="text-align:left;">
-above-ground dry biomass
+thousand kernel weight
 </td>
 <td style="text-align:left;">
-Biomass_bio,Biomass
+biomass 50 cm cut
 </td>
 <td style="text-align:left;">
-biomass 50 cm cut,whole plot
+TKW_bio
 </td>
 <td style="text-align:left;">
-0~3495
+4.7~77.8
 </td>
 <td style="text-align:left;">
-g/m2,dt/ha
+g
 </td>
 </tr>
 <tr>
@@ -142,10 +176,10 @@ g/m2,dt/ha
 day when 75% of the ears are visible
 </td>
 <td style="text-align:left;">
-BBCH59
+whole plot
 </td>
 <td style="text-align:left;">
-whole plot
+BBCH59
 </td>
 <td style="text-align:left;">
 123~181
@@ -159,10 +193,10 @@ days of year
 day when 75% hard dough
 </td>
 <td style="text-align:left;">
-BBCH87
+whole plot
 </td>
 <td style="text-align:left;">
-whole plot
+BBCH87
 </td>
 <td style="text-align:left;">
 175~213
@@ -173,13 +207,30 @@ days of year
 </tr>
 <tr>
 <td style="text-align:left;">
-crude protein percentage per grain dry mass
-</td>
-<td style="text-align:left;">
-Crude_protein
+above-ground dry biomass
 </td>
 <td style="text-align:left;">
 whole plot
+</td>
+<td style="text-align:left;">
+Biomass
+</td>
+<td style="text-align:left;">
+14.2~856
+</td>
+<td style="text-align:left;">
+dt/ha
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+crude protein percentage per grain dry mass
+</td>
+<td style="text-align:left;">
+whole plot
+</td>
+<td style="text-align:left;">
+Crude_protein
 </td>
 <td style="text-align:left;">
 6.2~21.3
@@ -193,10 +244,10 @@ whole plot
 leaf tan spot caused by Drechslera tritici-repentis
 </td>
 <td style="text-align:left;">
-DTR
+whole plot
 </td>
 <td style="text-align:left;">
-whole plot
+DTR
 </td>
 <td style="text-align:left;">
 0~100
@@ -210,10 +261,10 @@ whole plot
 falling number
 </td>
 <td style="text-align:left;">
-Falling_number
+whole plot
 </td>
 <td style="text-align:left;">
-whole plot
+Falling_number
 </td>
 <td style="text-align:left;">
 60~700
@@ -227,10 +278,10 @@ s
 fusarium head blight
 </td>
 <td style="text-align:left;">
-Fusarium
+whole plot
 </td>
 <td style="text-align:left;">
-whole plot
+Fusarium
 </td>
 <td style="text-align:left;">
 0~27
@@ -244,10 +295,10 @@ whole plot
 number of kernels per unit area
 </td>
 <td style="text-align:left;">
-Kernel
+whole plot
 </td>
 <td style="text-align:left;">
-whole plot
+Kernel
 </td>
 <td style="text-align:left;">
 19.2~5851.5
@@ -261,10 +312,10 @@ Nbr x 10^5/ha
 leaf rust caused by Puccinia triticina eriks.
 </td>
 <td style="text-align:left;">
-Leaf_rust
+whole plot
 </td>
 <td style="text-align:left;">
-whole plot
+Leaf_rust
 </td>
 <td style="text-align:left;">
 0~90
@@ -278,10 +329,10 @@ whole plot
 leaf powdery mildew
 </td>
 <td style="text-align:left;">
-Powdery_mildew
+whole plot
 </td>
 <td style="text-align:left;">
-whole plot
+Powdery_mildew
 </td>
 <td style="text-align:left;">
 0~100
@@ -295,10 +346,10 @@ whole plot
 grain protein yield
 </td>
 <td style="text-align:left;">
-Protein_yield
+whole plot
 </td>
 <td style="text-align:left;">
-whole plot
+Protein_yield
 </td>
 <td style="text-align:left;">
 0~22.2
@@ -312,10 +363,10 @@ dt/ha
 sedimentation
 </td>
 <td style="text-align:left;">
-Sedimentation
+whole plot
 </td>
 <td style="text-align:left;">
-whole plot
+Sedimentation
 </td>
 <td style="text-align:left;">
 2.1~95.4
@@ -326,13 +377,30 @@ ml
 </tr>
 <tr>
 <td style="text-align:left;">
-leaf spot caused by Septoria tritici
-</td>
-<td style="text-align:left;">
-Septoria
+grain yield
 </td>
 <td style="text-align:left;">
 whole plot
+</td>
+<td style="text-align:left;">
+Seedyield
+</td>
+<td style="text-align:left;">
+0~141.6
+</td>
+<td style="text-align:left;">
+dt/ha
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+leaf spot caused by Septoria tritici
+</td>
+<td style="text-align:left;">
+whole plot
+</td>
+<td style="text-align:left;">
+Septoria
 </td>
 <td style="text-align:left;">
 0~80
@@ -346,10 +414,10 @@ whole plot
 above ground biomass substracted by grain yield
 </td>
 <td style="text-align:left;">
-Straw
+whole plot
 </td>
 <td style="text-align:left;">
-whole plot
+Straw
 </td>
 <td style="text-align:left;">
 8.9~729.7
@@ -363,10 +431,10 @@ dt/ha
 stripe rust caused by Puccinia striiformis
 </td>
 <td style="text-align:left;">
-Stripe_rust
+whole plot
 </td>
 <td style="text-align:left;">
-whole plot
+Stripe_rust
 </td>
 <td style="text-align:left;">
 0~100
@@ -377,33 +445,16 @@ whole plot
 </tr>
 <tr>
 <td style="text-align:left;">
-grain yield
-</td>
-<td style="text-align:left;">
-Seedyield,Seedyield_bio
-</td>
-<td style="text-align:left;">
-whole plot,biomass 50 cm cut
-</td>
-<td style="text-align:left;">
-0~1815
-</td>
-<td style="text-align:left;">
-dt/ha ,g/m2
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
 thousand kernel weight
 </td>
 <td style="text-align:left;">
-TKW,TKW_bio
+whole plot
 </td>
 <td style="text-align:left;">
-whole plot,biomass 50 cm cut
+TKW
 </td>
 <td style="text-align:left;">
-2.6~77.8
+2.6~69.5
 </td>
 <td style="text-align:left;">
 g
