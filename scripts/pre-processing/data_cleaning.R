@@ -1,6 +1,8 @@
 rm(list=ls())
 #### setup ####
 pacman::p_load(dplyr,purrr,readr,stringr)
+source("scripts/pre-processing/functions.R")
+
 ##### import #####
 complete_dat <- list.files(path = "data/locations",
                            pattern="*.csv",
@@ -8,12 +10,7 @@ complete_dat <- list.files(path = "data/locations",
   map_df(~read_csv2(., col_types = cols(.default = "c")))%>% 
   suppressMessages() %>% 
   # for consistency of location and treatment naming rules
-  mutate(
-    Treatment = stringr::str_replace_all(Treatment, "(D{1,2})", "IR"),# irrigation
-    Treatment=case_when(Location=="DKI"~paste0(Treatment,"_RO"),# rain out shelter
-                        T~Treatment),
-    Location=gsub("DKI","KIE",Location)
-  )
+  treatment_location_name_correction()
 ##### tidy and filter #####
 complete_dat <- complete_dat %>% 
   dplyr::select(-ReifeHoehe,-Kernel_number_bio , -Sorte, -`StrawYield_dt/ha`, -Subblock, -Subtrial) %>% 
@@ -65,7 +62,7 @@ complete_dat <- complete_dat %>%
          Biomass = Seedyield/Harvest_Index,
          Straw = Biomass*(1-Harvest_Index),
          Protein_yield=Seedyield*Crude_protein/100
-         ) %>% 
+  ) %>% 
   filter(Treatment != "LLN_WF",
          !BRISONr%in%c("BRISONr_?","BRISONr_NA"))
 
@@ -99,7 +96,7 @@ export_dat <- complete_dat %>%
                 Powdery_mildew, Leaf_rust, Septoria, DTR, Fusarium, Falling_number, Crude_protein, Sedimentation,
                 # !!! new added
                 KperSpike,Kernel,Biomass,Straw,Protein_yield
-                ) %>% 
+  ) %>% 
   mutate(across(BBCH59:Protein_yield,as.numeric)) 
 # consistent colnames ------------------------------------------------------------------------
 # unit <- xlsx::read.xlsx("metadata/Unit.xlsx",sheetIndex = 1) %>%
@@ -112,7 +109,7 @@ export_dat <- complete_dat %>%
 # xlsx::write.xlsx(unit,"metadata/Unit.xlsx",row.names = F)
 
 col_rename <- xlsx::read.xlsx("metadata/Unit.xlsx",sheetIndex = 1) %>%
- select(trait,trait_old) %>% 
+  select(trait,trait_old) %>% 
   filter(!trait==trait_old)
 # names(raw)
 names(export_dat)[match(col_rename$trait_old,names(export_dat))] <- col_rename$trait
