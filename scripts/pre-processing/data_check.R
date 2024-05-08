@@ -16,10 +16,7 @@ long <- raw  %>%
 
 # with(long,Trait[grepl("a-z",Trait)])
 fig1_sub <- raw %>% 
-  mutate(Environment = paste(Location, Year, sep = "_"),
-         Treatment = forcats::fct_relevel(Treatment, "HN_WF","HN_WF_RO","HN_WF_IR","LN_NF","HN_NF","LN_WF"),
-         Environment = forcats::fct_expand(Environment, "RHH_2018", "RHH_2019"),
-         Environment = forcats::fct_expand(Environment, "GGE_2019", after = 4)) %>%
+  mutate(Environment = paste(Location, Year, sep = "_")) %>%
   select(Environment,Treatment,Seedyield,Harvest_Index_bio,Kernel,Straw) %>% 
   tidyr::pivot_longer(Seedyield:Straw,values_to = "trait",names_to="Trait")%>%
   left_join(unit %>% 
