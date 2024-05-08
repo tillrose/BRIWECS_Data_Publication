@@ -112,7 +112,7 @@ db <- soil %>%process_data() %>%
   mutate(across(Clay:Sand,as.numeric)) %>% 
   na.omit()
 dbm <- db %>% group_by(Location) %>% summarise(across(Clay:Sand,mean))
-fig2 <- suppressMessages(ggtern(data = USDA, 
+fig2 <- suppressMessages(ggplot(data = USDA, 
                aes(
                  y = Clay,
                  x = Sand,
@@ -130,7 +130,7 @@ fig2 <- suppressMessages(ggtern(data = USDA,
   geom_text(data = USDA_text,
             mapping=aes( 
               label = Label),
-            color = 'darkgray',alpha=.5,fontface="bold",
+            color = 'darkgray',alpha=.7,fontface="bold",
             
             # check_overlap = T
             size = 2
@@ -162,6 +162,7 @@ fig2 <- suppressMessages(ggtern(data = USDA,
     hjust=+.1,vjust=-0.2
   )+
   # theme_legend_position('tr') + 
+    ggtern::theme_bw(base_size = 10) + 
   theme(axis.title = element_blank()))
 # fig2
 # -------------------------------------------------------------------------
@@ -178,8 +179,8 @@ png(filename="figure/fig0.png",
     pointsize=3,
     res=600,# dpi,
     family="Arial")
-cowplot::plot_grid(fig1,
-                   print(fig2) %>%suppressMessages()  ,
+cowplot::plot_grid(fig1 %>% print(),
+                   print(fig2)   ,
                    nrow=1,labels = c("A","B"),rel_widths = c(.7,1),
                    align = "hv") %>% suppressWarnings()
 dev.off()
