@@ -63,7 +63,7 @@ complete_dat <- complete_dat %>%
          Straw = Biomass*(1-Harvest_Index),
          Protein_yield=Seedyield*Crude_protein/100
   ) %>% 
-  filter(Treatment != "LLN_WF",
+  filter(Treatment != "LLN_WF_RF",
          !BRISONr%in%c("BRISONr_?","BRISONr_NA"))
 
 ## Filter Harvest Index by Standard Deviation
@@ -114,5 +114,22 @@ col_rename <- xlsx::read.xlsx("metadata/Unit.xlsx",sheetIndex = 1) %>%
 # names(raw)
 names(export_dat)[match(col_rename$trait_old,names(export_dat))] <- col_rename$trait
 
+# average double rows in KIE 2017-------------------------------------------------------------------------
+tmpr <-export_dat %>% filter(!(BRISONr=="BRISONr_188"&Location=="KIE"&Year==2017&Treatment=="LN_NF_RF"&Block=="B2"))
+tmps <- export_dat %>% filter((BRISONr=="BRISONr_188"&Location=="KIE"&Year==2017&Treatment=="LN_NF_RF"&Block=="B2")) %>% 
+  mutate(Row=24) %>% 
+  group_by_at(c("Row","Column","BRISONr","Year","Treatment","Block","Location")) %>% 
+  summarise_all(mean)
+res <- rbind(tmpr,tmps)
 # -------------------------------------------------------------------------
-write_delim(export_dat, "output/BRIWECS_data_publication.csv", delim = ";")
+write_delim(res, "output/BRIWECS_data_publication.csv", delim = ";")
+# -------------------------------------------------------------------------
+# a <- read.csv("data/cultivar_info.csv") %>% arrange(id)
+# a1 <- read.csv("metadata/BRIWECS_BRISONr_information.csv")
+# 
+# setdiff(a$genotype%>% unlist(),
+#         a1$genotype%>% unlist()) %>% sort()
+# setdiff(a1$genotype%>% unlist(),
+#         a$genotype%>% unlist()) %>% sort()
+# 
+# setdiff(a$kai,a1$breeding_progress_subset)
