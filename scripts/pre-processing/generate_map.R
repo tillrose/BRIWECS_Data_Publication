@@ -1,6 +1,7 @@
 ## ggsflabel has to be installed from github
 pacman::p_load(dplyr,readr,sf,ggthemes,rnaturalearth,ggrepel,ggsflabel,ggplot2)
-
+# install.packages("devtools")
+devtools::install_github("yutannihilation/ggsflabel")
 ## Background map
 ctrys <- ne_countries(continent = "europe", scale = 10, type = "countries", returnclass = "sf")
 ctrys <- ctrys %>% 
@@ -121,27 +122,19 @@ fig2 <- suppressMessages(ggplot(data = USDA,
   coord_tern(L = "x", T = "y", R = "z") +
   geom_polygon(
     aes(fill = Label),
-    alpha = 0.0,
-    size = 0.5,
-    color = "black",show.legend = F
-  ) +
+    alpha = 0.0,size = 0.5,
+    color = "black",show.legend = F) +
   ggalt::geom_encircle(data = db %>% filter(Location%in%c("KIE","GGE")),
                 mapping=aes(color=Location),size=1,alpha=.5, expand=.02,spread=0.001) +
   geom_text(data = USDA_text,
             mapping=aes( 
               label = Label),
-            color = 'darkgray',alpha=.7,fontface="bold",
-            
-            # check_overlap = T
-            size = 2
-  ) +
+            color = 'darkgray',alpha=.7,fontface="bold",size = 2) +
   geom_point(
     data = db,
     mapping=aes( 
       color=Location),
-    size=1,shape=1,stroke=.5
-    
-  ) +
+    size=1,shape=1,stroke=.5) +
   theme_showarrows() +
   labs(yarrow = "clay (%)",
        zarrow = "silt (%)",
@@ -162,15 +155,14 @@ fig2 <- suppressMessages(ggplot(data = USDA,
     hjust=+.1,vjust=-0.2
   )+
   # theme_legend_position('tr') + 
-    ggtern::theme_bw(base_size = 10) + 
+  # ggtern::theme_bw(base_size = 10) + 
   theme(axis.title = element_blank()))
 # fig2
 # -------------------------------------------------------------------------
-# cp <- cowplot::plot_grid(fig1,
-#                          fig2  ,
-#                          nrow=1,labels = c("A","B"),rel_widths = c(1.5,2),
-#                          align = "hv")%>% 
-#   suppressWarnings() %>% suppressMessages()
+# cowplot::plot_grid(fig1,fig2   ,
+#                    nrow=1,labels = c("A","B"),rel_widths = c(.7,1),
+#                    align = "hv") %>% suppressWarnings()
+
 png(filename="figure/fig0.png",
     type="cairo",
     units="cm",
@@ -179,10 +171,15 @@ png(filename="figure/fig0.png",
     pointsize=3,
     res=600,# dpi,
     family="Arial")
-cowplot::plot_grid(fig1 %>% print(),
-                   print(fig2)   ,
-                   nrow=1,labels = c("A","B"),rel_widths = c(.7,1),
+cowplot::plot_grid(fig1,
+                   grid.arrange(fig2),
+                   nrow=1,labels = c("A","B"),rel_widths = c(.7,1.2),
                    align = "hv") %>% suppressWarnings()
+
+
+# grid.arrange(fig1, fig2, ncol=2,
+#       
+#              widths = c(.9,1.1))%>% suppressWarnings()
 dev.off()
 
 
