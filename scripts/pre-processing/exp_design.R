@@ -37,3 +37,23 @@ for(i in 1:length(data_list)){
 }
 
 dev.off()
+# -------------------------------------------------------------------------
+dat1 <- read.csv("data/cultivar_info.csv")
+dat2 <- read.csv("metadata/BRIWECS_BRISONr_information.csv")
+dat3 <- xlsx::read.xlsx("data/Dashani.xlsx",sheetIndex=1,startRow = 2) %>% 
+  rename(BRISONr="Genotype.No.") %>% 
+  mutate(BRISONr=gsub("Bri_","",BRISONr) %>% as.numeric() %>% paste0("BRISONr_",.))
+
+d <- dat1 %>% left_join(dat3) %>% filter(is.na(RYear))
+d2 <- dat1 %>% left_join(dat3) %>% filter(!is.na(RYear))
+d2 %>% filter(!RYear==Year.of.registration)
+with(d2,setdiff(RYear,Year.of.registration))
+
+
+setdiff(d$Year.of.registration,d$RYear)
+datmerge <- left_join(dat1 ,dat2 ) %>%
+  select(BRISONr,kai,carolin,breeding_progress_subset,RYear,Year)
+
+
+data %>% filter(trait=="Seedyield") %>% 
+  +   toolPhD::view_group(c("Location","Year","Treatment","trait"),"BRISONr")
