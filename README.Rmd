@@ -5,11 +5,9 @@ always_allow_html: true
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
-
-
 [![Website - pkgdown](https://img.shields.io/badge/data-visulaization-blue)](https://tillrose.github.io/BRIWECS_Data_Publication/data_overview.html) [![Project-website](https://img.shields.io/badge/Project-website-darkgreen)](https://www.igps.uni-hannover.de/de/forschung/forschungsprojekte/detailansicht/projects/forschungsverbund-briwecs)
 
-![Breeding Innovations in Wheat for Efficient Cropping Systems (BRIWECS). ](https://github.com/tillrose/BRIWECS_Data_Publication/blob/main/figure/BRIWECS_logo.png){fig-align="right"}
+![Breeding Innovations in Wheat for Efficient Cropping Systems (BRIWECS).](https://github.com/tillrose/BRIWECS_Data_Publication/blob/main/figure/BRIWECS_logo.png){fig-align="right"}
 
 ## A collaborative work on a data publication for the seasons 2015–2019 of the BRIWECS consortium
 
@@ -30,7 +28,7 @@ unit<- xlsx::read.xlsx("./metadata/Unit.xlsx",sheetIndex = 1) %>%
          unit=gsub('\\*',' x ',unit),
          unit=ifelse(is.na(unit),' ',unit),
          Full.name=gsub("caused.*","",Full.name,perl=T)
-         ) %>% select(-trait_old)
+         ) %>% select(-trait_old,-abbrev)
 
 raw <- read.csv2("./output/BRIWECS_data_publication.csv") %>% 
   mutate(across(BBCH59:Protein_yield,as.numeric))
@@ -115,7 +113,7 @@ tbl%>%
 ```
 
 ## overview visualizations
-![Fig0. Experiments location and soil properties.](https://github.com/tillrose/BRIWECS_Data_Publication/blob/main/figure/fig0.png){fig-align="center"}
-![Fig1. An overview of MET data descriptor of  winter wheat containing 24 traits collected across six locations in Germany (GGE, HAN, KAL, KIE, QLB, RHH) with nine managements (HN_WF_RO, LN_NF_IR, HN_NF_IR, HN_WF_IR, HN_WF_RF, LN_WF_IR, HN_NF_RF, LN_NF_RF and LN_WF_RF) during six years (2015-2020). ](https://github.com/tillrose/BRIWECS_Data_Publication/blob/main/figure/fig1.png){fig-align="center"}
+
+![Fig0. Experiments location and soil properties.](https://github.com/tillrose/BRIWECS_Data_Publication/blob/main/figure/fig0.png){fig-align="center"} ![Fig1. An overview of MET data descriptor of winter wheat containing 24 traits collected across six locations in Germany (GGE, HAN, KAL, KIE, QLB, RHH) with nine managements (HN_WF_RO, LN_NF_IR, HN_NF_IR, HN_WF_IR, HN_WF_RF, LN_WF_IR, HN_NF_RF, LN_NF_RF and LN_WF_RF) during six years (2015-2020).](https://github.com/tillrose/BRIWECS_Data_Publication/blob/main/figure/fig1.png){fig-align="center"}
 
 ![Fig2.Scatter plot of 29 combinations of location by year by management (LxYxM) versus 228 genotypes for 24 traits.](https://github.com/tillrose/BRIWECS_Data_Publication/blob/main/figure/data_point.png){fig-align="center"}
