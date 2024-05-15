@@ -468,7 +468,7 @@ g
 
 ## previous publications
 
-<div id="fig-papers" layout-ncol="2">
+<div id="fig-papers" layout-ncol="3">
 
 <a href="https://www.nature.com/articles/s41477-019-0445-5" id="fig-kai"
 class="lightbox" width="230" height="300"><img

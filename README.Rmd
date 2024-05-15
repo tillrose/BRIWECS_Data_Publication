@@ -113,7 +113,7 @@ tbl%>%
 ```
 
 ## previous publications
-::: {#fig-papers layout-ncol=2}
+::: {#fig-papers layout-ncol=3}
 
 [![Voss-Fels 2019](https://github.com/tillrose/BRIWECS_Data_Publication/blob/main/figure/previous_paper/Kai2019.PNG)](https://www.nature.com/articles/s41477-019-0445-5){#fig-kai  width=230 height=300 .lightbox}
 
