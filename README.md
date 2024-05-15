@@ -468,23 +468,52 @@ g
 
 ## previous publications
 
-<div id="fig-elephants" layout-ncol="5">
+<div id="fig-elephants" layout-ncol="3">
 
-<figure id="fig-surus">
-<img
-src="https://github.com/tillrose/BRIWECS_Data_Publication/blob/main/figure/previous_paper/Carolin_2020.png"
-width="300" height="300" alt="Surus" />
-<figcaption aria-hidden="true">Surus</figcaption>
-</figure>
-
-<figure id="fig-hanno">
+<figure id="fig-kai">
 <img
 src="https://github.com/tillrose/BRIWECS_Data_Publication/blob/main/figure/previous_paper/Kai2019.PNG"
-width="300" height="300" alt="Hanno" />
-<figcaption aria-hidden="true">Hanno</figcaption>
+class="lightbox" width="150" height="300" alt="Voss-Fels 2019" />
+<figcaption aria-hidden="true"><a
+href="https://www.nature.com/articles/s41477-019-0445-5">Voss-Fels
+2019</a></figcaption>
 </figure>
 
-Famous Elephants
+<figure id="fig-till">
+<img
+src="https://github.com/tillrose/BRIWECS_Data_Publication/blob/main/figure/previous_paper/Rose_2019.PNG"
+width="150" height="300" alt="Rose 2019" />
+<figcaption aria-hidden="true"><a
+href="https://www.frontiersin.org/journals/plant-science/articles/10.3389/fpls.2019.01521/full">Rose
+2019</a></figcaption>
+</figure>
+
+<figure id="fig-carolin">
+<img
+src="https://github.com/tillrose/BRIWECS_Data_Publication/blob/main/figure/previous_paper/Carolin_2020.png"
+width="150" height="300" alt="Lichthardt 2020" />
+<figcaption aria-hidden="true"><a
+href="https://www.frontiersin.org/journals/plant-science/articles/10.3389/fpls.2019.01771/full">Lichthardt
+2020</a></figcaption>
+</figure>
+
+<figure id="fig-holger">
+<img
+src="https://github.com/tillrose/BRIWECS_Data_Publication/blob/main/figure/previous_paper/Zetzsche_2020.png"
+width="150" height="300" alt="Zetzsche 2020" />
+<figcaption aria-hidden="true"><a
+href="https://www.nature.com/articles/s41598-020-77200-0">Zetzsche
+2020</a></figcaption>
+</figure>
+
+<figure id="fig-kahdija">
+<img
+src="https://github.com/tillrose/BRIWECS_Data_Publication/blob/main/figure/previous_paper/Sabir_2023.png"
+width="150" height="300" alt="Sabir 2023" />
+<figcaption aria-hidden="true"><a
+href="https://www.nature.com/articles/s41477-023-01516-8">Sabir
+2023</a></figcaption>
+</figure>
 
 </div>
 
