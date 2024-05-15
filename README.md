@@ -468,7 +468,7 @@ g
 
 ## previous publications
 
-<div id="fig-papers" layout-ncol="3">
+::: {#fig-papers layout-ncow= 2}
 
 [<img
 src="https://github.com/tillrose/BRIWECS_Data_Publication/blob/main/figure/previous_paper/Kai2019.PNG"
@@ -491,7 +491,7 @@ id="fig-holger" width="230" height="300" alt="Zetzsche 2020" />](https://www.nat
 src="https://github.com/tillrose/BRIWECS_Data_Publication/blob/main/figure/previous_paper/Sabir_2023.png"
 id="fig-kahdija" width="230" height="300" alt="Sabir 2023" />](https://www.nature.com/articles/s41477-023-01516-8)
 
-</div>
+:::
 
 ## overview visualizations
 
