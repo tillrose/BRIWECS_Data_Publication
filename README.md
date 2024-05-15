@@ -470,50 +470,32 @@ g
 
 <div id="fig-papers" layout-ncol="2">
 
-<figure id="fig-kai">
-<img
+<a href="https://www.nature.com/articles/s41477-019-0445-5" id="fig-kai"
+class="lightbox" width="230" height="300"><img
 src="https://github.com/tillrose/BRIWECS_Data_Publication/blob/main/figure/previous_paper/Kai2019.PNG"
-class="lightbox" width="230" height="300" alt="Voss-Fels 2019" />
-<figcaption aria-hidden="true"><a
-href="https://www.nature.com/articles/s41477-019-0445-5">Voss-Fels
-2019</a></figcaption>
-</figure>
+alt="Voss-Fels 2019" /></a>
 
-<figure id="fig-till">
-<img
+<a
+href="https://www.frontiersin.org/journals/plant-science/articles/10.3389/fpls.2019.01521/full"
+id="fig-till" width="230" height="300"><img
 src="https://github.com/tillrose/BRIWECS_Data_Publication/blob/main/figure/previous_paper/Rose_2019.png"
-width="230" height="300" alt="Rose 2019" />
-<figcaption aria-hidden="true"><a
-href="https://www.frontiersin.org/journals/plant-science/articles/10.3389/fpls.2019.01521/full">Rose
-2019</a></figcaption>
-</figure>
+alt="Rose 2019" /></a>
 
-<figure id="fig-carolin">
-<img
+<a
+href="https://www.frontiersin.org/journals/plant-science/articles/10.3389/fpls.2019.01771/full"
+id="fig-carolin" width="230" height="300"><img
 src="https://github.com/tillrose/BRIWECS_Data_Publication/blob/main/figure/previous_paper/Carolin_2020.png"
-width="230" height="300" alt="Lichthardt 2020" />
-<figcaption aria-hidden="true"><a
-href="https://www.frontiersin.org/journals/plant-science/articles/10.3389/fpls.2019.01771/full">Lichthardt
-2020</a></figcaption>
-</figure>
+alt="Lichthardt 2020" /></a>
 
-<figure id="fig-holger">
-<img
+<a href="https://www.nature.com/articles/s41598-020-77200-0"
+id="fig-holger" width="230" height="300"><img
 src="https://github.com/tillrose/BRIWECS_Data_Publication/blob/main/figure/previous_paper/Zetzsche_2020.png"
-width="230" height="300" alt="Zetzsche 2020" />
-<figcaption aria-hidden="true"><a
-href="https://www.nature.com/articles/s41598-020-77200-0">Zetzsche
-2020</a></figcaption>
-</figure>
+alt="Zetzsche 2020" /></a>
 
-<figure id="fig-kahdija">
-<img
+<a href="https://www.nature.com/articles/s41477-023-01516-8"
+id="fig-kahdija" width="230" height="300"><img
 src="https://github.com/tillrose/BRIWECS_Data_Publication/blob/main/figure/previous_paper/Sabir_2023.png"
-width="230" height="300" alt="Sabir 2023" />
-<figcaption aria-hidden="true"><a
-href="https://www.nature.com/articles/s41477-023-01516-8">Sabir
-2023</a></figcaption>
-</figure>
+alt="Sabir 2023" /></a>
 
 </div>
 
