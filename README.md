@@ -70,7 +70,7 @@ Biomass_bio
 0~3495
 </td>
 <td style="text-align:left;">
-g/m2
+g/m^2
 </td>
 </tr>
 <tr>
@@ -137,7 +137,7 @@ Seedyield_bio
 28.3~1815
 </td>
 <td style="text-align:left;">
-g/m2
+g/m^2
 </td>
 </tr>
 <tr>
@@ -154,7 +154,7 @@ Spike_number_bio
 48~1390
 </td>
 <td style="text-align:left;">
-Nbr /m2
+Nbr /m^2
 </td>
 </tr>
 <tr>
@@ -465,6 +465,28 @@ g
 </tr>
 </tbody>
 </table>
+
+## previous publications
+
+<div id="fig-elephants" layout-ncol="5">
+
+<figure id="fig-surus">
+<img
+src="https://github.com/tillrose/BRIWECS_Data_Publication/blob/main/figure/previous_paper/Carolin_2020.png"
+alt="Surus" />
+<figcaption aria-hidden="true">Surus</figcaption>
+</figure>
+
+<figure id="fig-hanno">
+<img
+src="https://github.com/tillrose/BRIWECS_Data_Publication/blob/main/figure/previous_paper/Kai2019.PNG"
+alt="Hanno" />
+<figcaption aria-hidden="true">Hanno</figcaption>
+</figure>
+
+Famous Elephants
+
+</div>
 
 ## overview visualizations
 
