@@ -473,14 +473,14 @@ g
 <figure id="fig-surus">
 <img
 src="https://github.com/tillrose/BRIWECS_Data_Publication/blob/main/figure/previous_paper/Carolin_2020.png"
-alt="Surus" />
+width="300" height="300" alt="Surus" />
 <figcaption aria-hidden="true">Surus</figcaption>
 </figure>
 
 <figure id="fig-hanno">
 <img
 src="https://github.com/tillrose/BRIWECS_Data_Publication/blob/main/figure/previous_paper/Kai2019.PNG"
-alt="Hanno" />
+width="300" height="300" alt="Hanno" />
 <figcaption aria-hidden="true">Hanno</figcaption>
 </figure>
 

@@ -115,9 +115,9 @@ tbl%>%
 ## previous publications
 ::: {#fig-elephants layout-ncol=5}
 
-![Surus](https://github.com/tillrose/BRIWECS_Data_Publication/blob/main/figure/previous_paper/Carolin_2020.png){#fig-surus}
+![Surus](https://github.com/tillrose/BRIWECS_Data_Publication/blob/main/figure/previous_paper/Carolin_2020.png){#fig-surus width=300 height=300}
 
-![Hanno](https://github.com/tillrose/BRIWECS_Data_Publication/blob/main/figure/previous_paper/Kai2019.PNG){#fig-hanno}
+![Hanno](https://github.com/tillrose/BRIWECS_Data_Publication/blob/main/figure/previous_paper/Kai2019.PNG){#fig-hanno  width=300 height=300}
 
 Famous Elephants
 :::
