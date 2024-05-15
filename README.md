@@ -22,20 +22,20 @@ Efficient Cropping Systems (BRIWECS).</figcaption>
 
 [<img
 src="https://github.com/tillrose/BRIWECS_Data_Publication/blob/main/figure/previous_paper/Kai2019.PNG"
-id="fig-kai" class="lightbox" width="100" height="150"
+id="fig-kai" class="lightbox" width="190" height="250"
 alt="Voss-Fels 2019" />](https://www.nature.com/articles/s41477-019-0445-5)
 [<img
 src="https://github.com/tillrose/BRIWECS_Data_Publication/blob/main/figure/previous_paper/Rose_2019.png"
-id="fig-till" width="100" height="150" alt="Rose 2019" />](https://www.frontiersin.org/journals/plant-science/articles/10.3389/fpls.2019.01521/full)
+id="fig-till" width="190" height="250" alt="Rose 2019" />](https://www.frontiersin.org/journals/plant-science/articles/10.3389/fpls.2019.01521/full)
 [<img
 src="https://github.com/tillrose/BRIWECS_Data_Publication/blob/main/figure/previous_paper/Carolin_2020.png"
-id="fig-carolin" width="100" height="150" alt="Lichthardt 2020" />](https://www.frontiersin.org/journals/plant-science/articles/10.3389/fpls.2019.01771/full)
+id="fig-carolin" width="190" height="250" alt="Lichthardt 2020" />](https://www.frontiersin.org/journals/plant-science/articles/10.3389/fpls.2019.01771/full)
 [<img
 src="https://github.com/tillrose/BRIWECS_Data_Publication/blob/main/figure/previous_paper/Zetzsche_2020.png"
-id="fig-holger" width="100" height="150" alt="Zetzsche 2020" />](https://www.nature.com/articles/s41598-020-77200-0)
+id="fig-holger" width="190" height="250" alt="Zetzsche 2020" />](https://www.nature.com/articles/s41598-020-77200-0)
 [<img
 src="https://github.com/tillrose/BRIWECS_Data_Publication/blob/main/figure/previous_paper/Sabir_2023.png"
-id="fig-kahdija" width="100" height="150" alt="Sabir 2023" />](https://www.nature.com/articles/s41477-023-01516-8)
+id="fig-kahdija" width="190" height="250" alt="Sabir 2023" />](https://www.nature.com/articles/s41477-023-01516-8)
 
 ## insturctution
 
