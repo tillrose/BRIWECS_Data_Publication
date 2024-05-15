@@ -519,13 +519,26 @@ href="https://www.nature.com/articles/s41477-023-01516-8">Sabir
 
 ## overview visualizations
 
+<figure>
 <img
 src="https://github.com/tillrose/BRIWECS_Data_Publication/blob/main/figure/fig0.png"
 data-fig-align="center"
-alt="Fig0. Experiments location and soil properties." /> <img
+alt="Fig0. Experiments location and soil properties." />
+<figcaption aria-hidden="true">Fig0. Experiments location and soil
+properties.</figcaption>
+</figure>
+
+<figure>
+<img
 src="https://github.com/tillrose/BRIWECS_Data_Publication/blob/main/figure/fig1.png"
 data-fig-align="center"
 alt="Fig1. An overview of MET data descriptor of winter wheat containing 24 traits collected across six locations in Germany (GGE, HAN, KAL, KIE, QLB, RHH) with nine managements (HN_WF_RO, LN_NF_IR, HN_NF_IR, HN_WF_IR, HN_WF_RF, LN_WF_IR, HN_NF_RF, LN_NF_RF and LN_WF_RF) during six years (2015-2020)." />
+<figcaption aria-hidden="true">Fig1. An overview of MET data descriptor
+of winter wheat containing 24 traits collected across six locations in
+Germany (GGE, HAN, KAL, KIE, QLB, RHH) with nine managements (HN_WF_RO,
+LN_NF_IR, HN_NF_IR, HN_WF_IR, HN_WF_RF, LN_WF_IR, HN_NF_RF, LN_NF_RF and
+LN_WF_RF) during six years (2015-2020).</figcaption>
+</figure>
 
 <figure>
 <img
