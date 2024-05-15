@@ -113,17 +113,17 @@ tbl%>%
 ```
 
 ## previous publications
-::: {#fig-elephants layout-ncol=3}
+::: {#fig-papers layout-ncol=2}
 
-![[Voss-Fels 2019](https://www.nature.com/articles/s41477-019-0445-5)](https://github.com/tillrose/BRIWECS_Data_Publication/blob/main/figure/previous_paper/Kai2019.PNG){#fig-kai  width=150 height=300 .lightbox}
+![[Voss-Fels 2019](https://www.nature.com/articles/s41477-019-0445-5)](https://github.com/tillrose/BRIWECS_Data_Publication/blob/main/figure/previous_paper/Kai2019.PNG){#fig-kai  width=200 height=300 .lightbox}
 
-![[Rose 2019](https://www.frontiersin.org/journals/plant-science/articles/10.3389/fpls.2019.01521/full)](https://github.com/tillrose/BRIWECS_Data_Publication/blob/main/figure/previous_paper/Rose_2019.PNG){#fig-till  width=150 height=300}
+![[Rose 2019](https://www.frontiersin.org/journals/plant-science/articles/10.3389/fpls.2019.01521/full)](https://github.com/tillrose/BRIWECS_Data_Publication/blob/main/figure/previous_paper/Rose_2019.PNG){#fig-till  width=200 height=300}
 
-![[Lichthardt 2020](https://www.frontiersin.org/journals/plant-science/articles/10.3389/fpls.2019.01771/full)](https://github.com/tillrose/BRIWECS_Data_Publication/blob/main/figure/previous_paper/Carolin_2020.png){#fig-carolin width=150 height=300}
+![[Lichthardt 2020](https://www.frontiersin.org/journals/plant-science/articles/10.3389/fpls.2019.01771/full)](https://github.com/tillrose/BRIWECS_Data_Publication/blob/main/figure/previous_paper/Carolin_2020.png){#fig-carolin width=200 height=300}
 
-![[Zetzsche 2020](https://www.nature.com/articles/s41598-020-77200-0)](https://github.com/tillrose/BRIWECS_Data_Publication/blob/main/figure/previous_paper/Zetzsche_2020.png){#fig-holger width=150 height=300}
+![[Zetzsche 2020](https://www.nature.com/articles/s41598-020-77200-0)](https://github.com/tillrose/BRIWECS_Data_Publication/blob/main/figure/previous_paper/Zetzsche_2020.png){#fig-holger width=200 height=300}
 
-![[Sabir 2023](https://www.nature.com/articles/s41477-023-01516-8)](https://github.com/tillrose/BRIWECS_Data_Publication/blob/main/figure/previous_paper/Sabir_2023.png){#fig-kahdija width=150 height=300}
+![[Sabir 2023](https://www.nature.com/articles/s41477-023-01516-8)](https://github.com/tillrose/BRIWECS_Data_Publication/blob/main/figure/previous_paper/Sabir_2023.png){#fig-kahdija width=200 height=300}
 :::
 
 ## overview visualizations
