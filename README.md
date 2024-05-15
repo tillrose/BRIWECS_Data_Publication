@@ -18,6 +18,20 @@ Efficient Cropping Systems (BRIWECS).</figcaption>
 
 <!-- [![License: GPL-3](https://img.shields.io/badge/License-GPL3-orange)](https://www.r-project.org/Licenses/) -->
 
+:————————-:\|:————————-:\|:————————-: [<img
+src="https://github.com/tillrose/BRIWECS_Data_Publication/blob/main/figure/previous_paper/Kai2019.PNG"
+id="fig-kai" class="lightbox" width="230" height="300"
+alt="Voss-Fels 2019" />](https://www.nature.com/articles/s41477-019-0445-5)\|[<img
+src="https://github.com/tillrose/BRIWECS_Data_Publication/blob/main/figure/previous_paper/Rose_2019.png"
+id="fig-till" width="230" height="300" alt="Rose 2019" />](https://www.frontiersin.org/journals/plant-science/articles/10.3389/fpls.2019.01521/full)\|[<img
+src="https://github.com/tillrose/BRIWECS_Data_Publication/blob/main/figure/previous_paper/Carolin_2020.png"
+id="fig-carolin" width="230" height="300" alt="Lichthardt 2020" />](https://www.frontiersin.org/journals/plant-science/articles/10.3389/fpls.2019.01771/full)
+[<img
+src="https://github.com/tillrose/BRIWECS_Data_Publication/blob/main/figure/previous_paper/Zetzsche_2020.png"
+id="fig-holger" width="230" height="300" alt="Zetzsche 2020" />](https://www.nature.com/articles/s41598-020-77200-0)\|[<img
+src="https://github.com/tillrose/BRIWECS_Data_Publication/blob/main/figure/previous_paper/Sabir_2023.png"
+id="fig-kahdija" width="230" height="300" alt="Sabir 2023" />](https://www.nature.com/articles/s41477-023-01516-8)\|
+
 ## insturctution
 
 1.  open `BRIWECS_Data_Publication.RProject`
@@ -465,33 +479,6 @@ g
 </tr>
 </tbody>
 </table>
-
-## previous publications
-
-<div id="fig-papers" layout-nrow="2">
-
-[<img
-src="https://github.com/tillrose/BRIWECS_Data_Publication/blob/main/figure/previous_paper/Kai2019.PNG"
-id="fig-kai" class="lightbox" width="230" height="300"
-alt="Voss-Fels 2019" />](https://www.nature.com/articles/s41477-019-0445-5)
-
-[<img
-src="https://github.com/tillrose/BRIWECS_Data_Publication/blob/main/figure/previous_paper/Rose_2019.png"
-id="fig-till" width="230" height="300" alt="Rose 2019" />](https://www.frontiersin.org/journals/plant-science/articles/10.3389/fpls.2019.01521/full)
-
-[<img
-src="https://github.com/tillrose/BRIWECS_Data_Publication/blob/main/figure/previous_paper/Carolin_2020.png"
-id="fig-carolin" width="230" height="300" alt="Lichthardt 2020" />](https://www.frontiersin.org/journals/plant-science/articles/10.3389/fpls.2019.01771/full)
-
-[<img
-src="https://github.com/tillrose/BRIWECS_Data_Publication/blob/main/figure/previous_paper/Zetzsche_2020.png"
-id="fig-holger" width="230" height="300" alt="Zetzsche 2020" />](https://www.nature.com/articles/s41598-020-77200-0)
-
-[<img
-src="https://github.com/tillrose/BRIWECS_Data_Publication/blob/main/figure/previous_paper/Sabir_2023.png"
-id="fig-kahdija" width="230" height="300" alt="Sabir 2023" />](https://www.nature.com/articles/s41477-023-01516-8)
-
-</div>
 
 ## overview visualizations
 
