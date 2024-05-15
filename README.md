@@ -483,15 +483,13 @@ id="fig-till" width="230" height="300" alt="Rose 2019" />](https://www.frontiers
 src="https://github.com/tillrose/BRIWECS_Data_Publication/blob/main/figure/previous_paper/Carolin_2020.png"
 id="fig-carolin" width="230" height="300" alt="Lichthardt 2020" />](https://www.frontiersin.org/journals/plant-science/articles/10.3389/fpls.2019.01771/full)
 
-<a href="https://www.nature.com/articles/s41598-020-77200-0"
-id="fig-holger" width="230" height="300"><img
+[<img
 src="https://github.com/tillrose/BRIWECS_Data_Publication/blob/main/figure/previous_paper/Zetzsche_2020.png"
-alt="Zetzsche 2020" /></a>
+id="fig-holger" width="230" height="300" alt="Zetzsche 2020" />](https://www.nature.com/articles/s41598-020-77200-0)
 
-<a href="https://www.nature.com/articles/s41477-023-01516-8"
-id="fig-kahdija" width="230" height="300"><img
+[<img
 src="https://github.com/tillrose/BRIWECS_Data_Publication/blob/main/figure/previous_paper/Sabir_2023.png"
-alt="Sabir 2023" /></a>
+id="fig-kahdija" width="230" height="300" alt="Sabir 2023" />](https://www.nature.com/articles/s41477-023-01516-8)
 
 </div>
 
