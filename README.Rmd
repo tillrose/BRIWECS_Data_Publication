@@ -45,10 +45,9 @@ left_join(unit ,by='trait')%>%
          "trait source"="sample.source","trait range"="Trait") 
 
 ```
-:-------------------------:|:-------------------------:|:-------------------------:
-[![Voss-Fels 2019](https://github.com/tillrose/BRIWECS_Data_Publication/blob/main/figure/previous_paper/Kai2019.PNG){#fig-kai  width=230 height=300 .lightbox}](https://www.nature.com/articles/s41477-019-0445-5)|[![Rose 2019](https://github.com/tillrose/BRIWECS_Data_Publication/blob/main/figure/previous_paper/Rose_2019.png){#fig-till  width=230 height=300}](https://www.frontiersin.org/journals/plant-science/articles/10.3389/fpls.2019.01521/full)|[![Lichthardt 2020](https://github.com/tillrose/BRIWECS_Data_Publication/blob/main/figure/previous_paper/Carolin_2020.png){#fig-carolin width=230 height=300}](https://www.frontiersin.org/journals/plant-science/articles/10.3389/fpls.2019.01771/full)
-[![Zetzsche 2020](https://github.com/tillrose/BRIWECS_Data_Publication/blob/main/figure/previous_paper/Zetzsche_2020.png){#fig-holger width=230 height=300}](https://www.nature.com/articles/s41598-020-77200-0)|[![Sabir 2023](https://github.com/tillrose/BRIWECS_Data_Publication/blob/main/figure/previous_paper/Sabir_2023.png){#fig-kahdija width=230 height=300}](https://www.nature.com/articles/s41477-023-01516-8)|
+## previous publications
 
+[![Voss-Fels 2019](https://github.com/tillrose/BRIWECS_Data_Publication/blob/main/figure/previous_paper/Kai2019.PNG){#fig-kai  width=230 height=300 .lightbox}](https://www.nature.com/articles/s41477-019-0445-5) [![Rose 2019](https://github.com/tillrose/BRIWECS_Data_Publication/blob/main/figure/previous_paper/Rose_2019.png){#fig-till  width=230 height=300}](https://www.frontiersin.org/journals/plant-science/articles/10.3389/fpls.2019.01521/full) [![Lichthardt 2020](https://github.com/tillrose/BRIWECS_Data_Publication/blob/main/figure/previous_paper/Carolin_2020.png){#fig-carolin width=230 height=300}](https://www.frontiersin.org/journals/plant-science/articles/10.3389/fpls.2019.01771/full) [![Zetzsche 2020](https://github.com/tillrose/BRIWECS_Data_Publication/blob/main/figure/previous_paper/Zetzsche_2020.png){#fig-holger width=230 height=300}](https://www.nature.com/articles/s41598-020-77200-0) [![Sabir 2023](https://github.com/tillrose/BRIWECS_Data_Publication/blob/main/figure/previous_paper/Sabir_2023.png){#fig-kahdija width=230 height=300}](https://www.nature.com/articles/s41477-023-01516-8)
 
 
 ## insturctution
