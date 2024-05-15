@@ -468,7 +468,7 @@ g
 
 ## previous publications
 
-::: {#fig-papers layout-ncow= 2}
+::: {#fig-papers layout-nrow= 2}
 
 [<img
 src="https://github.com/tillrose/BRIWECS_Data_Publication/blob/main/figure/previous_paper/Kai2019.PNG"
