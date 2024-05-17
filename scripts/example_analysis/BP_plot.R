@@ -41,31 +41,26 @@ s_window_statistic <- read.csv("output/Slidingwindow_BLUES_statistics.csv") %>%
          Treatment_Year=paste(Treatment, Year, sep="-")
   ) %>% 
   left_join(.,un) %>% 
-  
   left_join(env_trait,.) %>% 
   filter(!is.na(Ab_BP)) %>% 
   group_by(Parameter) %>%
-  mutate(m=mean(Ab_BP))
-# -------------------------------------------------------------------------
-
-orderid<- s_window_statistic %>% dplyr::select(abbrev,m) %>%
-  distinct() %>% arrange(-m) %>% .$abbrev
-sdf <- s_window_statistic %>% 
-  arrange(m) %>% 
-  mutate(
-    M=max(Ab_BP) %>%toolPhD::round_scale() %>% as.numeric(),
-    r1=paste0(
-      "M:",M ,"\n",
-      "A:",mean(Ab_BP)%>% toolPhD::round_scale(),"\n",
-      "m:",min(Ab_BP) %>% toolPhD::round_scale()),
-    abbrev=factor(abbrev,levels=orderid),
-    unit=case_when(unit==" "~unit,
-                   grepl("/",unit)~ paste0("(",unit," year",")"),
-                   T~ paste0("(",unit," /year",")"))
-    ) 
+  mutate(m=mean(Ab_BP),
+         M=max(Ab_BP) %>%toolPhD::round_scale() %>% as.numeric(),
+         cv=(sd(Ab_BP)/mean(Ab_BP))%>% toolPhD::round_scale(),
+         r1=paste0(
+           "M:",M ,"\n",
+           "A:",mean(Ab_BP)%>% toolPhD::round_scale(),"\n",
+           "m:",min(Ab_BP) %>% toolPhD::round_scale()),
+         unit=case_when(unit==" "~unit,
+                        grepl("/",unit)~ paste0("(",unit," year",")"),
+                        T~ paste0("(",unit," /year",")"))
+  ) 
+orderid<- s_window_statistic %>% dplyr::select(abbrev,cv) %>%
+  distinct() %>% arrange(desc(cv)) %>% .$abbrev
 # levels(sdf$abbrev)
-sdf$unit %>% unique()
-p <- sdf%>% 
+# sdf$unit %>% unique()
+p <- s_window_statistic%>% 
+  mutate(abbrev=factor(abbrev,levels=orderid)) %>% 
   ggplot(aes(abbrev,Ab_BP,group=abbrev))+
   ggplot2::scale_fill_viridis_d(option = "D") + 
   ggplot2::geom_violin(alpha = 0.5, 
@@ -91,9 +86,9 @@ p <- sdf%>%
              # strip.position="left",
              dir="h",
              labeller = stickylabeller::label_glue('({.L}) {abbrev}\n{unit}'),
-            
+             
   )
-png(filename="figure/BP_range.png",
+png(filename="figure/Fig6.png",
     type="cairo",
     units="cm",
     width=18,
