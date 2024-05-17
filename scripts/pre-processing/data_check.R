@@ -95,7 +95,7 @@ fig2 <- long %>%
   )+
   scale_y_continuous(
     labels =label_number(scale_cut = cut_short_scale()),
-    limits=c(0,36000)
+    limits=c(0,37000)
   )+
   toolPhD::theme_phd_facet(b=10,r=10,strp.txt.siz = 8,
                            plot.title = element_text(size=10))
@@ -139,7 +139,7 @@ png(filename="figure/fig1.png",
     type="cairo",
     units="cm",
     # compression = "lzw",
-    width=18,
+    width=20,
     height=12,
     pointsize=3,
     res=600,# dpi,
