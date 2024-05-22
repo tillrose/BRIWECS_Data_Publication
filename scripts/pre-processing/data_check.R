@@ -135,7 +135,7 @@ cp <- cowplot::plot_grid(fig1+
                              axis.text.y=element_text(size=5)),
                          nrow=1,labels = c("A","B"),align = "hv")%>% 
   suppressWarnings() %>% suppressMessages()
-png(filename="figure/fig1.png",
+png(filename="figure/Fig2.png",
     type="cairo",
     units="cm",
     # compression = "lzw",
@@ -164,11 +164,11 @@ figdata <- long %>%
         axis.text.y= element_text(size=2,angle = 0,hjust=1),
         strip.text = element_text(size=6),
         strip.background = element_blank())+
-  ylab("combination of LxYxM")+
+  ylab("growing conditions (YearxLocationxManagement;YxLxM)")+
   xlab("genotypes (G)")
 
 
-png(filename="figure/data_point.png",
+png(filename="figure/Fig3.png",
     type="cairo",
     units="cm",
     width=30,

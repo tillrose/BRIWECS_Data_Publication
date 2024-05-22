@@ -163,7 +163,7 @@ fig2 <- suppressMessages(ggplot(data = USDA,
 #                    nrow=1,labels = c("A","B"),rel_widths = c(.7,1),
 #                    align = "hv") %>% suppressWarnings()
 
-png(filename="figure/fig0.png",
+png(filename="figure/Fig1.png",
     type="cairo",
     units="cm",
     width=16,
