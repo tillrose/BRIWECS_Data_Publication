@@ -47,7 +47,7 @@ saveRDS(trait_env_list,"output/trait_env_list.RDS",compress = T)
 subdata <-  readRDS("output/BLUE.RDS")%>%
   dplyr::filter(
     trait%in%c('Seedyield','Straw','Harvest_Index_bio',
-               'Biomass','TKW','Grain',
+               'Biomass','TGW','Grain',
                "Spike_number_bio",'Grain_per_spike_bio'),
     Treatment%in% c('HN_WF_RF', 'HN_NF_RF', 'LN_NF_RF') )
 
