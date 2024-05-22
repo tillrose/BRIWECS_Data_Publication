@@ -114,16 +114,16 @@ weather_dat <- weather_dat %>%
          Date > Sowing_date)
 ```
 ## Overview
-```{r,warning=FALSE, message=FALSE}
+```{r,warning=FALSE,echo=FALSE, message=FALSE}
 library(ggplot2)
 library(webr)
 library(dplyr)
 
 first.ring <- c("Genotype","Locations","Year","Management") 
-second.ring <- list(c("228 cultivars","year of release\n1960-2016","SNIP"),
-c("6 locations","soil map","experimental deisgn"),
+second.ring <- list(c("228 cultivars","year of release\n1960-2016","8710 SNIPs"),
+c("6 locations","soil map","experimental\ndeisgn"),
 c("precipitation","iradiance","temperature"),
-c("plant protection","irrigation","fertilization"))
+c("fungicide","water\navailability","fertilization"))
 repid <- purrr::map_dbl(second.ring,~{
 length(.x)
 })
@@ -203,7 +203,7 @@ for (i in 1:length(section_nam)) {
       cat(sep = "\n", knitr::knit_child(quiet = TRUE, text = c(
         "```{r}",
         "#| echo: false",
-        sprintf("#| fig-cap: yield vs yield bio-correlation", tr),
+        sprintf("#| fig-cap: correlations between whole plot and 50 cm cut", tr),
         sprintf("#| label: fig-%s-cpp", tr),
         "#| fig.asp: 1.6",
         "suppressWarnings(suppressMessages(print(cpp)))",
