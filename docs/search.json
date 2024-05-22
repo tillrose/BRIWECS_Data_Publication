@@ -4,34 +4,307 @@
     "href": "data_overview.html#phenology",
     "title": "Data Publication of BRIWECS Consortium",
     "section": "2 Phenology",
-    "text": "2 Phenology"
+    "text": "2 Phenology\n\n2.1 Emergence_date\n\n\n\n\n\n\n\n\nFigure 18: Emergence_date-distribution\n\n\n\n\n\n\n\n2.2 BBCH59\n\n\n\n\n\n\n\n\nFigure 19: BBCH59-distribution\n\n\n\n\n\n\n\n\n\n\n\n\n\nFigure 20: BBCH59-correlation\n\n\n\n\n\n\n\n2.3 BBCH87\n\n\n\n\n\n\n\n\nFigure 21: BBCH87-distribution\n\n\n\n\n\n\n\n\n\n\n\n\n\nFigure 22: BBCH87-correlation"
   },
   {
     "objectID": "data_overview.html#pathogens",
     "href": "data_overview.html#pathogens",
     "title": "Data Publication of BRIWECS Consortium",
     "section": "3 Pathogens",
-    "text": "3 Pathogens"
+    "text": "3 Pathogens\n\n3.1 Stripe_rust\n\n\n\n\n\n\n\n\nFigure 23: Stripe_rust-distribution\n\n\n\n\n\n\n\n3.2 Powdery_mildew\n\n\n\n\n\n\n\n\nFigure 24: Powdery_mildew-distribution\n\n\n\n\n\n\n\n3.3 Leaf_rust\n\n\n\n\n\n\n\n\nFigure 25: Leaf_rust-distribution\n\n\n\n\n\n\n\n3.4 Septoria\n\n\n\n\n\n\n\n\nFigure 26: Septoria-distribution\n\n\n\n\n\n\n\n3.5 DTR\n\n\n\n\n\n\n\n\nFigure 27: DTR-distribution\n\n\n\n\n\n\n\n3.6 Fusarium\n\n\n\n\n\n\n\n\nFigure 28: Fusarium-distribution"
   },
   {
     "objectID": "data_overview.html#yield-quality",
     "href": "data_overview.html#yield-quality",
     "title": "Data Publication of BRIWECS Consortium",
     "section": "4 Yield Quality",
-    "text": "4 Yield Quality"
+    "text": "4 Yield Quality\n\n4.1 Sedimentation\n\n\n\n\n\n\n\n\nFigure 29: Sedimentation-distribution\n\n\n\n\n\n\n\n\n\n\n\n\n\nFigure 30: Sedimentation-correlation\n\n\n\n\n\n\n\n4.2 Falling_number\n\n\n\n\n\n\n\n\nFigure 31: Falling_number-distribution\n\n\n\n\n\n\n\n\n\n\n\n\n\nFigure 32: Falling_number-correlation\n\n\n\n\n\n\n\n4.3 Crude_protein\n\n\n\n\n\n\n\n\nFigure 33: Crude_protein-distribution\n\n\n\n\n\n\n\n\n\n\n\n\n\nFigure 34: Crude_protein-correlation\n\n\n\n\n\n\n\n4.4 Protein_yield\n\n\n\n\n\n\n\n\nFigure 35: Protein_yield-distribution\n\n\n\n\n\n\n\n\n\n\n\n\n\nFigure 36: Protein_yield-correlation"
   },
   {
     "objectID": "data_overview.html#management",
     "href": "data_overview.html#management",
     "title": "Data Publication of BRIWECS Consortium",
     "section": "5 Management",
-    "text": "5 Management"
+    "text": "5 Management\n\n\n### `Sowing_date` \n\n\n\n::: {.cell}\n::: {.cell-output-display}\n![Sowing_date-distribution](data_overview_files/figure-html/fig-Sowing_date-dp-1.png){#fig-Sowing_date-dp width=672}\n:::\n:::"
   },
   {
     "objectID": "data_overview.html#weather",
     "href": "data_overview.html#weather",
     "title": "Data Publication of BRIWECS Consortium",
     "section": "6 Weather",
-    "text": "6 Weather"
+    "text": "6 Weather\n\n\n\n\n\n\n\n\nFigure 37\n\n\n\n\n\n\n\n\n\n\n\n\n\nFigure 38"
+  },
+  {
+    "objectID": "test.html",
+    "href": "test.html",
+    "title": "Data Publication of BRIWECS Consortium",
+    "section": "",
+    "text": "Figure 1: Seedyield-distribution\n\n\n\n\n\n\n\n\n\n\n\n\n\nFigure 2: Seedyield-correlation\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nFigure 3: Seedyield_bio-distribution\n\n\n\n\n\n\n\n\n\n\n\n\n\nFigure 4: Seedyield_bio-correlation\n\n\n\n\n\n\n\n\n\n\n\n\n\nFigure 5: yield vs yield bio-correlation\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nFigure 6: Biomass_bio-distribution\n\n\n\n\n\n\n\n\n\n\n\n\n\nFigure 7: Biomass_bio-correlation\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nFigure 8: Harvest_Index_bio-distribution\n\n\n\n\n\n\n\n\n\n\n\n\n\nFigure 9: Harvest_Index_bio-correlation\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nFigure 10: TGW-distribution\n\n\n\n\n\n\n\n\n\n\n\n\n\nFigure 11: TGW-correlation\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nFigure 12: TGW_bio-distribution\n\n\n\n\n\n\n\n\n\n\n\n\n\nFigure 13: TGW_bio-correlation\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nFigure 14: Spike_number_bio-distribution\n\n\n\n\n\n\n\n\n\n\n\n\n\nFigure 15: Spike_number_bio-correlation\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nFigure 16: Plantheight_bio-distribution\n\n\n\n\n\n\n\n\n\n\n\n\n\nFigure 17: Plantheight_bio-correlation"
+  },
+  {
+    "objectID": "docs/read2.html",
+    "href": "docs/read2.html",
+    "title": "Guide for reproducible scientific analysis",
+    "section": "",
+    "text": "DOI\n\n\n\nGuide for reproducible scientific analysis\nTo reproduce the figure results in publication on Theoretical and Applied Genetics Wang et al, 2023,\nplease do the following 4 steps:\n\nClone the repository to your local environment. Folder structure should look like this:\n\nR_script\n¦–Wang_2023_TAAG.Rproj\n¦–README.md\n¦–data\n¦ °–Wang_et_al_TAAG_2023_physiological_parameter.rds\n¦–result\n¦ °–Networkdata\n¦ ¦–si_layout_circle.csv\n¦ °–t_layout_circle.csv\n°–src\n¦–Data_preparation.R\n¦–Fig1_preparation.R\n¦–Fig1_S1.R\n¦–Fig2.R\n¦–Fig2_prep_fun.R\n¦–Fig2_S3_4_preparation.R\n¦–Fig3.R\n¦–Fig3_4_6_preparation.R\n¦–Fig3_6_prep_fun.R\n¦–Fig4.R\n¦–Fig5.R\n¦–Fig5_prep_fun.R\n¦–Fig5_preparation.R\n¦–Fig6.R\n¦–FigS3.R\n¦–FigS4.R\n¦–TC_theme.R\n°–TC_theme2.R\n2. Go to , Please download the following data from Zenodo and place it to the data folder * Wang_et_al_TAAG_2022_output_trait.rds\n3. Install R package toolStability by install.packages(\"toolStability\").\n4. Run with the Data_preparation.R to FigS4.R in an ascending manner (order as shown above).\nEnjoy!!\nCitation info:\nWang, T-C., Casadebaig, P., Chen, T-W. More than 1000 genotypes are required to derive robust relationships between yield, yield stability and physiological parameters: a computational study on wheat crop. Theor Appl Genet (2023). https://doi.org/10.1007/s00122-023-04264-7"
+  },
+  {
+    "objectID": "test.html#adelie-tbl-adelie",
+    "href": "test.html#adelie-tbl-adelie",
+    "title": "Data Publication of BRIWECS Consortium",
+    "section": "Adelie (Table 1)",
+    "text": "Adelie (Table 1)\n\n\n\n\nTable 1: Adelie\n\n\n\n\n\n\n\n\n\n\nAdelie\n\n\nisland\nbill_length_mm\nbill_depth_mm\nflipper_length_mm\nbody_mass_g\nsex\nyear\n\n\n\n\nTorgersen\n39.1\n18.7\n181\n3750\nmale\n2007\n\n\nTorgersen\n39.5\n17.4\n186\n3800\nfemale\n2007\n\n\nTorgersen\n40.3\n18.0\n195\n3250\nfemale\n2007\n\n\nTorgersen\nNA\nNA\nNA\nNA\nNA\n2007\n\n\nTorgersen\n36.7\n19.3\n193\n3450\nfemale\n2007\n\n\nTorgersen\n39.3\n20.6\n190\n3650\nmale\n2007"
+  },
+  {
+    "objectID": "test.html#chinstrap-tbl-chinstrap",
+    "href": "test.html#chinstrap-tbl-chinstrap",
+    "title": "Data Publication of BRIWECS Consortium",
+    "section": "Chinstrap (Table 2)",
+    "text": "Chinstrap (Table 2)\n\n\n\n\nTable 2: Chinstrap\n\n\n\n\n\n\n\n\n\n\nChinstrap\n\n\nisland\nbill_length_mm\nbill_depth_mm\nflipper_length_mm\nbody_mass_g\nsex\nyear\n\n\n\n\nDream\n46.5\n17.9\n192\n3500\nfemale\n2007\n\n\nDream\n50.0\n19.5\n196\n3900\nmale\n2007\n\n\nDream\n51.3\n19.2\n193\n3650\nmale\n2007\n\n\nDream\n45.4\n18.7\n188\n3525\nfemale\n2007\n\n\nDream\n52.7\n19.8\n197\n3725\nmale\n2007\n\n\nDream\n45.2\n17.8\n198\n3950\nfemale\n2007"
+  },
+  {
+    "objectID": "test.html#gentoo-tbl-gentoo",
+    "href": "test.html#gentoo-tbl-gentoo",
+    "title": "Data Publication of BRIWECS Consortium",
+    "section": "Gentoo (Table 3)",
+    "text": "Gentoo (Table 3)\n\n\n\n\nTable 3: Gentoo\n\n\n\n\n\n\n\n\n\n\nGentoo\n\n\nisland\nbill_length_mm\nbill_depth_mm\nflipper_length_mm\nbody_mass_g\nsex\nyear\n\n\n\n\nBiscoe\n46.1\n13.2\n211\n4500\nfemale\n2007\n\n\nBiscoe\n50.0\n16.3\n230\n5700\nmale\n2007\n\n\nBiscoe\n48.7\n14.1\n210\n4450\nfemale\n2007\n\n\nBiscoe\n50.0\n15.2\n218\n5700\nmale\n2007\n\n\nBiscoe\n47.6\n14.5\n215\n5400\nmale\n2007\n\n\nBiscoe\n46.5\n13.5\n210\n4550\nfemale\n2007"
+  },
+  {
+    "objectID": "test.html#seedyield-fig-seedyield",
+    "href": "test.html#seedyield-fig-seedyield",
+    "title": "Data Publication of BRIWECS Consortium",
+    "section": "Seedyield (?@fig-Seedyield)",
+    "text": "Seedyield (?@fig-Seedyield)\nWarning: Using an external vector in selections was deprecated in tidyselect 1.1.0.\ni Please use `all_of()` or `any_of()` instead.\n  # Was:\n  data %&gt;% select(tr)\n\n  # Now:\n  data %&gt;% select(all_of(tr))\n\nSee &lt;https://tidyselect.r-lib.org/reference/faq-external-vector.html&gt;.\nScale for fill is already present.\nAdding another scale for fill, which will replace the existing scale.\n\n\nPicking joint bandwidth of 0.294\n\n\n\n\nTable 1\n\n\n\n\n\n\nSeedyield-dp\n\n\n\n\n\n\n\n\n\n\n\nTable 2\n\n\n\n\n\n\nSeedyield-cp"
+  },
+  {
+    "objectID": "test.html#seedyield_bio-fig-seedyield_bio",
+    "href": "test.html#seedyield_bio-fig-seedyield_bio",
+    "title": "Data Publication of BRIWECS Consortium",
+    "section": "Seedyield_bio (?@fig-Seedyield_bio)",
+    "text": "Seedyield_bio (?@fig-Seedyield_bio)\nScale for fill is already present.\nAdding another scale for fill, which will replace the existing scale.\n\n\nPicking joint bandwidth of 0.294\n\n\n\n\nTable 3\n\n\n\n\n\n\nSeedyield_bio-dp\n\n\n\n\n\n\n\n\n\n\n\nTable 4\n\n\n\n\n\n\nSeedyield_bio-cp"
+  },
+  {
+    "objectID": "test.html#biomass_bio-fig-biomass_bio",
+    "href": "test.html#biomass_bio-fig-biomass_bio",
+    "title": "Data Publication of BRIWECS Consortium",
+    "section": "Biomass_bio (?@fig-Biomass_bio)",
+    "text": "Biomass_bio (?@fig-Biomass_bio)\nScale for fill is already present.\nAdding another scale for fill, which will replace the existing scale.\n\n\nPicking joint bandwidth of 0.294\n\n\n\n\nTable 5\n\n\n\n\n\n\nBiomass_bio-dp\n\n\n\n\n\n\n\n\n\n\n\nTable 6\n\n\n\n\n\n\nBiomass_bio-cp"
+  },
+  {
+    "objectID": "test.html#harvest_index_bio-fig-harvest_index_bio",
+    "href": "test.html#harvest_index_bio-fig-harvest_index_bio",
+    "title": "Data Publication of BRIWECS Consortium",
+    "section": "Harvest_Index_bio (?@fig-Harvest_Index_bio)",
+    "text": "Harvest_Index_bio (?@fig-Harvest_Index_bio)\nScale for fill is already present.\nAdding another scale for fill, which will replace the existing scale.\n\n\nPicking joint bandwidth of 0.294\n\n\n\n\nTable 7\n\n\n\n\n\n\nHarvest_Index_bio-dp\n\n\n\n\n\n\n\n\n\n\n\nTable 8\n\n\n\n\n\n\nHarvest_Index_bio-cp"
+  },
+  {
+    "objectID": "test.html#tgw-fig-tgw",
+    "href": "test.html#tgw-fig-tgw",
+    "title": "Data Publication of BRIWECS Consortium",
+    "section": "TGW (?@fig-TGW)",
+    "text": "TGW (?@fig-TGW)\nScale for fill is already present.\nAdding another scale for fill, which will replace the existing scale.\n\n\nPicking joint bandwidth of 0.294\n\n\n\n\nTable 9\n\n\n\n\n\n\nTGW-dp\n\n\n\n\n\n\n\n\n\n\n\nTable 10\n\n\n\n\n\n\nTGW-cp"
+  },
+  {
+    "objectID": "test.html#tgw_bio-fig-tgw_bio",
+    "href": "test.html#tgw_bio-fig-tgw_bio",
+    "title": "Data Publication of BRIWECS Consortium",
+    "section": "TGW_bio (?@fig-TGW_bio)",
+    "text": "TGW_bio (?@fig-TGW_bio)\nScale for fill is already present.\nAdding another scale for fill, which will replace the existing scale.\n\n\nPicking joint bandwidth of 0.294\n\n\n\n\nTable 11\n\n\n\n\n\n\nTGW_bio-dp\n\n\n\n\n\n\n\n\n\n\n\nTable 12\n\n\n\n\n\n\nTGW_bio-cp"
+  },
+  {
+    "objectID": "test.html#spike_number_bio-fig-spike_number_bio",
+    "href": "test.html#spike_number_bio-fig-spike_number_bio",
+    "title": "Data Publication of BRIWECS Consortium",
+    "section": "Spike_number_bio (?@fig-Spike_number_bio)",
+    "text": "Spike_number_bio (?@fig-Spike_number_bio)\nScale for fill is already present.\nAdding another scale for fill, which will replace the existing scale.\n\n\nPicking joint bandwidth of 0.294\n\n\n\n\nTable 13\n\n\n\n\n\n\nSpike_number_bio-dp\n\n\n\n\n\n\n\n\n\n\n\nTable 14\n\n\n\n\n\n\nSpike_number_bio-cp"
+  },
+  {
+    "objectID": "test.html#plantheight_bio-fig-plantheight_bio",
+    "href": "test.html#plantheight_bio-fig-plantheight_bio",
+    "title": "Data Publication of BRIWECS Consortium",
+    "section": "Plantheight_bio (?@fig-Plantheight_bio)",
+    "text": "Plantheight_bio (?@fig-Plantheight_bio)\nScale for fill is already present.\nAdding another scale for fill, which will replace the existing scale.\n\n\nPicking joint bandwidth of 0.294\n\n\n\n\nTable 15\n\n\n\n\n\n\nPlantheight_bio-dp\n\n\n\n\n\n\n\n\n\n\n\nTable 16\n\n\n\n\n\n\nPlantheight_bio-cp"
+  },
+  {
+    "objectID": "test.html#seedyield-fig-seedyield-dpfig-seedyield-cp",
+    "href": "test.html#seedyield-fig-seedyield-dpfig-seedyield-cp",
+    "title": "Data Publication of BRIWECS Consortium",
+    "section": "",
+    "text": "Figure 1: Seedyield-distribution\n\n\n\n\n\n\n\n\n\n\n\n\n\nFigure 2: Seedyield-correlation"
+  },
+  {
+    "objectID": "test.html#seedyield_bio-fig-seedyield_bio-dpfig-seedyield_bio-cp",
+    "href": "test.html#seedyield_bio-fig-seedyield_bio-dpfig-seedyield_bio-cp",
+    "title": "Data Publication of BRIWECS Consortium",
+    "section": "Seedyield_bio (Figure 3)(Figure 4)",
+    "text": "Seedyield_bio (Figure 3)(Figure 4)\nScale for fill is already present.\nAdding another scale for fill, which will replace the existing scale.\n\n\nPicking joint bandwidth of 35.5\n\n\nPicking joint bandwidth of 44.9\n\n\nPicking joint bandwidth of 44.1\n\n\nWarning: Removed 3989 rows containing non-finite outside the scale range\n(`stat_density_ridges()`).\n\n\n\n\n\n\n\n\nFigure 3: Seedyield_bio-distribution\n\n\n\n\n\n\n\n\n\n\n\n\n\nFigure 4: Seedyield_bio-correlation"
+  },
+  {
+    "objectID": "test.html#biomass_bio-fig-biomass_bio-dpfig-biomass_bio-cp",
+    "href": "test.html#biomass_bio-fig-biomass_bio-dpfig-biomass_bio-cp",
+    "title": "Data Publication of BRIWECS Consortium",
+    "section": "3 Biomass_bio (Figure 6)(Figure 7)",
+    "text": "3 Biomass_bio (Figure 6)(Figure 7)\n\n\n\n\n\n\n\n\nFigure 6: Biomass_bio-distribution\n\n\n\n\n\n\n\n\n\n\n\n\n\nFigure 7: Biomass_bio-correlation"
+  },
+  {
+    "objectID": "test.html#harvest_index_bio-fig-harvest_index_bio-dpfig-harvest_index_bio-cp",
+    "href": "test.html#harvest_index_bio-fig-harvest_index_bio-dpfig-harvest_index_bio-cp",
+    "title": "Data Publication of BRIWECS Consortium",
+    "section": "4 Harvest_Index_bio (Figure 8)(Figure 9)",
+    "text": "4 Harvest_Index_bio (Figure 8)(Figure 9)\n\n\n\n\n\n\n\n\nFigure 8: Harvest_Index_bio-distribution\n\n\n\n\n\n\n\n\n\n\n\n\n\nFigure 9: Harvest_Index_bio-correlation"
+  },
+  {
+    "objectID": "test.html#tgw-fig-tgw-dpfig-tgw-cp",
+    "href": "test.html#tgw-fig-tgw-dpfig-tgw-cp",
+    "title": "Data Publication of BRIWECS Consortium",
+    "section": "5 TGW (Figure 10)(Figure 11)",
+    "text": "5 TGW (Figure 10)(Figure 11)\n\n\n\n\n\n\n\n\nFigure 10: TGW-distribution\n\n\n\n\n\n\n\n\n\n\n\n\n\nFigure 11: TGW-correlation"
+  },
+  {
+    "objectID": "test.html#tgw_bio-fig-tgw_bio-dpfig-tgw_bio-cp",
+    "href": "test.html#tgw_bio-fig-tgw_bio-dpfig-tgw_bio-cp",
+    "title": "Data Publication of BRIWECS Consortium",
+    "section": "6 TGW_bio (Figure 12)(Figure 13)",
+    "text": "6 TGW_bio (Figure 12)(Figure 13)\n\n\n\n\n\n\n\n\nFigure 12: TGW_bio-distribution\n\n\n\n\n\n\n\n\n\n\n\n\n\nFigure 13: TGW_bio-correlation"
+  },
+  {
+    "objectID": "test.html#spike_number_bio-fig-spike_number_bio-dpfig-spike_number_bio-cp",
+    "href": "test.html#spike_number_bio-fig-spike_number_bio-dpfig-spike_number_bio-cp",
+    "title": "Data Publication of BRIWECS Consortium",
+    "section": "7 Spike_number_bio (Figure 14)(Figure 15)",
+    "text": "7 Spike_number_bio (Figure 14)(Figure 15)\n\n\n\n\n\n\n\n\nFigure 14: Spike_number_bio-distribution\n\n\n\n\n\n\n\n\n\n\n\n\n\nFigure 15: Spike_number_bio-correlation"
+  },
+  {
+    "objectID": "test.html#plantheight_bio-fig-plantheight_bio-dpfig-plantheight_bio-cp",
+    "href": "test.html#plantheight_bio-fig-plantheight_bio-dpfig-plantheight_bio-cp",
+    "title": "Data Publication of BRIWECS Consortium",
+    "section": "8 Plantheight_bio (Figure 16)(Figure 17)",
+    "text": "8 Plantheight_bio (Figure 16)(Figure 17)\n\n\n\n\n\n\n\n\nFigure 16: Plantheight_bio-distribution\n\n\n\n\n\n\n\n\n\n\n\n\n\nFigure 17: Plantheight_bio-correlation"
+  },
+  {
+    "objectID": "test.html#seedyield_bio-fig-seedyield_bio-dpfig-seedyield_bio-cpfig-seedyield_bio-cpp",
+    "href": "test.html#seedyield_bio-fig-seedyield_bio-dpfig-seedyield_bio-cpfig-seedyield_bio-cpp",
+    "title": "Data Publication of BRIWECS Consortium",
+    "section": "2 Seedyield_bio (Figure 3)(Figure 4)(Figure 5)",
+    "text": "2 Seedyield_bio (Figure 3)(Figure 4)(Figure 5)\n\n\n\n\n\n\n\n\nFigure 3: Seedyield_bio-distribution\n\n\n\n\n\n\n\n\n\n\n\n\n\nFigure 4: Seedyield_bio-correlation\n\n\n\n\n\n\n\n\n\n\n\n\n\nFigure 5: yield vs yield bio-correlation"
+  },
+  {
+    "objectID": "test.html#seedyield",
+    "href": "test.html#seedyield",
+    "title": "Data Publication of BRIWECS Consortium",
+    "section": "2 Seedyield",
+    "text": "2 Seedyield\n\n\n\n\n\n\n\n\nFigure 1: Seedyield-distribution\n\n\n\n\n\n\n\n\n\n\n\n\n\nFigure 2: Seedyield-correlation"
+  },
+  {
+    "objectID": "test.html#seedyield_bio",
+    "href": "test.html#seedyield_bio",
+    "title": "Data Publication of BRIWECS Consortium",
+    "section": "3 Seedyield_bio",
+    "text": "3 Seedyield_bio\n\n\n\n\n\n\n\n\nFigure 3: Seedyield_bio-distribution\n\n\n\n\n\n\n\n\n\n\n\n\n\nFigure 4: Seedyield_bio-correlation\n\n\n\n\n\n\n\n\n\n\n\n\n\nFigure 5: yield vs yield bio-correlation"
+  },
+  {
+    "objectID": "test.html#biomass_bio",
+    "href": "test.html#biomass_bio",
+    "title": "Data Publication of BRIWECS Consortium",
+    "section": "4 Biomass_bio",
+    "text": "4 Biomass_bio\n\n\n\n\n\n\n\n\nFigure 6: Biomass_bio-distribution\n\n\n\n\n\n\n\n\n\n\n\n\n\nFigure 7: Biomass_bio-correlation"
+  },
+  {
+    "objectID": "test.html#harvest_index_bio",
+    "href": "test.html#harvest_index_bio",
+    "title": "Data Publication of BRIWECS Consortium",
+    "section": "5 Harvest_Index_bio",
+    "text": "5 Harvest_Index_bio\n\n\n\n\n\n\n\n\nFigure 8: Harvest_Index_bio-distribution\n\n\n\n\n\n\n\n\n\n\n\n\n\nFigure 9: Harvest_Index_bio-correlation"
+  },
+  {
+    "objectID": "test.html#tgw",
+    "href": "test.html#tgw",
+    "title": "Data Publication of BRIWECS Consortium",
+    "section": "6 TGW",
+    "text": "6 TGW\n\n\n\n\n\n\n\n\nFigure 10: TGW-distribution\n\n\n\n\n\n\n\n\n\n\n\n\n\nFigure 11: TGW-correlation"
+  },
+  {
+    "objectID": "test.html#tgw_bio",
+    "href": "test.html#tgw_bio",
+    "title": "Data Publication of BRIWECS Consortium",
+    "section": "7 TGW_bio",
+    "text": "7 TGW_bio\n\n\n\n\n\n\n\n\nFigure 12: TGW_bio-distribution\n\n\n\n\n\n\n\n\n\n\n\n\n\nFigure 13: TGW_bio-correlation"
+  },
+  {
+    "objectID": "test.html#spike_number_bio",
+    "href": "test.html#spike_number_bio",
+    "title": "Data Publication of BRIWECS Consortium",
+    "section": "8 Spike_number_bio",
+    "text": "8 Spike_number_bio\n\n\n\n\n\n\n\n\nFigure 14: Spike_number_bio-distribution\n\n\n\n\n\n\n\n\n\n\n\n\n\nFigure 15: Spike_number_bio-correlation"
+  },
+  {
+    "objectID": "test.html#plantheight_bio",
+    "href": "test.html#plantheight_bio",
+    "title": "Data Publication of BRIWECS Consortium",
+    "section": "9 Plantheight_bio",
+    "text": "9 Plantheight_bio\n\n\n\n\n\n\n\n\nFigure 16: Plantheight_bio-distribution\n\n\n\n\n\n\n\n\n\n\n\n\n\nFigure 17: Plantheight_bio-correlation"
+  },
+  {
+    "objectID": "test.html#phenology",
+    "href": "test.html#phenology",
+    "title": "Data Publication of BRIWECS Consortium",
+    "section": "2 Phenology",
+    "text": "2 Phenology\n\n2.1 Emergence_date\n\n\n\n\n\n\n\n\nFigure 18: Emergence_date-distribution\n\n\n\n\n\n\n\n2.2 BBCH59\n\n\n\n\n\n\n\n\nFigure 19: BBCH59-distribution\n\n\n\n\n\n\n\n\n\n\n\n\n\nFigure 20: BBCH59-correlation\n\n\n\n\n\n\n\n2.3 BBCH87\n\n\n\n\n\n\n\n\nFigure 21: BBCH87-distribution\n\n\n\n\n\n\n\n\n\n\n\n\n\nFigure 22: BBCH87-correlation"
+  },
+  {
+    "objectID": "test.html#yield-and-yield-components",
+    "href": "test.html#yield-and-yield-components",
+    "title": "Data Publication of BRIWECS Consortium",
+    "section": "",
+    "text": "Figure 1: Seedyield-distribution\n\n\n\n\n\n\n\n\n\n\n\n\n\nFigure 2: Seedyield-correlation\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nFigure 3: Seedyield_bio-distribution\n\n\n\n\n\n\n\n\n\n\n\n\n\nFigure 4: Seedyield_bio-correlation\n\n\n\n\n\n\n\n\n\n\n\n\n\nFigure 5: yield vs yield bio-correlation\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nFigure 6: Biomass_bio-distribution\n\n\n\n\n\n\n\n\n\n\n\n\n\nFigure 7: Biomass_bio-correlation\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nFigure 8: Harvest_Index_bio-distribution\n\n\n\n\n\n\n\n\n\n\n\n\n\nFigure 9: Harvest_Index_bio-correlation\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nFigure 10: TGW-distribution\n\n\n\n\n\n\n\n\n\n\n\n\n\nFigure 11: TGW-correlation\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nFigure 12: TGW_bio-distribution\n\n\n\n\n\n\n\n\n\n\n\n\n\nFigure 13: TGW_bio-correlation\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nFigure 14: Spike_number_bio-distribution\n\n\n\n\n\n\n\n\n\n\n\n\n\nFigure 15: Spike_number_bio-correlation\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nFigure 16: Plantheight_bio-distribution\n\n\n\n\n\n\n\n\n\n\n\n\n\nFigure 17: Plantheight_bio-correlation"
+  },
+  {
+    "objectID": "test.html#pathogens",
+    "href": "test.html#pathogens",
+    "title": "Data Publication of BRIWECS Consortium",
+    "section": "3 Pathogens",
+    "text": "3 Pathogens\n\n3.1 Stripe_rust\n\n\n\n\n\n\n\n\nFigure 23: Stripe_rust-distribution\n\n\n\n\n\n\n\n3.2 Powdery_mildew\n\n\n\n\n\n\n\n\nFigure 24: Powdery_mildew-distribution\n\n\n\n\n\n\n\n3.3 Leaf_rust\n\n\n\n\n\n\n\n\nFigure 25: Leaf_rust-distribution\n\n\n\n\n\n\n\n3.4 Septoria\n\n\n\n\n\n\n\n\nFigure 26: Septoria-distribution\n\n\n\n\n\n\n\n3.5 DTR\n\n\n\n\n\n\n\n\nFigure 27: DTR-distribution\n\n\n\n\n\n\n\n3.6 Fusarium\n\n\n\n\n\n\n\n\nFigure 28: Fusarium-distribution"
+  },
+  {
+    "objectID": "test.html#yield-quality",
+    "href": "test.html#yield-quality",
+    "title": "Data Publication of BRIWECS Consortium",
+    "section": "4 Yield Quality",
+    "text": "4 Yield Quality\n\n4.1 Sedimentation\n\n\n\n\n\n\n\n\nFigure 29: Sedimentation-distribution\n\n\n\n\n\n\n\n\n\n\n\n\n\nFigure 30: Sedimentation-correlation\n\n\n\n\n\n\n\n4.2 Falling_number\n\n\n\n\n\n\n\n\nFigure 31: Falling_number-distribution\n\n\n\n\n\n\n\n\n\n\n\n\n\nFigure 32: Falling_number-correlation\n\n\n\n\n\n\n\n4.3 Crude_protein\n\n\n\n\n\n\n\n\nFigure 33: Crude_protein-distribution\n\n\n\n\n\n\n\n\n\n\n\n\n\nFigure 34: Crude_protein-correlation\n\n\n\n\n\n\n\n4.4 Protein_yield\n\n\n\n\n\n\n\n\nFigure 35: Protein_yield-distribution\n\n\n\n\n\n\n\n\n\n\n\n\n\nFigure 36: Protein_yield-correlation"
+  },
+  {
+    "objectID": "test.html#management",
+    "href": "test.html#management",
+    "title": "Data Publication of BRIWECS Consortium",
+    "section": "5 Management",
+    "text": "5 Management\n\n\n### `Sowing_date` \n\n\n\n::: {.cell}\n::: {.cell-output-display}\n![Sowing_date-distribution](test_files/figure-html/fig-Sowing_date-dp-1.png){#fig-Sowing_date-dp width=672}\n:::\n:::"
+  },
+  {
+    "objectID": "test.html#principal-component-analyses-to-detect-problematic-data-sets",
+    "href": "test.html#principal-component-analyses-to-detect-problematic-data-sets",
+    "title": "Data Publication of BRIWECS Consortium",
+    "section": "6 Principal Component Analyses to detect problematic data sets",
+    "text": "6 Principal Component Analyses to detect problematic data sets\n\n\nWarning: Setting row names on a tibble is deprecated."
+  },
+  {
+    "objectID": "test.html#weather",
+    "href": "test.html#weather",
+    "title": "Data Publication of BRIWECS Consortium",
+    "section": "6 Weather",
+    "text": "6 Weather\n\n\n\n\n\n\n\n\nFigure 37\n\n\n\n\n\n\n\n\n\n\n\n\n\nFigure 38"
+  },
+  {
+    "objectID": "data_overview.html",
+    "href": "data_overview.html",
+    "title": "Data Publication of BRIWECS Consortium",
+    "section": "",
+    "text": "Figure 1: Seedyield-distribution\n\n\n\n\n\n\n\n\n\n\n\n\n\nFigure 2: Seedyield-correlation\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nFigure 3: Seedyield_bio-distribution\n\n\n\n\n\n\n\n\n\n\n\n\n\nFigure 4: Seedyield_bio-correlation\n\n\n\n\n\n\n\n\n\n\n\n\n\nFigure 5: yield vs yield bio-correlation\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nFigure 6: Biomass_bio-distribution\n\n\n\n\n\n\n\n\n\n\n\n\n\nFigure 7: Biomass_bio-correlation\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nFigure 8: Harvest_Index_bio-distribution\n\n\n\n\n\n\n\n\n\n\n\n\n\nFigure 9: Harvest_Index_bio-correlation\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nFigure 10: TGW-distribution\n\n\n\n\n\n\n\n\n\n\n\n\n\nFigure 11: TGW-correlation\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nFigure 12: TGW_bio-distribution\n\n\n\n\n\n\n\n\n\n\n\n\n\nFigure 13: TGW_bio-correlation\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nFigure 14: Spike_number_bio-distribution\n\n\n\n\n\n\n\n\n\n\n\n\n\nFigure 15: Spike_number_bio-correlation\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nFigure 16: Plantheight_bio-distribution\n\n\n\n\n\n\n\n\n\n\n\n\n\nFigure 17: Plantheight_bio-correlation"
+  },
+  {
+    "objectID": "data_overview.html#yield-and-yield-components",
+    "href": "data_overview.html#yield-and-yield-components",
+    "title": "Data Publication of BRIWECS Consortium",
+    "section": "",
+    "text": "Figure 1: Seedyield-distribution\n\n\n\n\n\n\n\n\n\n\n\n\n\nFigure 2: Seedyield-correlation\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nFigure 3: Seedyield_bio-distribution\n\n\n\n\n\n\n\n\n\n\n\n\n\nFigure 4: Seedyield_bio-correlation\n\n\n\n\n\n\n\n\n\n\n\n\n\nFigure 5: yield vs yield bio-correlation\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nFigure 6: Biomass_bio-distribution\n\n\n\n\n\n\n\n\n\n\n\n\n\nFigure 7: Biomass_bio-correlation\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nFigure 8: Harvest_Index_bio-distribution\n\n\n\n\n\n\n\n\n\n\n\n\n\nFigure 9: Harvest_Index_bio-correlation\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nFigure 10: TGW-distribution\n\n\n\n\n\n\n\n\n\n\n\n\n\nFigure 11: TGW-correlation\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nFigure 12: TGW_bio-distribution\n\n\n\n\n\n\n\n\n\n\n\n\n\nFigure 13: TGW_bio-correlation\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nFigure 14: Spike_number_bio-distribution\n\n\n\n\n\n\n\n\n\n\n\n\n\nFigure 15: Spike_number_bio-correlation\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nFigure 16: Plantheight_bio-distribution\n\n\n\n\n\n\n\n\n\n\n\n\n\nFigure 17: Plantheight_bio-correlation"
   }
 ]
