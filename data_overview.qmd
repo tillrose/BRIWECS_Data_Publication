@@ -151,7 +151,7 @@ for (tr in tr.vec) {
     "#| echo: false",
     sprintf("#| fig-cap: %s-distribution", tr),
     sprintf("#| label: fig-%s-dp", tr),
-     "#| fig.asp: 1.2",
+    "#| fig.asp: 1.2",
     "suppressWarnings(suppressMessages(print(dp)))",
     "```"
   )))
@@ -220,7 +220,7 @@ for (tr in phen.vec) {
     "#| echo: false",
     sprintf("#| fig-cap: %s-distribution", tr),
     sprintf("#| label: fig-%s-dp", tr),
-     "#| fig.asp: 1.2",
+    "#| fig.asp: 1.2",
     "suppressWarnings(suppressMessages(print(dp)))",
     "```"
   )))
@@ -265,7 +265,7 @@ for (tr in path.vec) {
     "#| echo: false",
     sprintf("#| fig-cap: %s-distribution", tr),
     sprintf("#| label: fig-%s-dp", tr),
-     "#| fig.asp: 1.2",
+    "#| fig.asp: 1.2",
     "suppressWarnings(suppressMessages(print(dp)))",
     "```"
   )))
@@ -293,7 +293,7 @@ for (tr in yq.vec) {
     "#| echo: false",
     sprintf("#| fig-cap: %s-distribution", tr),
     sprintf("#| label: fig-%s-dp", tr),
-     "#| fig.asp: 1.2",
+    "#| fig.asp: 1.2",
     "suppressWarnings(suppressMessages(print(dp)))",
     "```"
   )))
@@ -319,16 +319,28 @@ tr <- "Sowing_date"
 cat(
   sprintf(
     "### `%s` ", #(@fig-%s-dp)(@fig-%s-cp)
-    tr))
+    tr),sep="\n")
 
-dp <- distri_plot(complete_dat,tr) %>% suppressWarnings() %>% suppressMessages()
+dp <-ggplot(illu) +
+  aes(x = Sowing_date, y = Environment, fill = Treatment) +
+  theme_classic() +
+  theme(legend.justification = "top") +
+  geom_density_ridges(alpha = 0.75,
+                      jittered_points = TRUE,
+                      position = "raincloud",
+                      point_size = 0.05,
+                      point_alpha = 0.2,
+                      scale = 0) +
+  scale_fill_brewer(palette = "Set1") +
+  scale_x_continuous(limits = c(250, 350))+
+  xlab("days of years") 
 
 cat(sep = "\n", knitr::knit_child(quiet = TRUE, text = c(
   "```{r}",
   "#| echo: false",
   sprintf("#| fig-cap: %s-distribution", tr),
   sprintf("#| label: fig-%s-dp", tr),
-   "#| fig.asp: 1.2",
+  "#| fig.asp: 1.2",
   "suppressWarnings(suppressMessages(print(dp)))",
   "```"
 )))
