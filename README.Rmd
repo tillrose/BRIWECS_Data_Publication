@@ -41,7 +41,8 @@ left_join(unit ,by='trait')%>%
   view_group(.,"trait",c('Full.name',"sample.source","Trait","unit")) %>% 
   arrange(sample.source,trait) %>% 
   relocate(Full.name,sample.source) %>% 
-  rename("trait full name"="Full.name","trait name in\ndata descriptor"="trait",
+  mutate(sample.source=gsub("biomass ","",sample.source)) %>% 
+  rename("trait full name"="Full.name","column name"="trait",
          "trait source"="sample.source","trait range"="Trait") 
 
 ```
@@ -80,7 +81,7 @@ x <- lapply(strsplit(dirst, "/"),
   plyr::rbind.fill(.) %>%
   filter(!is.na(V2)) %>% 
   group_by(V1,V2,V3) %>%
-  reframe(V4 = case_when(n() > 5&(!V3=="pre-processing")~sprintf("%s files",n()-1),
+  reframe(V4 = case_when(n() > 5&(!V3%in%c("pre-processing","figure"))~sprintf("%s files",n()-1),
                            T~V4)) %>% 
   mutate(V2=factor(V2,levels=c("data","metadata","scripts","output","figure"))) %>% 
   arrange(desc(V2)) %>% suppressWarnings()

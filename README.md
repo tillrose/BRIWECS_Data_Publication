@@ -64,7 +64,7 @@ trait full name
 trait source
 </th>
 <th style="text-align:left;">
-trait name in data descriptor
+column name
 </th>
 <th style="text-align:left;">
 trait range
@@ -80,7 +80,7 @@ unit
 above-ground dry biomass
 </td>
 <td style="text-align:left;">
-biomass 50 cm cut
+50 cm cut
 </td>
 <td style="text-align:left;">
 Biomass_bio
@@ -97,7 +97,7 @@ g/m^2
 grains per spike
 </td>
 <td style="text-align:left;">
-biomass 50 cm cut
+50 cm cut
 </td>
 <td style="text-align:left;">
 Grain_per_spike_bio
@@ -114,7 +114,7 @@ Nbr
 harvest index
 </td>
 <td style="text-align:left;">
-biomass 50 cm cut
+50 cm cut
 </td>
 <td style="text-align:left;">
 Harvest_Index_bio
@@ -130,7 +130,7 @@ Harvest_Index_bio
 plant height
 </td>
 <td style="text-align:left;">
-biomass 50 cm cut
+50 cm cut
 </td>
 <td style="text-align:left;">
 Plantheight_bio
@@ -147,7 +147,7 @@ cm
 grain yield
 </td>
 <td style="text-align:left;">
-biomass 50 cm cut
+50 cm cut
 </td>
 <td style="text-align:left;">
 Seedyield_bio
@@ -164,7 +164,7 @@ g/m^2
 spike number
 </td>
 <td style="text-align:left;">
-biomass 50 cm cut
+50 cm cut
 </td>
 <td style="text-align:left;">
 Spike_number_bio
@@ -181,7 +181,7 @@ Nbr /m^2
 thousand grain weight
 </td>
 <td style="text-align:left;">
-biomass 50 cm cut
+50 cm cut
 </td>
 <td style="text-align:left;">
 TGW_bio
