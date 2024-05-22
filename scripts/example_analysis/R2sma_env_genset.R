@@ -2,8 +2,8 @@ rm(list=ls())
 pacman::p_load(dplyr,purrr,foreach,ggplot2,doParallel,toolPhD,ggpmisc)
 source("scripts/fun/Cor_fun.R")
 # -------------------------------------------------------------------------
-tr.vec    <- c('Seedyield','Straw','Harvest_Index_bio','Biomass','TKW','Kernel',
-               "Spike_number_bio",'KperSpike_bio',"BBCH59","BBCH87")
+tr.vec    <- c('Seedyield','Straw','Harvest_Index_bio','Biomass','TGW','Grain',
+               "Spike_number_bio",'Grain_per_spike_bio',"BBCH59","BBCH87")
 BLU       <- readRDS("output/BLUE.RDS") %>% rename(Trait=emmean)
 fraw_data <- read.csv2("output/BRIWECS_data_publication.csv") %>% 
   mutate(across(BBCH59:Protein_yield,as.numeric)) %>% 
@@ -47,8 +47,8 @@ saveRDS(trait_env_list,"output/trait_env_list.RDS",compress = T)
 subdata <-  readRDS("output/BLUE.RDS")%>%
   dplyr::filter(
     trait%in%c('Seedyield','Straw','Harvest_Index_bio',
-               'Biomass','TKW','Kernel',
-               "Spike_number_bio",'KperSpike_bio'),
+               'Biomass','TKW','Grain',
+               "Spike_number_bio",'Grain_per_spike_bio'),
     Treatment%in% c('HN_WF_RF', 'HN_NF_RF', 'LN_NF_RF') )
 
 big.gen <- subdata %>% 

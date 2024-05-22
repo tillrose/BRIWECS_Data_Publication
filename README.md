@@ -94,6 +94,23 @@ g/m^2
 </tr>
 <tr>
 <td style="text-align:left;">
+grains per spike
+</td>
+<td style="text-align:left;">
+biomass 50 cm cut
+</td>
+<td style="text-align:left;">
+Grain_per_spike_bio
+</td>
+<td style="text-align:left;">
+3.6~146.7
+</td>
+<td style="text-align:left;">
+Nbr
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
 harvest index
 </td>
 <td style="text-align:left;">
@@ -106,23 +123,6 @@ Harvest_Index_bio
 0.1~0.8
 </td>
 <td style="text-align:left;">
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-kernels per spike
-</td>
-<td style="text-align:left;">
-biomass 50 cm cut
-</td>
-<td style="text-align:left;">
-KperSpike_bio
-</td>
-<td style="text-align:left;">
-3.6~146.7
-</td>
-<td style="text-align:left;">
-Nbr
 </td>
 </tr>
 <tr>
@@ -178,13 +178,13 @@ Nbr /m^2
 </tr>
 <tr>
 <td style="text-align:left;">
-thousand kernel weight
+thousand grain weight
 </td>
 <td style="text-align:left;">
 biomass 50 cm cut
 </td>
 <td style="text-align:left;">
-TKW_bio
+TGW_bio
 </td>
 <td style="text-align:left;">
 4.7~77.8
@@ -314,13 +314,13 @@ Fusarium
 </tr>
 <tr>
 <td style="text-align:left;">
-number of kernels per unit area
+number of grains per unit area
 </td>
 <td style="text-align:left;">
 whole plot
 </td>
 <td style="text-align:left;">
-Kernel
+Grain
 </td>
 <td style="text-align:left;">
 19.2~5851.5
@@ -467,13 +467,13 @@ Stripe_rust
 </tr>
 <tr>
 <td style="text-align:left;">
-thousand kernel weight
+thousand grain weight
 </td>
 <td style="text-align:left;">
 whole plot
 </td>
 <td style="text-align:left;">
-TKW
+TGW
 </td>
 <td style="text-align:left;">
 2.6~69.5

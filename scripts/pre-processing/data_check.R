@@ -17,7 +17,7 @@ long <- raw  %>%
 # with(long,Trait[grepl("a-z",Trait)])
 fig1_sub <- raw %>% 
   mutate(Environment = paste(Location, Year, sep = "_")) %>%
-  select(Environment,Treatment,Seedyield,Harvest_Index_bio,Kernel,Straw) %>% 
+  select(Environment,Treatment,Seedyield,Harvest_Index_bio,Grain,Straw) %>% 
   tidyr::pivot_longer(Seedyield:Straw,values_to = "trait",names_to="Trait")%>%
   left_join(unit %>% 
               rename(Trait=trait) %>% select(-Full.name),by="Trait") %>% 

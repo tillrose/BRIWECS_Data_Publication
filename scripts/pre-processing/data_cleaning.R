@@ -58,7 +58,7 @@ complete_dat <- complete_dat %>%
          KperSpike=case_when(is.na(TKW_bio)~ 1000*Seedyield_bio/(TKW_plot*Spike_number),
                              T~ 1000*Seedyield_bio/(TKW_bio*Spike_number)),
          TKW = ifelse(is.na(TKW_plot), TKW_bio, TKW_plot), 
-         Kernel= Seedyield*1000/TKW,# set yield back to grain and divide by tkw
+         Grain= Seedyield*1000/TKW,# set yield back to grain and divide by tkw
          Biomass = Seedyield/Harvest_Index,
          Straw = Biomass*(1-Harvest_Index),
          Protein_yield=Seedyield*Crude_protein/100
@@ -95,8 +95,8 @@ export_dat <- complete_dat %>%
                 Biomass_bio, Harvest_Index, TKW_plot, TKW_bio, Spike_number, Stripe_rust,
                 Powdery_mildew, Leaf_rust, Septoria, DTR, Fusarium, Falling_number, Crude_protein, Sedimentation,
                 # !!! new added
-                KperSpike,Kernel,Biomass,Straw,Protein_yield
-  ) %>% 
+                KperSpike,Grain,Biomass,Straw,Protein_yield
+  ) %>% rename(Grain_per_spike=KperSpike,TGW_plot=TKW_plot,TGW_bio=TKW_bio) %>% 
   mutate(across(BBCH59:Protein_yield,as.numeric)) 
 # consistent colnames ------------------------------------------------------------------------
 # unit <- xlsx::read.xlsx("metadata/Unit.xlsx",sheetIndex = 1) %>%
@@ -110,7 +110,8 @@ export_dat <- complete_dat %>%
 
 col_rename <- xlsx::read.xlsx("metadata/Unit.xlsx",sheetIndex = 1) %>%
   select(trait,trait_old) %>% 
-  filter(!trait==trait_old)
+  filter(!trait==trait_old,
+         !trait_old=="Kernel_number_bio")
 # names(raw)
 names(export_dat)[match(col_rename$trait_old,names(export_dat))] <- col_rename$trait
 

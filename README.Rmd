@@ -45,10 +45,10 @@ left_join(unit ,by='trait')%>%
          "trait source"="sample.source","trait range"="Trait") 
 
 ```
+
 ## previous publications
 
-[![Voss-Fels 2019](https://github.com/tillrose/BRIWECS_Data_Publication/blob/main/figure/previous_paper/Kai2019.PNG){#fig-kai  width=160 height=220 .lightbox}](https://www.nature.com/articles/s41477-019-0445-5) [![Rose 2019](https://github.com/tillrose/BRIWECS_Data_Publication/blob/main/figure/previous_paper/Rose_2019.png){#fig-till  width=160 height=220}](https://www.frontiersin.org/journals/plant-science/articles/10.3389/fpls.2019.01521/full) [![Lichthardt 2020](https://github.com/tillrose/BRIWECS_Data_Publication/blob/main/figure/previous_paper/Carolin_2020.png){#fig-carolin width=160 height=220}](https://www.frontiersin.org/journals/plant-science/articles/10.3389/fpls.2019.01771/full) [![Zetzsche 2020](https://github.com/tillrose/BRIWECS_Data_Publication/blob/main/figure/previous_paper/Zetzsche_2020.png){#fig-holger width=160 height=220}](https://www.nature.com/articles/s41598-020-77200-0) [![Sabir 2023](https://github.com/tillrose/BRIWECS_Data_Publication/blob/main/figure/previous_paper/Sabir_2023.png){#fig-kahdija width=160 height=220}](https://www.nature.com/articles/s41477-023-01516-8)
-
+[![Voss-Fels 2019](https://github.com/tillrose/BRIWECS_Data_Publication/blob/main/figure/previous_paper/Kai2019.PNG){#fig-kai .lightbox width="160" height="220"}](https://www.nature.com/articles/s41477-019-0445-5) [![Rose 2019](https://github.com/tillrose/BRIWECS_Data_Publication/blob/main/figure/previous_paper/Rose_2019.png){#fig-till width="160" height="220"}](https://www.frontiersin.org/journals/plant-science/articles/10.3389/fpls.2019.01521/full) [![Lichthardt 2020](https://github.com/tillrose/BRIWECS_Data_Publication/blob/main/figure/previous_paper/Carolin_2020.png){#fig-carolin width="160" height="220"}](https://www.frontiersin.org/journals/plant-science/articles/10.3389/fpls.2019.01771/full) [![Zetzsche 2020](https://github.com/tillrose/BRIWECS_Data_Publication/blob/main/figure/previous_paper/Zetzsche_2020.png){#fig-holger width="160" height="220"}](https://www.nature.com/articles/s41598-020-77200-0) [![Sabir 2023](https://github.com/tillrose/BRIWECS_Data_Publication/blob/main/figure/previous_paper/Sabir_2023.png){#fig-kahdija width="160" height="220"}](https://www.nature.com/articles/s41477-023-01516-8)
 
 ## insturctution
 
@@ -116,13 +116,9 @@ tbl%>%
   kable_classic_2(full_width = F, position = "float_right")
 ```
 
-
-
 ## overview visualizations
 
-
-
-![Fig0. Experiments location and soil properties.](https://github.com/tillrose/BRIWECS_Data_Publication/blob/main/figure/fig0.png){fig-align="center"} 
+![Fig0. Experiments location and soil properties.](https://github.com/tillrose/BRIWECS_Data_Publication/blob/main/figure/fig0.png){fig-align="center"}
 
 ![Fig1. An overview of MET data descriptor of winter wheat containing 24 traits collected across six locations in Germany (GGE, HAN, KAL, KIE, QLB, RHH) with nine managements (HN_WF_RO, LN_NF_IR, HN_NF_IR, HN_WF_IR, HN_WF_RF, LN_WF_IR, HN_NF_RF, LN_NF_RF and LN_WF_RF) during six years (2015-2020).](https://github.com/tillrose/BRIWECS_Data_Publication/blob/main/figure/fig1.png){fig-align="center"}
 

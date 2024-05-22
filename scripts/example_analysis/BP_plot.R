@@ -1,9 +1,9 @@
 rm(list=ls())
 pacman::p_load(dplyr,purrr,ggplot2)
 level_order <- c('HN_WF_RF', 'HN_NF_RF', 'LN_NF_RF') 
-traitlist <- c('Straw','Harvest_Index_bio','TKW',
-               "Spike_number_bio",'KperSpike_bio',
-               'Biomass','Seedyield','Kernel')
+traitlist <- c('Straw','Harvest_Index_bio','TGW',
+               "Spike_number_bio",'Grain_per_spike_bio',
+               'Biomass','Seedyield','Grain')
 
 un <- xlsx::read.xlsx("metadata/Unit.xlsx",sheetIndex = 1) %>% 
   mutate(unit=gsub('\\#','Nbr ',unit),
@@ -17,7 +17,7 @@ blue <- readRDS("output/BLUE.RDS") %>%
                 Year<2018)
 m.gen <- 
   map_dfr(c('Seedyield','Straw','Harvest_Index_bio','Biomass',
-            'TKW','Kernel','KperSpike_bio',"Spike_number_bio") ,function(tr){
+            'TGW','Grain','Grain_per_spike_bio',"Spike_number_bio") ,function(tr){
               
               blue %>% 
                 dplyr::filter(
