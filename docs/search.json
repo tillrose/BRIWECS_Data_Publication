@@ -1,0 +1,65 @@
+[
+  {
+    "objectID": "data_overview.html",
+    "href": "data_overview.html",
+    "title": "Data Publication of BRIWECS Consortium",
+    "section": "",
+    "text": "library(ggplot2)\nlibrary(webr)\nlibrary(dplyr)\n\nfirst.ring &lt;- c(\"Genotype\",\"Locations\",\"Year\",\"Management\") \nsecond.ring &lt;- list(c(\"228 cultivars\",\"year of release\\n1960-2016\",\"SNIP\"),\nc(\"6 locations\",\"soil map\",\"experimental deisgn\"),\nc(\"precipitation\",\"iradiance\",\"temperature\"),\nc(\"plant protection\",\"irrigation\",\"fertilization\"))\nrepid &lt;- purrr::map_dbl(second.ring,~{\nlength(.x)\n})\npheno &lt;- purrr::map2(first.ring,repid,~{\nrep(.x,each=.y)\n}) %&gt;% unlist()\n\n\ntd &lt;- data.frame(phenotype=pheno,factor1=second.ring %&gt;% unlist()) %&gt;% \ngroup_by(phenotype) %&gt;% \nmutate(n=n()) %&gt;% ungroup()\n\nPieDonut(td, aes(phenotype, factor1, count=n),\nexplode = c(1,2,3,4),r0 = .5,\naddDonutLabel = TRUE,\n# family = \"Arial\",\nshowRatioDonut = F, labelposition = 0.2,\nshowRatioPie = F)"
+  },
+  {
+    "objectID": "data_overview.html#overview",
+    "href": "data_overview.html#overview",
+    "title": "Data Publication of BRIWECS Consortium",
+    "section": "",
+    "text": "library(ggplot2)\nlibrary(webr)\nlibrary(dplyr)\n\nfirst.ring &lt;- c(\"Genotype\",\"Locations\",\"Year\",\"Management\") \nsecond.ring &lt;- list(c(\"228 cultivars\",\"year of release\\n1960-2016\",\"SNIP\"),\nc(\"6 locations\",\"soil map\",\"experimental deisgn\"),\nc(\"precipitation\",\"iradiance\",\"temperature\"),\nc(\"plant protection\",\"irrigation\",\"fertilization\"))\nrepid &lt;- purrr::map_dbl(second.ring,~{\nlength(.x)\n})\npheno &lt;- purrr::map2(first.ring,repid,~{\nrep(.x,each=.y)\n}) %&gt;% unlist()\n\n\ntd &lt;- data.frame(phenotype=pheno,factor1=second.ring %&gt;% unlist()) %&gt;% \ngroup_by(phenotype) %&gt;% \nmutate(n=n()) %&gt;% ungroup()\n\nPieDonut(td, aes(phenotype, factor1, count=n),\nexplode = c(1,2,3,4),r0 = .5,\naddDonutLabel = TRUE,\n# family = \"Arial\",\nshowRatioDonut = F, labelposition = 0.2,\nshowRatioPie = F)"
+  },
+  {
+    "objectID": "data_overview.html#agronomic-traits",
+    "href": "data_overview.html#agronomic-traits",
+    "title": "Data Publication of BRIWECS Consortium",
+    "section": "2 Agronomic traits",
+    "text": "2 Agronomic traits\n\n2.1 Seedyield\n\n\n\n\n\n\n\n\nFigure 1: Seedyield-distribution\n\n\n\n\n\n\n\n\n\n\n\n\n\nFigure 2: Seedyield-correlation\n\n\n\n\n\n\n\n2.2 Seedyield_bio\n\n\n\n\n\n\n\n\nFigure 3: Seedyield_bio-distribution\n\n\n\n\n\n\n\n\n\n\n\n\n\nFigure 4: Seedyield_bio-correlation\n\n\n\n\n\nWarning in sprintf(\"#| fig-cap: yield vs yield bio-correlation\", tr): one\nargument not used by format '#| fig-cap: yield vs yield bio-correlation'\n\n\n\n\n\n\n\n\nFigure 5: yield vs yield bio-correlation\n\n\n\n\n\n\n\n2.3 Biomass_bio\n\n\n\n\n\n\n\n\nFigure 6: Biomass_bio-distribution\n\n\n\n\n\n\n\n\n\n\n\n\n\nFigure 7: Biomass_bio-correlation\n\n\n\n\n\n\n\n2.4 Harvest_Index_bio\n\n\n\n\n\n\n\n\nFigure 8: Harvest_Index_bio-distribution\n\n\n\n\n\n\n\n\n\n\n\n\n\nFigure 9: Harvest_Index_bio-correlation\n\n\n\n\n\n\n\n2.5 TGW\n\n\n\n\n\n\n\n\nFigure 10: TGW-distribution\n\n\n\n\n\n\n\n\n\n\n\n\n\nFigure 11: TGW-correlation\n\n\n\n\n\n\n\n2.6 TGW_bio\n\n\n\n\n\n\n\n\nFigure 12: TGW_bio-distribution\n\n\n\n\n\n\n\n\n\n\n\n\n\nFigure 13: TGW_bio-correlation\n\n\n\n\n\n\n\n2.7 Spike_number_bio\n\n\n\n\n\n\n\n\nFigure 14: Spike_number_bio-distribution\n\n\n\n\n\n\n\n\n\n\n\n\n\nFigure 15: Spike_number_bio-correlation\n\n\n\n\n\n\n\n2.8 Plantheight_bio\n\n\n\n\n\n\n\n\nFigure 16: Plantheight_bio-distribution\n\n\n\n\n\n\n\n\n\n\n\n\n\nFigure 17: Plantheight_bio-correlation"
+  },
+  {
+    "objectID": "data_overview.html#yield-quality",
+    "href": "data_overview.html#yield-quality",
+    "title": "Data Publication of BRIWECS Consortium",
+    "section": "3 yield quality",
+    "text": "3 yield quality\n\n3.1 Sedimentation\n\n\n\n\n\n\n\n\nFigure 18: Sedimentation-distribution\n\n\n\n\n\n\n\n\n\n\n\n\n\nFigure 19: Sedimentation-correlation\n\n\n\n\n\n\n\n3.2 Falling_number\n\n\n\n\n\n\n\n\nFigure 20: Falling_number-distribution\n\n\n\n\n\n\n\n\n\n\n\n\n\nFigure 21: Falling_number-correlation\n\n\n\n\n\n\n\n3.3 Crude_protein\n\n\n\n\n\n\n\n\nFigure 22: Crude_protein-distribution\n\n\n\n\n\n\n\n\n\n\n\n\n\nFigure 23: Crude_protein-correlation\n\n\n\n\n\n\n\n3.4 Protein_yield\n\n\n\n\n\n\n\n\nFigure 24: Protein_yield-distribution\n\n\n\n\n\n\n\n\n\n\n\n\n\nFigure 25: Protein_yield-correlation"
+  },
+  {
+    "objectID": "data_overview.html#phenology",
+    "href": "data_overview.html#phenology",
+    "title": "Data Publication of BRIWECS Consortium",
+    "section": "4 Phenology",
+    "text": "4 Phenology\n\n4.1 Emergence_date\n\n\n\n\n\n\n\n\nFigure 26: Emergence_date-distribution\n\n\n\n\n\n\n\n4.2 BBCH59\n\n\n\n\n\n\n\n\nFigure 27: BBCH59-distribution\n\n\n\n\n\n\n\n\n\n\n\n\n\nFigure 28: BBCH59-correlation\n\n\n\n\n\n\n\n4.3 BBCH87\n\n\n\n\n\n\n\n\nFigure 29: BBCH87-distribution\n\n\n\n\n\n\n\n\n\n\n\n\n\nFigure 30: BBCH87-correlation"
+  },
+  {
+    "objectID": "data_overview.html#pathogens",
+    "href": "data_overview.html#pathogens",
+    "title": "Data Publication of BRIWECS Consortium",
+    "section": "5 Pathogens",
+    "text": "5 Pathogens\n\n5.1 Stripe_rust\n\n\n\n\n\n\n\n\nFigure 31: Stripe_rust-distribution\n\n\n\n\n\n\n\n5.2 Powdery_mildew\n\n\n\n\n\n\n\n\nFigure 32: Powdery_mildew-distribution\n\n\n\n\n\n\n\n5.3 Leaf_rust\n\n\n\n\n\n\n\n\nFigure 33: Leaf_rust-distribution\n\n\n\n\n\n\n\n5.4 Septoria\n\n\n\n\n\n\n\n\nFigure 34: Septoria-distribution\n\n\n\n\n\n\n\n5.5 DTR\n\n\n\n\n\n\n\n\nFigure 35: DTR-distribution\n\n\n\n\n\n\n\n5.6 Fusarium\n\n\n\n\n\n\n\n\nFigure 36: Fusarium-distribution"
+  },
+  {
+    "objectID": "data_overview.html#management",
+    "href": "data_overview.html#management",
+    "title": "Data Publication of BRIWECS Consortium",
+    "section": "6 Management",
+    "text": "6 Management\n\n\n### `Sowing_date` \n\n\n\n::: {.cell}\n::: {.cell-output-display}\n![Sowing_date-distribution](data_overview_files/figure-html/fig-Sowing_date-dp-1.png){#fig-Sowing_date-dp width=672}\n:::\n:::"
+  },
+  {
+    "objectID": "data_overview.html#weather",
+    "href": "data_overview.html#weather",
+    "title": "Data Publication of BRIWECS Consortium",
+    "section": "7 Weather",
+    "text": "7 Weather\n\n\n\n\n\n\n\n\nFigure 37\n\n\n\n\n\n\n\n\n\n\n\n\n\nFigure 38"
+  },
+  {
+    "objectID": "data_overview.html#principal-component-analyses-to-detect-problematic-data-sets",
+    "href": "data_overview.html#principal-component-analyses-to-detect-problematic-data-sets",
+    "title": "Data Publication of BRIWECS Consortium",
+    "section": "8 Principal Component Analyses to detect problematic data sets",
+    "text": "8 Principal Component Analyses to detect problematic data sets"
+  }
+]

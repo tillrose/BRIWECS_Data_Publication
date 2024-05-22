@@ -26,13 +26,13 @@ unit<- xlsx::read.xlsx("metadata/Unit.xlsx",sheetIndex = 1) %>%
          xlabel=case_when(unit==" "~trait,
                           T~paste0(trait,"\n(",unit,")")))
 complete_dat <- read.csv2("output/BRIWECS_data_publication.csv") %>% 
-  mutate(across(BBCH59:Protein_yield,as.numeric),
+  mutate(across(c(Sowing_date,BBCH59:Protein_yield),as.numeric),
          Environment = paste(Location, Year, sep = "_")) %>% 
   tidyr::separate(Treatment,into=c("Nitrogen","Fungicide","Water_availability"))
 
 illu  <-  complete_dat %>% 
   group_by(BRISONr, Environment) %>% 
-  summarize(across(BBCH59:Protein_yield,function(x) mean(x, na.rm = TRUE))) %>% 
+  summarize(across(c(Sowing_date,BBCH59:Protein_yield),function(x) mean(x, na.rm = TRUE))) %>% 
   ungroup() %>% 
   mutate_all(~ifelse(is.nan(.), NA, .)) 
 
@@ -42,6 +42,8 @@ tr.vec <- c("Seedyield","Seedyield_bio","Biomass_bio",
 phen.vec <- c("Emergence_date","BBCH59","BBCH87")
 path.vec <- c("Stripe_rust","Powdery_mildew","Leaf_rust","Septoria","DTR","Fusarium")
 yq.vec <- c("Sedimentation","Falling_number","Crude_protein","Protein_yield")
+section_nam<- list("Agronomic traits","yield quality","Phenology","Pathogens")
+tr_list <- list(tr.vec,yq.vec,phen.vec,path.vec)
 distri_plot<- function(complete_dat,tr){
   ggplot(complete_dat) +
     aes(x = .data[[tr]], y = Environment, fill = interaction(Nitrogen,Fungicide)) +
@@ -54,12 +56,7 @@ distri_plot<- function(complete_dat,tr){
       position = "raincloud",
       point_size = 0.05,
       point_alpha = 0.2,
-      scale=.8
-      # alpha = 0.5,
-      #                         size=.8,
-      #                         scale=1,# height
-      #                         rel_min_height=0.005
-    ) +
+      scale=.8) +
     scale_fill_brewer(palette = "Set1") +
     scale_y_discrete(drop=FALSE) +
     xlab(with(unit,xlabel[match(tr,trait)]))+
@@ -116,199 +113,106 @@ weather_dat <- weather_dat %>%
          Month != 8,
          Date > Sowing_date)
 ```
+## Overview
+```{r,warning=FALSE, message=FALSE}
+library(ggplot2)
+library(webr)
+library(dplyr)
 
-## Yield and Yield Components
+first.ring <- c("Genotype","Locations","Year","Management") 
+second.ring <- list(c("228 cultivars","year of release\n1960-2016","SNIP"),
+c("6 locations","soil map","experimental deisgn"),
+c("precipitation","iradiance","temperature"),
+c("plant protection","irrigation","fertilization"))
+repid <- purrr::map_dbl(second.ring,~{
+length(.x)
+})
+pheno <- purrr::map2(first.ring,repid,~{
+rep(.x,each=.y)
+}) %>% unlist()
+
+
+td <- data.frame(phenotype=pheno,factor1=second.ring %>% unlist()) %>% 
+group_by(phenotype) %>% 
+mutate(n=n()) %>% ungroup()
+
+PieDonut(td, aes(phenotype, factor1, count=n),
+explode = c(1,2,3,4),r0 = .5,
+addDonutLabel = TRUE,
+# family = "Arial",
+showRatioDonut = F, labelposition = 0.2,
+showRatioPie = F)
+```
+
 
 ```{r,warning=FALSE, message=FALSE}
 #| echo: false
 #| output: asis
-
-for (tr in tr.vec) {
-  # if (!tr=="Seedyield_bio"){
+for (i in 1:length(section_nam)) {
   cat(
-    sprintf(
-      "### `%s` ", #(@fig-%s-dp)(@fig-%s-cp)
-      tr,
-      tr,tr
-    ),
-    sep = "\n"
-  ) 
-  # }else{
-  #   cat(
-  #     sprintf(
-  #       "### `%s` ", #(@fig-%s-dp)(@fig-%s-cp)(@fig-%s-cpp)
-  #       tr,
-  #       tr,tr,tr
-  #     ),
-  #     sep = "\n"
-  #   ) 
-  # }
+    sprintf("## %s",section_nam[[i]]),
+    sep='\n')
   
-  dp <- distri_plot(complete_dat,tr) %>% suppressWarnings() %>% suppressMessages()
-  cp <- cor_plot(illu,tr) %>%  suppressWarnings() %>% suppressMessages()
-  cat(sep = "\n", knitr::knit_child(quiet = TRUE, text = c(
-    "```{r}",
-    "#| echo: false",
-    sprintf("#| fig-cap: %s-distribution", tr),
-    sprintf("#| label: fig-%s-dp", tr),
-    "#| fig.asp: 1.2",
-    "suppressWarnings(suppressMessages(print(dp)))",
-    "```"
-  )))
-  
-  cat(sep = "\n", knitr::knit_child(quiet = TRUE, text = c(
-    "```{r}",
-    "#| echo: false",
-    sprintf("#| fig-cap: %s-correlation", tr),
-    sprintf("#| label: fig-%s-cp", tr),
-    "#| fig.asp: 1.2",
+  trvec <-  tr_list[[i]] 
+  for (tr in trvec) {
+    cat(
+      sprintf(
+        "### `%s` ",tr),
+      sep = "\n"
+    ) 
+    dp <- distri_plot(complete_dat,tr) %>% suppressWarnings() %>% suppressMessages()
     
-    "cp",
-    "```"
-  )))
-  if (tr=="Seedyield_bio"){
-    cpp <-  suppressMessages(
-      ggplot(illu) + 
-        aes(x = Seedyield*10, y = Seedyield_bio) + 
-        ggtitle("Comparison Combine Harvest and Hand Harvest") +
-        facet_wrap(~Environment, ncol = 5) +
-        theme_minimal() +
-        geom_abline(intercept = 0, slope = 1) +
-        geom_point(shape = 21, colour = "white", fill = "grey40", stroke = 0.2) +
-        geom_smooth(method = "lm", se = FALSE, colour = "orangered2") +
-        ggpmisc::stat_poly_eq(aes(label =  paste(..rr.label.., sep = "~~~~")), 
-                              parse = TRUE, geom = "text_npc", formula = y~x, size = 4) +
-        coord_equal()+
-        xlab("Seedyield")+
-        NULL
-    )
     cat(sep = "\n", knitr::knit_child(quiet = TRUE, text = c(
       "```{r}",
       "#| echo: false",
-      sprintf("#| fig-cap: yield vs yield bio-correlation", tr),
-      sprintf("#| label: fig-%s-cpp", tr),
-      "#| fig.asp: 1.6",
-      "suppressWarnings(suppressMessages(print(cpp)))",
-      "```"
-    )))
-  }
-  
-  
-  
-}
-```
-
-## Phenology
-
-```{r,warning=FALSE, message=FALSE}
-#| echo: false
-#| output: asis
-
-for (tr in phen.vec) {
-  
-  cat(
-    sprintf(
-      "### `%s` ", #(@fig-%s-dp)(@fig-%s-cp)
-      tr),
-    sep = "\n"
-  ) 
-  
-  dp <- distri_plot(complete_dat,tr) %>% suppressWarnings() %>% suppressMessages()
-  
-  cat(sep = "\n", knitr::knit_child(quiet = TRUE, text = c(
-    "```{r}",
-    "#| echo: false",
-    sprintf("#| fig-cap: %s-distribution", tr),
-    sprintf("#| label: fig-%s-dp", tr),
-    "#| fig.asp: 1.2",
-    "suppressWarnings(suppressMessages(print(dp)))",
-    "```"
-  )))
-  
-  if (!tr=="Emergence_date"){
-    cp <- cor_plot(illu,tr) %>%  suppressWarnings() %>% suppressMessages()
-    cat(sep = "\n", knitr::knit_child(quiet = TRUE, text = c(
-      "```{r}",
-      "#| echo: false",
-      sprintf("#| fig-cap: %s-correlation", tr),
-      sprintf("#| label: fig-%s-cp", tr),
+      sprintf("#| fig-cap: %s-distribution", tr),
+      sprintf("#| label: fig-%s-dp", tr),
       "#| fig.asp: 1.2",
-      "cp",
+      "suppressWarnings(suppressMessages(print(dp)))",
       "```"
     )))
+    
+    if(!tr%in%c("Emergence_date",path.vec)){
+      cp <- cor_plot(illu,tr) %>%  suppressWarnings() %>% suppressMessages()
+      cat(sep = "\n", knitr::knit_child(quiet = TRUE, text = c(
+        "```{r}",
+        "#| echo: false",
+        sprintf("#| fig-cap: %s-correlation", tr),
+        sprintf("#| label: fig-%s-cp", tr),
+        "#| fig.asp: 1.2",
+        "cp",
+        "```"
+      )))
+    }
+    if (tr=="Seedyield_bio"){
+      cpp <-  suppressMessages(
+        ggplot(illu) + 
+          aes(x = Seedyield*10, y = Seedyield_bio) + 
+          ggtitle("Comparison Combine Harvest and Hand Harvest") +
+          facet_wrap(~Environment, ncol = 5) +
+          theme_minimal() +
+          geom_abline(intercept = 0, slope = 1) +
+          geom_point(shape = 21, colour = "white", fill = "grey40", stroke = 0.2) +
+          geom_smooth(method = "lm", se = FALSE, colour = "orangered2") +
+          ggpmisc::stat_poly_eq(aes(label =  paste(..rr.label.., sep = "~~~~")), 
+                                parse = TRUE, geom = "text_npc", formula = y~x, size = 4) +
+          coord_equal()+
+          xlab("Seedyield")+
+          NULL
+      )
+      cat(sep = "\n", knitr::knit_child(quiet = TRUE, text = c(
+        "```{r}",
+        "#| echo: false",
+        sprintf("#| fig-cap: yield vs yield bio-correlation", tr),
+        sprintf("#| label: fig-%s-cpp", tr),
+        "#| fig.asp: 1.6",
+        "suppressWarnings(suppressMessages(print(cpp)))",
+        "```"
+      )))
+    }
+    
+    
   }
-}
-```
-
-## Pathogens
-
-```{r,warning=FALSE, message=FALSE}
-#| echo: false
-#| output: asis
-
-for (tr in path.vec) {
-  
-  cat(
-    sprintf(
-      "### `%s` ", #(@fig-%s-dp)(@fig-%s-cp)
-      tr,
-      tr,tr
-    ),
-    sep = "\n"
-  ) 
-  
-  
-  dp <- distri_plot(complete_dat,tr) %>% suppressWarnings() %>% suppressMessages()
-  
-  cat(sep = "\n", knitr::knit_child(quiet = TRUE, text = c(
-    "```{r}",
-    "#| echo: false",
-    sprintf("#| fig-cap: %s-distribution", tr),
-    sprintf("#| label: fig-%s-dp", tr),
-    "#| fig.asp: 1.2",
-    "suppressWarnings(suppressMessages(print(dp)))",
-    "```"
-  )))
-  
-}
-```
-
-## Yield Quality
-
-```{r,warning=FALSE, message=FALSE}
-#| echo: false
-#| output: asis
-
-for (tr in yq.vec) {
-  
-  cat(
-    sprintf(
-      "### `%s` ", #(@fig-%s-dp)(@fig-%s-cp)
-      tr),sep="\n")
-  
-  dp <- distri_plot(complete_dat,tr) %>% suppressWarnings() %>% suppressMessages()
-  
-  cat(sep = "\n", knitr::knit_child(quiet = TRUE, text = c(
-    "```{r}",
-    "#| echo: false",
-    sprintf("#| fig-cap: %s-distribution", tr),
-    sprintf("#| label: fig-%s-dp", tr),
-    "#| fig.asp: 1.2",
-    "suppressWarnings(suppressMessages(print(dp)))",
-    "```"
-  )))
-  
-  cp <- cor_plot(illu,tr) %>%  suppressWarnings() %>% suppressMessages()
-  cat(sep = "\n", knitr::knit_child(quiet = TRUE, text = c(
-    "```{r}",
-    "#| echo: false",
-    sprintf("#| fig-cap: %s-correlation", tr),
-    sprintf("#| label: fig-%s-cp", tr),
-    "#| fig.asp: 1.2",
-    "cp",
-    "```"
-  )))
-  
 }
 ```
 
@@ -321,10 +225,10 @@ cat(
     "### `%s` ", #(@fig-%s-dp)(@fig-%s-cp)
     tr),sep="\n")
 
-dp <-ggplot(illu) +
-  aes(x = Sowing_date, y = Environment, fill = Treatment) +
+dp <-ggplot(complete_dat) +
+  aes(x = Sowing_date, y = Environment, fill = interaction(Nitrogen,Fungicide)) +
   theme_classic() +
-  theme(legend.justification = "top") +
+  theme(legend.position = "bottom") +
   geom_density_ridges(alpha = 0.75,
                       jittered_points = TRUE,
                       position = "raincloud",
@@ -345,65 +249,6 @@ cat(sep = "\n", knitr::knit_child(quiet = TRUE, text = c(
   "```"
 )))
 ```
-
-<!-- ## Principal Component Analyses to detect problematic data sets -->
-
-<!-- ```{r,echo=FALSE,warning=FALSE,message=FALSE} -->
-
-<!-- #| label: fig-principlecomp" -->
-
-<!-- #|  -->
-
-<!-- reduced_select <- complete_dat %>%  -->
-
-<!--   filter(Nitrogen == "HN",Fungicide=="WF") %>%  -->
-
-<!--   dplyr::select(Environment, Seedyield, Harvest_Index_bio, TGW, Spike_number_bio) %>%  -->
-
-<!--   tidyr::drop_na() %>%  -->
-
-<!--   group_by(Environment) %>%  -->
-
-<!--   summarize_all(.funs = mean) %>%  -->
-
-<!--   ungroup() %>%  -->
-
-<!--   dplyr::select(-Environment) -->
-
-<!-- row.names(reduced_select) <- complete_dat %>%  -->
-
-<!--   filter(Nitrogen == "HN",Fungicide=="WF") %>%  -->
-
-<!--   mutate(Environment = paste(Location, Year, sep = "_")) %>%  -->
-
-<!--   dplyr::select(Environment, Seedyield, Harvest_Index_bio, TGW, Spike_number_bio) %>%  -->
-
-<!--   tidyr::drop_na() %>%  -->
-
-<!--   group_by(Environment) %>%  -->
-
-<!--   summarize_all(.funs = mean) %>%  -->
-
-<!--   ungroup() %>%  -->
-
-<!--   pull(Environment) %>% suppressWarnings() -->
-
-<!-- res.pca <- prcomp(reduced_select, scale = TRUE) %>% suppressWarnings() -->
-
-<!-- # factoextra::fviz_eig(res.pca) -->
-
-<!-- factoextra::fviz_pca_ind(res.pca, -->
-
-<!--                          col.ind = "cos2", # Color by the quality of representation -->
-
-<!--                          gradient.cols = c("#00AFBB", "#E7B800", "#FC4E07"), -->
-
-<!--                          repel = TRUE     # Avoid text overlapping -->
-
-<!-- ) %>% print() -->
-
-<!-- ``` -->
-
 ## Weather
 
 ```{r,echo=FALSE,warning=FALSE,message=FALSE}
@@ -485,7 +330,9 @@ illu <- weather_dat %>%
 
 plot_1 <- 
   ggplot(illu) + 
-  aes(x = Date_Fake, y = Global.Radiation.CumSum_MJ_m2_d - Global.Radiation.CumSum.Mean_MJ_m2_d, colour = Environment) +
+  aes(x = Date_Fake,
+      y = Global.Radiation.CumSum_MJ_m2_d - Global.Radiation.CumSum.Mean_MJ_m2_d,
+      colour = Environment) +
   ggtitle("March to harvest") +
   theme_classic() +
   theme(plot.margin = margin(0.1, 3, 0.1, 0.1, "cm")) +
@@ -514,3 +361,61 @@ plot_1 <-
 plot_1 %>% suppressWarnings()
 
 ```
+## Principal Component Analyses to detect problematic data sets
+
+```{r,echo=FALSE,warning=FALSE,message=FALSE}
+
+#| label: fig-principlecomp"
+
+
+reduced_select <- complete_dat %>%
+
+  filter(Nitrogen == "HN",Fungicide=="WF") %>%
+
+  dplyr::select(Environment, Seedyield, Harvest_Index_bio, TGW, Spike_number_bio) %>%
+
+  tidyr::drop_na() %>%
+
+  group_by(Environment) %>%
+
+  summarize_all(.funs = mean) %>%
+
+  ungroup() %>%
+
+  dplyr::select(-Environment)
+
+row.names(reduced_select) <- complete_dat %>%
+
+  filter(Nitrogen == "HN",Fungicide=="WF") %>%
+
+  mutate(Environment = paste(Location, Year, sep = "_")) %>%
+
+  dplyr::select(Environment, Seedyield, Harvest_Index_bio, TGW, Spike_number_bio) %>%
+
+  tidyr::drop_na() %>%
+
+  group_by(Environment) %>%
+
+  summarize_all(.funs = mean) %>%
+
+  ungroup() %>%
+
+  pull(Environment) %>% suppressWarnings()
+
+res.pca <- prcomp(reduced_select, scale = TRUE) %>% suppressWarnings()
+
+# factoextra::fviz_eig(res.pca)
+
+factoextra::fviz_pca_ind(res.pca,
+
+                         col.ind = "cos2", # Color by the quality of representation
+
+                         gradient.cols = c("#00AFBB", "#E7B800", "#FC4E07"),
+
+                         repel = TRUE     # Avoid text overlapping
+
+) %>% print()
+
+```
+
+
