@@ -5,15 +5,15 @@ always_allow_html: true
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
-# BRIWECS_Data_Publication
+[![Website - pkgdown](https://img.shields.io/badge/data-visulaization-blue)](https://tillrose.github.io/BRIWECS_Data_Publication/data_overview.html) [![Project-website](https://img.shields.io/badge/Project-website-darkgreen)](https://www.igps.uni-hannover.de/de/forschung/forschungsprojekte/detailansicht/projects/forschungsverbund-briwecs)
+
+![Breeding Innovations in Wheat for Efficient Cropping Systems (BRIWECS).](https://github.com/tillrose/BRIWECS_Data_Publication/blob/main/figure/BRIWECS_logo.png){fig-align="right"}
 
 ## A collaborative work on a data publication for the seasons 2015–2019 of the BRIWECS consortium
 
-[![Website - pkgdown](https://img.shields.io/badge/data-overview-blue)](https://tillrose.github.io/BRIWECS_Data_Publication/data_overview.html) [![Project-website](https://img.shields.io/badge/Project-website-darkgreen)](https://www.igps.uni-hannover.de/de/forschung/forschungsprojekte/detailansicht/projects/forschungsverbund-briwecs)
-
 <!-- [![License: GPL-3](https://img.shields.io/badge/License-GPL3-orange)](https://www.r-project.org/Licenses/) -->
 
-```{r setup, include=FALSE}
+```{r setup, include=FALSE,echo=F}
 knitr::opts_chunk$set(echo = TRUE)
 suppressWarnings(library(dplyr));
 # suppressWarnings(library(ggplot2));
@@ -26,8 +26,9 @@ options(dplyr.summarise.inform = FALSE)
 unit<- xlsx::read.xlsx("./metadata/Unit.xlsx",sheetIndex = 1) %>%
   mutate(unit=gsub('\\#','Nbr ',unit),
          unit=gsub('\\*',' x ',unit),
-         unit=ifelse(is.na(unit),' ',unit)
-         )
+         unit=ifelse(is.na(unit),' ',unit),
+         Full.name=gsub("caused.*","",Full.name,perl=T)
+         ) %>% select(-trait_old,-abbrev)
 
 raw <- read.csv2("./output/BRIWECS_data_publication.csv") %>% 
   mutate(across(BBCH59:Protein_yield,as.numeric))
@@ -37,20 +38,28 @@ long <- raw  %>%
   filter(!is.na(Trait)) 
 tbl <- long %>%
 left_join(unit ,by='trait')%>%
-  view_group(.,"trait",c('Full.name',"Trait","unit")) 
+  view_group(.,"trait",c('Full.name',"sample.source","Trait","unit")) %>% 
+  arrange(sample.source,trait) %>% 
+  relocate(Full.name,sample.source) %>% 
+  mutate(sample.source=gsub("biomass ","",sample.source)) %>% 
+  rename("trait full name"="Full.name","column name"="trait",
+         "trait source"="sample.source","trait range"="Trait") 
+
 ```
 
-![](https://github.com/tillrose/BRIWECS_Data_Publication/blob/main/figure/BRIWECS_logo.png){fig-align="right"} 
+## previous publications
 
-## insturctution 
-1. open `BRIWECS_Data_Publication.RProject` 
-2. open `scripts/run.R`
-3. run all `Ctrl + Alt + R`
-![](https://github.com/tillrose/BRIWECS_Data_Publication/blob/main/figure/Instruction.PNG){fig-align="center"}
+[![Voss-Fels 2019](https://github.com/tillrose/BRIWECS_Data_Publication/blob/main/figure/previous_paper/Kai2019.PNG){#fig-kai .lightbox width="160" height="220"}](https://www.nature.com/articles/s41477-019-0445-5) [![Rose 2019](https://github.com/tillrose/BRIWECS_Data_Publication/blob/main/figure/previous_paper/Rose_2019.png){#fig-till width="160" height="220"}](https://www.frontiersin.org/journals/plant-science/articles/10.3389/fpls.2019.01521/full) [![Lichthardt 2020](https://github.com/tillrose/BRIWECS_Data_Publication/blob/main/figure/previous_paper/Carolin_2020.png){#fig-carolin width="160" height="220"}](https://www.frontiersin.org/journals/plant-science/articles/10.3389/fpls.2019.01771/full) [![Zetzsche 2020](https://github.com/tillrose/BRIWECS_Data_Publication/blob/main/figure/previous_paper/Zetzsche_2020.png){#fig-holger width="160" height="220"}](https://www.nature.com/articles/s41598-020-77200-0) [![Sabir 2023](https://github.com/tillrose/BRIWECS_Data_Publication/blob/main/figure/previous_paper/Sabir_2023.png){#fig-kahdija width="160" height="220"}](https://www.nature.com/articles/s41477-023-01516-8)
+
+## insturctution
+
+1.  open `BRIWECS_Data_Publication.RProject`
+2.  open `scripts/run.R`
+3.  run all `Ctrl + Alt + R` ![](https://github.com/tillrose/BRIWECS_Data_Publication/blob/main/figure/Instruction.PNG){fig-align="center"}
 
 ## directory tree
 
-```{r,echo=F,fig.width=8, fig.height=10,warning=F}
+```{r,echo=F,fig.width=10, fig.height=10,warning=F}
 dirs <- list.dirs(path = ".", full.names = TRUE, recursive = TRUE) 
 
 r.target <- paste(c(".git",".Rproj.user",".quarto","gfm","docs"),
@@ -72,7 +81,7 @@ x <- lapply(strsplit(dirst, "/"),
   plyr::rbind.fill(.) %>%
   filter(!is.na(V2)) %>% 
   group_by(V1,V2,V3) %>%
-  reframe(V4 = case_when(n() > 5~sprintf("%s files",n()-1),
+  reframe(V4 = case_when(n() > 5&(!V3%in%c("pre-processing","figure"))~sprintf("%s files",n()-1),
                            T~V4)) %>% 
   mutate(V2=factor(V2,levels=c("data","metadata","scripts","output","figure"))) %>% 
   arrange(desc(V2)) %>% suppressWarnings()
@@ -100,22 +109,18 @@ do.call('rbind',
 
 ```
 
-## unit table
+## trait table
 
 ```{r,echo=F}
-
-
-names(tbl)[1:3]<-c('trait name','full name','trait range') 
-
 tbl%>%
-  kbl(caption = "Table1. trait name, range and unit") %>%
+  kbl(caption = "Table 1. Trait names, sources, ranges and units") %>%
   kable_classic_2(full_width = F, position = "float_right")
-
-
 ```
 
-## overview picture
+## overview visualizations
 
-![](https://github.com/tillrose/BRIWECS_Data_Publication/blob/main/figure/fig1.png){fig-align="center"}
+![Fig1. Experiments location and soil properties.](https://github.com/tillrose/BRIWECS_Data_Publication/blob/main/figure/fig1.png){fig-align="center"}
 
-![](https://github.com/tillrose/BRIWECS_Data_Publication/blob/main/figure/data_point.png){fig-align="center"}
+![Fig2. An overview of MET data descriptor of winter wheat containing 24 traits collected across six locations in Germany (GGE, HAN, KAL, KIE, QLB, RHH) with nine incomplete managements (HN_WF_RO, LN_NF_IR, HN_NF_IR, HN_WF_IR, HN_WF_RF, LN_WF_IR, HN_NF_RF, LN_NF_RF and LN_WF_RF) during six years (2015-2020).](https://github.com/tillrose/BRIWECS_Data_Publication/blob/main/figure/Fig2.png){fig-align="center"}
+
+![Fig3.Scatter plot of 29 combinations of location by year by management (LxYxM) versus 228 genotypes for 24 traits.](https://github.com/tillrose/BRIWECS_Data_Publication/blob/main/figure/Fig3.png){fig-align="center"}
