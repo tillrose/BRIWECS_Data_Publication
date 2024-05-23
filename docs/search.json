@@ -1,51 +1,44 @@
 [
   {
-    "objectID": "data_overview.html#agronomic-traits",
-    "href": "data_overview.html#agronomic-traits",
+    "objectID": "data_overview.html",
+    "href": "data_overview.html",
     "title": "Data Publication of BRIWECS Consortium",
-    "section": "2 Agronomic traits",
-    "text": "2 Agronomic traits\n\n2.1 Seedyield\n\n\n\n\n\n\n\n\nFigure 1: Seedyield-distribution\n\n\n\n\n\n\n\n\n\n\n\n\n\nFigure 2: Seedyield-correlation\n\n\n\n\n\n\n\n2.2 Seedyield_bio\n\n\n\n\n\n\n\n\nFigure 3: Seedyield_bio-distribution\n\n\n\n\n\n\n\n\n\n\n\n\n\nFigure 4: Seedyield_bio-correlation\n\n\n\n\n\nWarning in sprintf(\"#| fig-cap: correlations between whole plot and 50 cm cut\",\n: one argument not used by format '#| fig-cap: correlations between whole plot\nand 50 cm cut'\n\n\n\n\n\n\n\n\nFigure 5: correlations between whole plot and 50 cm cut\n\n\n\n\n\n\n\n2.3 Biomass_bio\n\n\n\n\n\n\n\n\nFigure 6: Biomass_bio-distribution\n\n\n\n\n\n\n\n\n\n\n\n\n\nFigure 7: Biomass_bio-correlation\n\n\n\n\n\n\n\n2.4 Harvest_Index_bio\n\n\n\n\n\n\n\n\nFigure 8: Harvest_Index_bio-distribution\n\n\n\n\n\n\n\n\n\n\n\n\n\nFigure 9: Harvest_Index_bio-correlation\n\n\n\n\n\n\n\n2.5 TGW\n\n\n\n\n\n\n\n\nFigure 10: TGW-distribution\n\n\n\n\n\n\n\n\n\n\n\n\n\nFigure 11: TGW-correlation\n\n\n\n\n\n\n\n2.6 TGW_bio\n\n\n\n\n\n\n\n\nFigure 12: TGW_bio-distribution\n\n\n\n\n\n\n\n\n\n\n\n\n\nFigure 13: TGW_bio-correlation\n\n\n\n\n\n\n\n2.7 Spike_number_bio\n\n\n\n\n\n\n\n\nFigure 14: Spike_number_bio-distribution\n\n\n\n\n\n\n\n\n\n\n\n\n\nFigure 15: Spike_number_bio-correlation\n\n\n\n\n\n\n\n2.8 Plantheight_bio\n\n\n\n\n\n\n\n\nFigure 16: Plantheight_bio-distribution\n\n\n\n\n\n\n\n\n\n\n\n\n\nFigure 17: Plantheight_bio-correlation"
+    "section": "",
+    "text": "### 553283 traits across 6 years, 6 locations and 9 managements\n\n\n\nBRIWECs MET dataset6 LocationsManagementsPrevious publications\n\n\n\n\n\n\n\n\n\n\nFigure 1\n\n\n\n\n\n\n\nFig1. Experiments location and soil properties.\n\n\n\n\n\n\n\n\n\n\n\nFigure 2: overview-management\n\n\n\n\n\n\n\n\n\nTable 1: managements\n\n\n\n\n\n\n\nNitrogen\nFungicide\nWater_availability\n\n\n\n\nHN\nWF\nRO\n\n\nLN\nNF\nIR\n\n\nHN\nNF\nIR\n\n\nHN\nWF\nIR\n\n\nHN\nWF\nRF\n\n\nLN\nNF\nRF\n\n\nHN\nNF\nRF\n\n\nLN\nWF\nIR\n\n\nLN\nWF\nRF"
   },
   {
-    "objectID": "data_overview.html#yield-quality",
-    "href": "data_overview.html#yield-quality",
+    "objectID": "data_overview.html#high-lights",
+    "href": "data_overview.html#high-lights",
     "title": "Data Publication of BRIWECS Consortium",
-    "section": "3 yield quality",
-    "text": "3 yield quality\n\n3.1 Sedimentation\n\n\n\n\n\n\n\n\nFigure 18: Sedimentation-distribution\n\n\n\n\n\n\n\n\n\n\n\n\n\nFigure 19: Sedimentation-correlation\n\n\n\n\n\n\n\n3.2 Falling_number\n\n\n\n\n\n\n\n\nFigure 20: Falling_number-distribution\n\n\n\n\n\n\n\n\n\n\n\n\n\nFigure 21: Falling_number-correlation\n\n\n\n\n\n\n\n3.3 Crude_protein\n\n\n\n\n\n\n\n\nFigure 22: Crude_protein-distribution\n\n\n\n\n\n\n\n\n\n\n\n\n\nFigure 23: Crude_protein-correlation\n\n\n\n\n\n\n\n3.4 Protein_yield\n\n\n\n\n\n\n\n\nFigure 24: Protein_yield-distribution\n\n\n\n\n\n\n\n\n\n\n\n\n\nFigure 25: Protein_yield-correlation"
+    "section": "",
+    "text": "### 553283 traits across 6 years, 6 locations and 9 managements\n\n\n\nBRIWECs MET dataset6 LocationsManagementsPrevious publications\n\n\n\n\n\n\n\n\n\n\nFigure 1\n\n\n\n\n\n\n\nFig1. Experiments location and soil properties.\n\n\n\n\n\n\n\n\n\n\n\nFigure 2: overview-management\n\n\n\n\n\n\n\n\n\nTable 1: managements\n\n\n\n\n\n\n\nNitrogen\nFungicide\nWater_availability\n\n\n\n\nHN\nWF\nRO\n\n\nLN\nNF\nIR\n\n\nHN\nNF\nIR\n\n\nHN\nWF\nIR\n\n\nHN\nWF\nRF\n\n\nLN\nNF\nRF\n\n\nHN\nNF\nRF\n\n\nLN\nWF\nIR\n\n\nLN\nWF\nRF"
   },
   {
-    "objectID": "data_overview.html#phenology",
-    "href": "data_overview.html#phenology",
+    "objectID": "data_overview.html#experimental-designs",
+    "href": "data_overview.html#experimental-designs",
     "title": "Data Publication of BRIWECS Consortium",
-    "section": "4 Phenology",
-    "text": "4 Phenology\n\n4.1 Emergence_date\n\n\n\n\n\n\n\n\nFigure 26: Emergence_date-distribution\n\n\n\n\n\n\n\n4.2 BBCH59\n\n\n\n\n\n\n\n\nFigure 27: BBCH59-distribution\n\n\n\n\n\n\n\n\n\n\n\n\n\nFigure 28: BBCH59-correlation\n\n\n\n\n\n\n\n4.3 BBCH87\n\n\n\n\n\n\n\n\nFigure 29: BBCH87-distribution\n\n\n\n\n\n\n\n\n\n\n\n\n\nFigure 30: BBCH87-correlation"
+    "section": "2 Experimental designs",
+    "text": "2 Experimental designs\n\n201520162017201820192020\n\n\n\n\n\n\n\n\n\n\nFigure 3: 2015-exp\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nFigure 4: 2016-exp\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nFigure 5: 2017-exp\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nFigure 6: 2018-exp\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nFigure 7: 2019-exp\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nFigure 8: 2020-exp"
   },
   {
-    "objectID": "data_overview.html#pathogens",
-    "href": "data_overview.html#pathogens",
+    "objectID": "data_overview.html#traits",
+    "href": "data_overview.html#traits",
     "title": "Data Publication of BRIWECS Consortium",
-    "section": "5 Pathogens",
-    "text": "5 Pathogens\n\n5.1 Stripe_rust\n\n\n\n\n\n\n\n\nFigure 31: Stripe_rust-distribution\n\n\n\n\n\n\n\n5.2 Powdery_mildew\n\n\n\n\n\n\n\n\nFigure 32: Powdery_mildew-distribution\n\n\n\n\n\n\n\n5.3 Leaf_rust\n\n\n\n\n\n\n\n\nFigure 33: Leaf_rust-distribution\n\n\n\n\n\n\n\n5.4 Septoria\n\n\n\n\n\n\n\n\nFigure 34: Septoria-distribution\n\n\n\n\n\n\n\n5.5 DTR\n\n\n\n\n\n\n\n\nFigure 35: DTR-distribution\n\n\n\n\n\n\n\n5.6 Fusarium\n\n\n\n\n\n\n\n\nFigure 36: Fusarium-distribution"
+    "section": "3 24 Traits",
+    "text": "3 24 Traits\n\n\n\n\nTable 2: trait range table\n\n\n\n\n\nTable 1. Trait names, sources, ranges and units\n\n\ntrait full name\ntrait source\ncolumn name\ntrait range\nunit\n\n\n\n\nabove-ground dry biomass\n50 cm cut\nBiomass_bio\n0~3495\ng/m^2\n\n\ngrains per spike\n50 cm cut\nGrain_per_spike_bio\n3.6~146.7\nNbr.\n\n\nharvest index\n50 cm cut\nHarvest_Index_bio\n0.1~0.8\n\n\n\nplant height\n50 cm cut\nPlantheight_bio\n40~145\ncm\n\n\ngrain yield\n50 cm cut\nSeedyield_bio\n28.3~1815\ng/m^2\n\n\nspike number\n50 cm cut\nSpike_number_bio\n48~1390\nNbr./m^2\n\n\nthousand grain weight\n50 cm cut\nTGW_bio\n4.7~77.8\ng\n\n\nday when 75% of the ears are visible\nwhole plot\nBBCH59\n123~181\ndays of year\n\n\nday when 75% hard dough\nwhole plot\nBBCH87\n175~213\ndays of year\n\n\nabove-ground dry biomass\nwhole plot\nBiomass\n14.2~856\ndt/ha\n\n\ncrude protein percentage per grain dry mass\nwhole plot\nCrude_protein\n6.2~21.3\n%\n\n\nleaf tan spot caused by Drechslera tritici-repentis\nwhole plot\nDTR\n0~100\n% leaf area\n\n\nfalling number\nwhole plot\nFalling_number\n60~700\ns\n\n\nfusarium head blight\nwhole plot\nFusarium\n0~27\n% spike\n\n\nnumber of grains per unit area\nwhole plot\nGrain\n19.2~5851.5\nNbr.*10^5/ha\n\n\nleaf rust caused by Puccinia triticina eriks.\nwhole plot\nLeaf_rust\n0~90\n% leaf area\n\n\nleaf powdery mildew\nwhole plot\nPowdery_mildew\n0~100\n% leaf area\n\n\ngrain protein yield\nwhole plot\nProtein_yield\n0~22.2\ndt/ha\n\n\nsedimentation\nwhole plot\nSedimentation\n2.1~95.4\nml\n\n\ngrain yield\nwhole plot\nSeedyield\n0~141.6\ndt/ha\n\n\nleaf spot caused by Septoria tritici\nwhole plot\nSeptoria\n0~80\n% leaf area\n\n\nabove ground biomass substracted by grain yield\nwhole plot\nStraw\n8.9~729.7\ndt/ha\n\n\nstripe rust caused by Puccinia striiformis\nwhole plot\nStripe_rust\n0~100\n% leaf area\n\n\nthousand grain weight\nwhole plot\nTGW\n2.6~69.5\ng"
   },
   {
-    "objectID": "data_overview.html#management",
-    "href": "data_overview.html#management",
+    "objectID": "data_overview.html#ranges-of-trait",
+    "href": "data_overview.html#ranges-of-trait",
     "title": "Data Publication of BRIWECS Consortium",
-    "section": "6 Management",
-    "text": "6 Management\n\n\n### `Sowing_date` \n\n\n\n::: {.cell}\n::: {.cell-output-display}\n![Sowing_date-distribution](data_overview_files/figure-html/fig-Sowing_date-dp-1.png){#fig-Sowing_date-dp width=672}\n:::\n:::"
+    "section": "4 Ranges of trait",
+    "text": "4 Ranges of trait\n\n4.1 Agronomic traits\n\n4.1.1 Seedyield\n\n\n\n\n\n\n\n\nFigure 9: Seedyield-distribution\n\n\n\n\n\n\n\n\n\n\n\n\n\nFigure 10: Seedyield-correlation\n\n\n\n\n\n\n\n4.1.2 Seedyield_bio\n\n\n\n\n\n\n\n\nFigure 11: Seedyield_bio-distribution\n\n\n\n\n\n\n\n\n\n\n\n\n\nFigure 12: Seedyield_bio-correlation\n\n\n\n\n\n\n\n\n\n\n\n\n\nFigure 13: correlations between whole plot and 50 cm cut\n\n\n\n\n\n\n\n4.1.3 Biomass_bio\n\n\n\n\n\n\n\n\nFigure 14: Biomass_bio-distribution\n\n\n\n\n\n\n\n\n\n\n\n\n\nFigure 15: Biomass_bio-correlation\n\n\n\n\n\n\n\n4.1.4 Harvest_Index_bio\n\n\n\n\n\n\n\n\nFigure 16: Harvest_Index_bio-distribution\n\n\n\n\n\n\n\n\n\n\n\n\n\nFigure 17: Harvest_Index_bio-correlation\n\n\n\n\n\n\n\n4.1.5 TGW\n\n\n\n\n\n\n\n\nFigure 18: TGW-distribution\n\n\n\n\n\n\n\n\n\n\n\n\n\nFigure 19: TGW-correlation\n\n\n\n\n\n\n\n4.1.6 TGW_bio\n\n\n\n\n\n\n\n\nFigure 20: TGW_bio-distribution\n\n\n\n\n\n\n\n\n\n\n\n\n\nFigure 21: TGW_bio-correlation\n\n\n\n\n\n\n\n4.1.7 Spike_number_bio\n\n\n\n\n\n\n\n\nFigure 22: Spike_number_bio-distribution\n\n\n\n\n\n\n\n\n\n\n\n\n\nFigure 23: Spike_number_bio-correlation\n\n\n\n\n\n\n\n4.1.8 Plantheight_bio\n\n\n\n\n\n\n\n\nFigure 24: Plantheight_bio-distribution\n\n\n\n\n\n\n\n\n\n\n\n\n\nFigure 25: Plantheight_bio-correlation\n\n\n\n\n\n\n\n\n4.2 Yield quality\n\n4.2.1 Sedimentation\n\n\n\n\n\n\n\n\nFigure 26: Sedimentation-distribution\n\n\n\n\n\n\n\n\n\n\n\n\n\nFigure 27: Sedimentation-correlation\n\n\n\n\n\n\n\n4.2.2 Falling_number\n\n\n\n\n\n\n\n\nFigure 28: Falling_number-distribution\n\n\n\n\n\n\n\n\n\n\n\n\n\nFigure 29: Falling_number-correlation\n\n\n\n\n\n\n\n4.2.3 Crude_protein\n\n\n\n\n\n\n\n\nFigure 30: Crude_protein-distribution\n\n\n\n\n\n\n\n\n\n\n\n\n\nFigure 31: Crude_protein-correlation\n\n\n\n\n\n\n\n4.2.4 Protein_yield\n\n\n\n\n\n\n\n\nFigure 32: Protein_yield-distribution\n\n\n\n\n\n\n\n\n\n\n\n\n\nFigure 33: Protein_yield-correlation\n\n\n\n\n\n\n\n\n4.3 Phenology\n\n4.3.1 Emergence_date\n\n\n\n\n\n\n\n\nFigure 34: Emergence_date-distribution\n\n\n\n\n\n\n\n4.3.2 BBCH59\n\n\n\n\n\n\n\n\nFigure 35: BBCH59-distribution\n\n\n\n\n\n\n\n\n\n\n\n\n\nFigure 36: BBCH59-correlation\n\n\n\n\n\n\n\n4.3.3 BBCH87\n\n\n\n\n\n\n\n\nFigure 37: BBCH87-distribution\n\n\n\n\n\n\n\n\n\n\n\n\n\nFigure 38: BBCH87-correlation\n\n\n\n\n\n\n\n\n4.4 Pathogens\n\n4.4.1 Stripe_rust\n\n\n\n\n\n\n\n\nFigure 39: Stripe_rust-distribution\n\n\n\n\n\n\n\n4.4.2 Powdery_mildew\n\n\n\n\n\n\n\n\nFigure 40: Powdery_mildew-distribution\n\n\n\n\n\n\n\n4.4.3 Leaf_rust\n\n\n\n\n\n\n\n\nFigure 41: Leaf_rust-distribution\n\n\n\n\n\n\n\n4.4.4 Septoria\n\n\n\n\n\n\n\n\nFigure 42: Septoria-distribution\n\n\n\n\n\n\n\n4.4.5 DTR\n\n\n\n\n\n\n\n\nFigure 43: DTR-distribution\n\n\n\n\n\n\n\n4.4.6 Fusarium\n\n\n\n\n\n\n\n\nFigure 44: Fusarium-distribution\n\n\n\n\n\n\n\n\n4.5 Sowing_date\n\n\n\n\n\n\n\n\nFigure 45: Sowing_date-distribution"
   },
   {
     "objectID": "data_overview.html#weather",
     "href": "data_overview.html#weather",
     "title": "Data Publication of BRIWECS Consortium",
-    "section": "7 Weather",
-    "text": "7 Weather\n\n\n\n\n\n\n\n\nFigure 37\n\n\n\n\n\n\n\n\n\n\n\n\n\nFigure 38"
-  },
-  {
-    "objectID": "data_overview.html#principal-component-analyses-to-detect-problematic-data-sets",
-    "href": "data_overview.html#principal-component-analyses-to-detect-problematic-data-sets",
-    "title": "Data Publication of BRIWECS Consortium",
-    "section": "8 Principal Component Analyses to detect problematic data sets",
-    "text": "8 Principal Component Analyses to detect problematic data sets"
+    "section": "5 Weather",
+    "text": "5 Weather\n\n\n\n\n\n\n\n\nFigure 46"
   }
 ]
