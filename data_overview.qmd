@@ -17,7 +17,7 @@ format:
 
 ```{r setup, include=FALSE,echo=F,message=FALSE}
 # knitr::opts_chunk$set(echo=FALSE, warning=FALSE, message=FALSE)
-pacman::p_load(ggplot2,dplyr,ggridges,tidyr,purrr,lubridate,webr,flextable,kableExtra,toolPhD)
+pacman::p_load(ggplot2,dplyr,ggridges,tidyr,purrr,lubridate,webr,scales,flextable,kableExtra,toolPhD)
 unit<- xlsx::read.xlsx("metadata/Unit.xlsx",sheetIndex = 1) %>% 
   mutate(unit=case_when(is.na(unit)~" ",
                         grepl("\\#",unit)~gsub("\\#","Nbr.",unit),
@@ -127,27 +127,26 @@ weather_dat <- weather_dat %>%
          Month != 8,
          Date > Sowing_date)
 ```
-
-
-## High lights
+## Hightlights
+::: {.callout-tip}
 ```{r,warning=FALSE,echo=FALSE, message=FALSE}
+#| output: asis
   cat(
   sprintf(
-  "### %s traits across 6 years, 6 locations and 9 managements",nrow(long)),
+  "## %s traits from 228 genotypes across 6 years, 6 locations and 9 managements",nrow(long)),
   sep = "\n"
   ) 
 ```
-
-::: {.panel-tabset}
-
+:::
+::: panel-tabset
 ## BRIWECs MET dataset
 
 ```{r,warning=FALSE,echo=FALSE, message=FALSE}
 #| label: fig-pie
 first.ring <- c("Genotype","Locations","Year","Management") 
-second.ring <- list(c("228\nwinter wheat\ncultivars","year of release\n1960-2016","8710\nSNIPs"),
-                    c("6 locations","soil map","Germany"),
-                    c("2 phases","climatic\ndata",""),
+second.ring <- list(c("228\nwinter wheat\ncultivars","1960-2016\nyear of release","8710\nSNIPs"),
+                    c("6\nlocations\nin Germany","soil properties","Experimental designs"),
+                    c("2 phases\n2015-2017\n2018-2020","climatic\ndata","sowing/ndate"),
                     c("fungicide","water\navailability","fertilization"))
 repid <- purrr::map_dbl(second.ring,~{
   length(.x)
@@ -170,9 +169,191 @@ PieDonut(td, aes(phenotype, factor1, count=n),
 ```
 
 ## 6 Locations
-[Fig1. Experiments location and soil properties.](./figure/fig1.png)
 
-## Managements
+::: {#tbl-panel}
+| Full name         | Abbreviation |
+|-------------------|:-------------|
+| Gross Gerau       | GGE          |
+| Hannover          | HAN          |
+| Klein Altendorf   | KAL          |
+| Kiel              | KIE          |
+| Quedlinburg       | QLB          |
+| Rauischholzhausen | RHH          |
+:::
+
+```{r, echo=FALSE,warning=FALSE}
+#| output: asis
+#| label: fig-locations
+pacman::p_load(dplyr,readr,sf,ggthemes,rnaturalearth,ggrepel,ggsflabel,ggplot2)
+## Background map
+ctrys <- ne_countries(continent = "europe", scale = 10, type = "countries", returnclass = "sf")
+ctrys <- ctrys %>% 
+  mutate("fill" = "grey90",
+         fill = ifelse(sovereignt == "Germany", "darkgoldenrod1", fill))
+
+locations <- read.csv("metadata/BRIWECS_location_coordinates.csv") %>% 
+  st_as_sf( coords = c("Long", "Lat"), crs = st_crs(ctrys)) 
+names(locations)[1] <- "Location"
+locations <- locations %>% 
+  mutate("nudge" = case_when(Location == "KIE" ~ 2,
+                             Location == "HAN" ~ -2,
+                             Location == "QLB" ~ 2,
+                             Location == "RHH" ~ 2,
+                             Location == "KAL" ~ -2,
+                             Location == "GGE" ~ 2))
+
+locations_1 <- locations %>% 
+  filter(Location %in% c("KIE", "QLB", "RHH", "GGE"))
+locations_2 <- locations %>% 
+  filter(Location %in% c("HAN", "KAL"))
+
+## Map
+p1 <- suppressWarnings(suppressMessages(ggplot() +
+  theme_map() + 
+  theme(
+    panel.background = element_rect(fill = "dodgerblue3",
+                                    colour = "transparent", linewidth = 0.25),
+
+    ) +
+  geom_sf(data = ctrys, aes(fill = fill), colour = "black", size = 0.25) +
+  geom_sf_label_repel(data = locations_1, fill = "white", size = 3, aes(label = Location), nudge_x = 2, label.r = unit(0, "lines")) +
+  geom_sf_label_repel(data = locations_2, fill = "white", size = 3, aes(label = Location), nudge_x = -2, label.r = unit(0, "lines")) +
+  geom_sf(data = locations, shape = 21, fill = "red3", size = 2.5, stroke = 0.5) +
+  coord_sf(xlim = c(-3, 23), ylim = c(43, 59)) +
+  scale_fill_identity()+
+  ggspatial::annotation_north_arrow(location = "tl", 
+                                    pad_x = unit(0.1, "in"), 
+                                    pad_y = unit(0.1, "in"),
+                                    style = ggspatial::north_arrow_nautical(fill = c("grey40", "white"),
+                                                                            line_col = "grey20"))))
+
+
+
+pacman::p_load(dplyr,purrr,toolPhD,ggtern)
+soil<- xlsx::read.xlsx(file="output/soil.xlsx",stringsAsFactors=F,sheetIndex = 1) %>% 
+  mutate(
+    across(Clay:Sand,as.numeric),
+    Sand=1-Clay-Silt,
+    Location=gsub("DKI","KIE",Location)
+  ) %>% distinct()
+data(USDA)
+USDA_text <- USDA  %>% group_by(Label) %>%
+  summarise_if(is.numeric, mean, na.rm = TRUE)
+
+usd <- USDA_text %>% filter(Label%in%c('Sandy Loam','Sand','Silt Loam')) %>% 
+  mutate(soiltype=c('Sandy loam','Sand','Silty loam'))
+
+soil <- bind_rows(soil %>% filter(!is.na(Sand)) ,
+                  soil %>% filter(is.na(Sand)) %>% select(-c(Clay:Sand)) %>% 
+                    left_join(.,usd,"soiltype")
+)
+
+process_data <- function(df) {
+  dfp <- df %>% 
+    group_by(Location,Clay,Silt,Sand) %>%  
+    group_split() %>% 
+    map_dfr(.,function(dff){
+      if(nrow(dff)>1){
+        yf <- dff$Year %>% substr(start = 3,stop = 4) 
+        if(all(yf %>% as.numeric() %>% diff() %>% unique()==1)){
+          yf <- yf%>% range() %>% paste(.,collapse="-")
+        }else{
+          yf <- yf%>% paste(.,collapse="-")
+        }
+        dff[1,] %>% select(Location,Clay,Silt,Sand) %>% mutate(g=paste(Location,yf),
+                                                               year=yf)
+      }else{
+        yf <- dff$Year %>% substr(start = 3,stop = 4) 
+        dff[1,] %>% select(Location,Clay,Silt,Sand) %>% mutate(g=paste(Location,yf),
+                                                               year=yf)
+        
+      }
+    })
+  return(dfp)
+}
+
+#What was recorded in file about the soil type 
+styp <- soil %>% group_by(Location) %>% select(Location,soiltype) %>% distinct()
+# check with plot using three ratio 
+db <- soil %>%process_data() %>% 
+  mutate(across(Clay:Sand,as.numeric)) %>% 
+  na.omit()
+dbm <- db %>% group_by(Location) %>% summarise(across(Clay:Sand,mean))
+p2 <- suppressMessages(ggplot(data = USDA, 
+               aes(
+                 y = Clay,
+                 x = Sand,
+                 z = Silt)) +
+  theme_bw()+
+  coord_tern(L = "x", T = "y", R = "z") +
+  geom_polygon(
+    aes(fill = Label),
+    alpha = 0.0,size = 0.5,
+    color = "black",show.legend = F) +
+  ggalt::geom_encircle(data = db %>% filter(Location%in%c("KIE","GGE")),
+                mapping=aes(color=Location),size=1,alpha=.5, expand=.02,spread=0.001) +
+  geom_text(data = USDA_text,
+            mapping=aes( 
+              label = Label),
+            color = 'darkgray',alpha=.7,fontface="bold",size = 2) +
+  geom_point(
+    data = db,
+    mapping=aes( 
+      color=Location),
+    size=1,shape=1,stroke=.5) +
+  theme_showarrows() +
+  labs(yarrow = "clay (%)",
+       zarrow = "silt (%)",
+       xarrow = "sand(%)") +
+  theme_clockwise() +
+  guides(fill=FALSE, color=FALSE)+
+  geom_text(
+    data = dbm,
+    mapping=aes(label=Location,color=Location),
+    size=2.2,fontface="bold",
+    hjust=+.1,vjust=-0.2,
+    show.legend = F
+  )+
+  geom_text(
+    data = db %>% filter(Location%in%c("KIE","GGE")),
+    mapping=aes(label=year,color=Location),
+    size=2.2,fontface="bold",show.legend = T,
+    hjust=+.1,vjust=-0.2
+  )+
+  theme(axis.title = element_blank())) %>% suppressWarnings()
+cat(sep = "\n", knitr::knit_child(quiet = TRUE, text = c(
+"```{r}",
+"#| echo: false",
+sprintf("#| fig-cap: %s-location", "map"),
+sprintf("#| label: fig-%s-location","map"),
+"suppressWarnings(suppressMessages(print(p1)))",
+"```"
+)))
+
+
+cat(sep = "\n", knitr::knit_child(quiet = TRUE, text = c(
+"```{r}",
+"#| echo: false",
+sprintf("#| fig-cap: %s-location", "soil"),
+sprintf("#| label: fig-%s-loccation", "soil"),
+"suppressWarnings(suppressMessages(print(p2)))",
+"```"
+)))
+
+```
+
+## 9 Managements
+
+Management comprises of three treatments: nitrogen fertilizer, fungicide application and water availability.
+
+-   Nitrogen fertilizer treatment includes two application levels: high (HN: 220 kg N ha^-1^) and low (LN: 110 kg N ha^-1^), both include soil mineral nitrogen (0–90 cm) measured in early spring.
+
+-   Fungicide treatment contains two application levels: with (WF) or without (NF) fungicide application.
+
+-   Water availability treatment has three levels: rain-fed (RF), irrigated (IR) and rainout-shelter treated (RO).
+
+In total, there are 9 managements, while it is incomplete and depends on the location and years (@fig-managements, @tbl-managements).
+
 ```{r,echo=FALSE}
 #| output: asis
 #| title: imbalanced managements across (YxL)
@@ -207,8 +388,8 @@ strip.placement = "outside"
 cat(sep = "\n", knitr::knit_child(quiet = TRUE, text = c(
 "```{r}",
 "#| echo: false",
-sprintf("#| fig-cap: %s-management", tr),
-sprintf("#| label: fig-%s-mp", tr),
+sprintf("#| fig-cap: %s-management", ''),
+sprintf("#| label: fig-%s", 'managements'),
 "suppressWarnings(suppressMessages(print(mp)))",
 "```"
 )))
@@ -227,13 +408,61 @@ tbla <-s %>% select(1:3) %>% distinct() %>% kbl() %>%
   
 ```
 
-## Previous publications
-[![Voss-Fels 2019](./figure/previous_paper/Kai2019.PNG){#fig-kai .lightbox width="160" height="220"}](https://www.nature.com/articles/s41477-019-0445-5) [![Rose 2019](./figure/previous_paper/Rose_2019.png){#fig-till width="160" height="220"}](https://www.frontiersin.org/journals/plant-science/articles/10.3389/fpls.2019.01521/full) [![Lichthardt 2020](./figure/previous_paper/Carolin_2020.png){#fig-carolin width="160" height="220"}](https://www.frontiersin.org/journals/plant-science/articles/10.3389/fpls.2019.01771/full) [![Zetzsche 2020](./figure/previous_paper/Zetzsche_2020.png){#fig-holger width="160" height="220"}](https://www.nature.com/articles/s41598-020-77200-0) [![Sabir 2023](./figure/previous_paper/Sabir_2023.png){#fig-kahdija width="160" height="220"}](https://www.nature.com/articles/s41477-023-01516-8)
-::: 
+## 24 traits, 55k observations
 
+```{r,echo=FALSE, warning=FALSE}
+#| output: asis
+fig2 <- long %>%left_join(unit,"trait")%>% 
+  group_by(trait,sample.source) %>% summarise(n=n(),.groups = "drop") %>% 
+  group_by(sample.source) %>% 
+  mutate(trait = forcats::fct_reorder(trait, n)) %>%
+  ggplot( aes(x=trait, y=n)) +
+  geom_segment( aes(xend=trait, yend=0)) +
+  geom_point( size=4, color="orange") +
+  coord_flip() +
+  ggh4x::facet_nested(sample.source~.,
+                      nest_line=T, 
+                      switch = "y",# place strip to bottom
+                      scales = "free_y",space ="free_y"
+                      # independent = "y"
+  )+
+  ggtitle(sprintf("total number of observation: %s",nrow(long)))+
+  xlab("")+ylab("number of observations")+
+  ggrepel::geom_text_repel(aes(label=n),
+                           size=2.7,
+                           hjust=0,
+                           box.padding = -.1,
+                           point.padding = 0,
+                           nudge_y=0,
+                           # nudge_x=0,
+                           direction="x"
+  )+
+  scale_y_continuous(
+    labels =label_number(scale_cut = cut_short_scale()),
+    limits=c(0,37000)
+  )+
+  toolPhD::theme_phd_facet(b=10,r=10,strp.txt.siz = 8,
+                           plot.title = element_text(size=10))+
+  theme(strip.placement = "outside")
+  
+cat(sep = "\n", knitr::knit_child(quiet = TRUE, text = c(
+"```{r}",
+"#| echo: false",
+sprintf("#| fig-cap: %s-datapoint", tr),
+sprintf("#| label: fig-%s-datapoint", tr),
+"suppressWarnings(suppressMessages(print(fig2)))",
+"```"
+)))  
+```
+
+## Previous publications
+
+[![Voss-Fels 2019](./figure/previous_paper/Kai2019.PNG){#fig-kai .lightbox width="160" height="220"}](https://www.nature.com/articles/s41477-019-0445-5) [![Rose 2019](./figure/previous_paper/Rose_2019.png){#fig-till width="160" height="220"}](https://www.frontiersin.org/journals/plant-science/articles/10.3389/fpls.2019.01521/full) [![Lichthardt 2020](./figure/previous_paper/Carolin_2020.png){#fig-carolin width="160" height="220"}](https://www.frontiersin.org/journals/plant-science/articles/10.3389/fpls.2019.01771/full) [![Zetzsche 2020](./figure/previous_paper/Zetzsche_2020.png){#fig-holger width="160" height="220"}](https://www.nature.com/articles/s41598-020-77200-0) [![Sabir 2023](./figure/previous_paper/Sabir_2023.png){#fig-kahdija width="160" height="220"}](https://www.nature.com/articles/s41477-023-01516-8)
+:::
 
 ## Experimental designs
-::: {.panel-tabset}
+
+::: panel-tabset
 ```{r,echo=FALSE,warning=FALSE,message=FALSE}
 #| output: asis
 data <- read.csv2("output/BRIWECS_data_publication.csv") %>% 
@@ -296,17 +525,18 @@ for(i in 1:length(data_list)){ #
   }
 ```
 :::
+
 ## 24 Traits
 
 ```{r,echo=F}
-#| tbl-cap: "trait range table" 
+#| tbl-cap: "Trait names, sources, ranges and units" 
 #| label: tbl-trait-range-table
 traittbl%>%
-  kbl(caption = "Table 1. Trait names, sources, ranges and units") %>%
+  kbl() %>%
   kable_classic_2(full_width = F, position = "float_right")
-```  
+```
 
-## Ranges of trait
+## Ranges of traits
 
 ```{r,warning=FALSE, message=FALSE}
 #| echo: false
@@ -324,7 +554,9 @@ for (i in 1:length(section_nam)) { #
   sep = "\n"
   ) 
   dp <- distri_plot(complete_dat,tr) %>% suppressWarnings() %>% suppressMessages()
-  
+  if(tr=="Emergence_date"){
+  dp <- dp+xlab("days of year")
+  }
   cat(sep = "\n", knitr::knit_child(quiet = TRUE, text = c(
   "```{r}",
   "#| echo: false",
@@ -376,6 +608,7 @@ for (i in 1:length(section_nam)) { #
   }
 }
 ```
+
 ```{r,echo=FALSE,warning=FALSE,message=FALSE}
 #| output: asis
 tr <- "Sowing_date"
@@ -408,7 +641,7 @@ sprintf("#| label: fig-%s-dp", tr),
 )))
 ```
 
-## Weather
+## Climate data
 
 ```{r,echo=FALSE,warning=FALSE,message=FALSE}
 #| label: fig-precipitation
@@ -467,6 +700,7 @@ wsub <- weather_dat %>%
   plot_1%>% suppressWarnings()
   
 ```
+
 ```{r,echo=FALSE,warning=FALSE,message=FALSE}
   #| label: fig-globalrad
   #Cumulated_Weather_GlobRad
