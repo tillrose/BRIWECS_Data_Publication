@@ -179,6 +179,61 @@ png(filename="figure/Fig3.png",
 figdata
 dev.off()
 
+# -------------------------------------------------------------------------
+
+s <- raw %>% 
+  select(Treatment,Year,Location) %>% 
+  tidyr::separate(Treatment,into=c("nitrogen\nfertilizer","fungicide\napplication","water\navailability")) %>% 
+  distinct() %>% 
+  mutate(phase=case_when(Year<2018~"Phase I",
+                         T~"Phase II") %>%
+           factor(.,levels=c("Phase II","Phase I")),
+         Year=as.character(Year))
+
+tbla <-s %>% select(1:3) %>%
+  distinct() %>% 
+  gridExtra::tableGrob(.,theme=ttheme_minimal(core = list(fg_params=list(cex = .7)),
+                                              colhead = list(fg_params=list(cex = .7)),
+                                              rowhead = list(fg_params=list(cex = .7)))) 
+s <- raw %>% 
+  select(Treatment,Year,Location) %>% 
+  tidyr::separate(Treatment,into=c("Nitrogen","Fungicide","Water_availability")) %>% 
+  distinct() %>% 
+  mutate(phase=case_when(Year<2018~"Phase I",
+                         T~"Phase II") %>%
+           factor(.,levels=c("Phase II","Phase I")),
+         Year=as.character(Year))
+mp <- s%>% 
+  ggplot() +
+  aes(x = interaction(Nitrogen,Fungicide), y = Year, color = interaction(Nitrogen,Fungicide)) +
+  theme_classic() +
+  ggh4x::facet_nested(phase~Water_availability+Location,nest_line = T,
+                      scales="free",space = "free_x",switch = "both",
+  )+
+  scale_color_brewer(palette = "Set1") +
+  geom_point(size=4,shape=15)+
+  theme(legend.position = "bottom",
+        axis.title=element_blank(),
+        strip.text = element_text(size=8),
+        axis.text.y=element_text(size=8),
+        legend.text = element_text(size=10),
+        # axis.line.x.bottom = element_blank(),
+        axis.text.x=element_blank(),
+        axis.ticks.x = element_blank(),
+        strip.background = element_blank(),
+        strip.placement = "outside"
+  )
+figdata <- cowplot::plot_grid(tbla, mp, nrow = 1,rel_widths =  c(1, 3),labels = "AUTO")
+png(filename="figure/FigM.png",
+    type="cairo",
+    units="cm",
+    width=26,
+    height=12,
+    pointsize=3,
+    res=650,# dpi,
+    family="Arial")
+figdata %>% print()
+dev.off()
 # get some number for summary statistics -------------------------------------------------------------------------
 # # how many traits in total 
 # long%>% 
