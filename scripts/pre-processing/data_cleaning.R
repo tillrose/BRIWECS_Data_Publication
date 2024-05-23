@@ -1,6 +1,8 @@
 rm(list=ls())
 #### setup ####
 pacman::p_load(dplyr,purrr,readr,stringr)
+source("scripts/pre-processing/functions.R")
+
 ##### import #####
 complete_dat <- list.files(path = "data/locations",
                            pattern="*.csv",
@@ -8,12 +10,7 @@ complete_dat <- list.files(path = "data/locations",
   map_df(~read_csv2(., col_types = cols(.default = "c")))%>% 
   suppressMessages() %>% 
   # for consistency of location and treatment naming rules
-  mutate(
-    Treatment = stringr::str_replace_all(Treatment, "(D{1,2})", "IR"),# irrigation
-    Treatment=case_when(Location=="DKI"~paste0(Treatment,"_RO"),# rain out shelter
-                        T~Treatment),
-    Location=gsub("DKI","KIE",Location)
-  )
+  treatment_location_name_correction()
 ##### tidy and filter #####
 complete_dat <- complete_dat %>% 
   dplyr::select(-ReifeHoehe,-Kernel_number_bio , -Sorte, -`StrawYield_dt/ha`, -Subblock, -Subtrial) %>% 
@@ -61,12 +58,12 @@ complete_dat <- complete_dat %>%
          KperSpike=case_when(is.na(TKW_bio)~ 1000*Seedyield_bio/(TKW_plot*Spike_number),
                              T~ 1000*Seedyield_bio/(TKW_bio*Spike_number)),
          TKW = ifelse(is.na(TKW_plot), TKW_bio, TKW_plot), 
-         Kernel= Seedyield*1000/TKW,# set yield back to grain and divide by tkw
+         Grain= Seedyield*1000/TKW,# set yield back to grain and divide by tkw
          Biomass = Seedyield/Harvest_Index,
          Straw = Biomass*(1-Harvest_Index),
          Protein_yield=Seedyield*Crude_protein/100
-         ) %>% 
-  filter(Treatment != "LLN_WF",
+  ) %>% 
+  filter(Treatment != "LLN_WF_RF",
          !BRISONr%in%c("BRISONr_?","BRISONr_NA"))
 
 ## Filter Harvest Index by Standard Deviation
@@ -98,8 +95,42 @@ export_dat <- complete_dat %>%
                 Biomass_bio, Harvest_Index, TKW_plot, TKW_bio, Spike_number, Stripe_rust,
                 Powdery_mildew, Leaf_rust, Septoria, DTR, Fusarium, Falling_number, Crude_protein, Sedimentation,
                 # !!! new added
-                KperSpike,Kernel,Biomass,Straw,Protein_yield
-                ) %>% 
+                KperSpike,Grain,Biomass,Straw,Protein_yield
+  ) %>% rename(Grain_per_spike=KperSpike,TGW_plot=TKW_plot,TGW_bio=TKW_bio) %>% 
   mutate(across(BBCH59:Protein_yield,as.numeric)) 
-# ------------------------------------------------------------------------
-write_delim(export_dat, "output/BRIWECS_data_publication.csv", delim = ";")
+# consistent colnames ------------------------------------------------------------------------
+# unit <- xlsx::read.xlsx("metadata/Unit.xlsx",sheetIndex = 1) %>%
+#   mutate(
+#     trait_old=trait,
+#     trait=case_when(!grepl("bio",trait_old,perl=T)&
+#                       sample.source=="biomass 50 cm cut"~paste0(trait_old,"_bio"),
+#                     T~trait_old) %>%
+#       gsub("_plot","",.))
+# xlsx::write.xlsx(unit,"metadata/Unit.xlsx",row.names = F)
+
+col_rename <- xlsx::read.xlsx("metadata/Unit.xlsx",sheetIndex = 1) %>%
+  select(trait,trait_old) %>% 
+  filter(!trait==trait_old,
+         !trait_old=="Kernel_number_bio")
+# names(raw)
+names(export_dat)[match(col_rename$trait_old,names(export_dat))] <- col_rename$trait
+
+# average double rows in KIE 2017-------------------------------------------------------------------------
+tmpr <-export_dat %>% filter(!(BRISONr=="BRISONr_188"&Location=="KIE"&Year==2017&Treatment=="LN_NF_RF"&Block=="B2"))
+tmps <- export_dat %>% filter((BRISONr=="BRISONr_188"&Location=="KIE"&Year==2017&Treatment=="LN_NF_RF"&Block=="B2")) %>% 
+  mutate(Row=24) %>% 
+  group_by_at(c("Row","Column","BRISONr","Year","Treatment","Block","Location")) %>% 
+  summarise_all(mean)
+res <- rbind(tmpr,tmps)
+# -------------------------------------------------------------------------
+write_delim(res, "output/BRIWECS_data_publication.csv", delim = ";")
+# -------------------------------------------------------------------------
+# a <- read.csv("data/cultivar_info.csv") %>% arrange(id)
+# a1 <- read.csv("metadata/BRIWECS_BRISONr_information.csv")
+# 
+# setdiff(a$genotype%>% unlist(),
+#         a1$genotype%>% unlist()) %>% sort()
+# setdiff(a1$genotype%>% unlist(),
+#         a$genotype%>% unlist()) %>% sort()
+# 
+# setdiff(a$kai,a1$breeding_progress_subset)

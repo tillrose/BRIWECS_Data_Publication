@@ -59,9 +59,11 @@ Management<- map(mana_list,~{
   })
 })
 
-nitrogen <- Management  %>% map_dfr(.,~{.x[[1]]}) 
-plant <- Management  %>% map_dfr(.,~{.x[[2]]}) %>% rename(Chemical=Notice)
-disease <- Management  %>% map_dfr(.,~{.x[[3]]})%>% rename(Note=Date)
+source("scripts/pre-processing/functions.R")
+nitrogen <- Management  %>% map_dfr(.,~{.x[[1]]}) %>% treatment_location_name_correction()
+
+plant <- Management  %>% map_dfr(.,~{.x[[2]]}) %>% rename(Chemical=Notice)%>% treatment_location_name_correction()
+disease <- Management  %>% map_dfr(.,~{.x[[3]]})%>% rename(Note=Date)%>% treatment_location_name_correction()
 
 xlsx::write.xlsx(nitrogen%>%
                    relocate(Location,Year,Treatment) %>%
@@ -119,7 +121,7 @@ soil_merge <- left_join(soildf,soilt,by="Typesoil") %>%
     organical.content=ifelse(grepl("0",organical.content),
                              as.numeric(organical.content)*100,
                              organical.content)
-  ) %>% 
+  ) %>% suppressWarnings() %>% 
   mutate(across(.fns = ~ tidyr::replace_na(as.character(.x), ""))) %>% 
   select(-`Catch.crop..`)
 
