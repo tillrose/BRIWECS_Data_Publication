@@ -143,7 +143,6 @@ additional depositories
 
 -   [climate, soil water and coefficient zenodo](https://zenodo.org/records/8248543)
 
-
 ## Hightlights
 
 ::: callout-tip
@@ -157,9 +156,7 @@ cat(
 ```
 :::
 
-
-::: {.panel-tabset}
-
+::: panel-tabset
 ## BRIWECs MET dataset
 
 ```{r,warning=FALSE,echo=FALSE, message=FALSE}
@@ -201,7 +198,6 @@ cat(
 | Quedlinburg       | QLB          |
 | Rauischholzhausen | RHH          |
 :::
-
 
 ```{r, echo=FALSE,warning=FALSE}
 #| output: asis
@@ -376,7 +372,6 @@ Management comprises of three treatments: nitrogen fertilizer, fungicide applica
 
 In total, there are 9 managements, while it is incomplete and depends on the location and years (@fig-managements, @tbl-managements).
 
-
 ```{r,echo=FALSE,warnings=F}
 #| output: asis
 
@@ -473,13 +468,11 @@ fig2 <- long %>%left_join(unit,"trait")%>%
     "```"
     )))  
 ```
-
 :::
 
-
 ## Experimental designs
-::: panel-tabset
 
+::: panel-tabset
 ```{r,echo=FALSE,warning=FALSE,message=FALSE}
 #| output: asis
 
@@ -547,6 +540,16 @@ sprintf("#| label: fig-%s-ep", tr),
 }
 ```
 :::
+
+## Reproducible analysis
+
+
+::: panel-tabset
+[![Analysis-workflow](https://img.shields.io/badge/Analysis-workflow-darkorange)](https://github.com/Illustratien/Scientific_Data_Analyis)
+
+[![Voss-Fels 2019](https://github.com/Illustratien/Scientific_Data_Analyis/blob/master/README_files/figure-gfm/unnamed-chunk-1-1.png){#fig-kai .lightbox width="160" height="220"}](https://github.com/Illustratien/Scientific_Data_Analyis)
+:::
+
 
 ## 24 Traits
 
