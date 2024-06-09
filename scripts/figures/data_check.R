@@ -168,7 +168,7 @@ figdata <- long %>%
   xlab("genotypes (G)")
 
 
-png(filename="figure/Fig3.png",
+png(filename="figure/FigS.png",
     type="cairo",
     units="cm",
     width=30,
@@ -192,7 +192,7 @@ s <- raw %>%
 
 tbla <-s %>% select(1:3) %>%
   distinct() %>% 
-  gridExtra::tableGrob(.,theme=ttheme_minimal(core = list(fg_params=list(cex = .7)),
+  gridExtra::tableGrob(.,theme=gridExtra::ttheme_minimal(core = list(fg_params=list(cex = .7)),
                                               colhead = list(fg_params=list(cex = .7)),
                                               rowhead = list(fg_params=list(cex = .7)))) 
 s <- raw %>% 
@@ -223,8 +223,8 @@ mp <- s%>%
         strip.background = element_blank(),
         strip.placement = "outside"
   )
-figdata <- cowplot::plot_grid(tbla, mp, nrow = 1,rel_widths =  c(1, 3),labels = "AUTO")
-png(filename="figure/FigM.png",
+figdata <- cowplot::plot_grid(tbla, mp, nrow = 1,rel_widths =  c(1, 3))
+png(filename="figure/Fig3.png",
     type="cairo",
     units="cm",
     width=26,
