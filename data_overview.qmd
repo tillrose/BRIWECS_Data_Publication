@@ -219,7 +219,7 @@ cat(
 ```
 ## 228 Genotypes
 
-[228 genotypes](./figure/culitvar_venn.png){#fig-cul .lightbox width="160" height="220"}
+![228 genotypes](./figure/culitvar_venn.png){#fig-cul .lightbox width="160" height="220"}
 
 ## 6 Locations
 
