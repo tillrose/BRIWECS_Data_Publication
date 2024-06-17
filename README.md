@@ -2,7 +2,6 @@
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
 [![Analysis-workflow](https://img.shields.io/badge/Analysis-workflow-darkorange)](https://github.com/Illustratien/Scientific_Data_Analyis)
-
 [![Website -
 pkgdown](https://img.shields.io/badge/data-visulaization-blue)](https://tillrose.github.io/BRIWECS_Data_Publication/data_overview.html)
 [![Project-website](https://img.shields.io/badge/Project-website-darkgreen)](https://www.igps.uni-hannover.de/de/forschung/forschungsprojekte/detailansicht/projects/forschungsverbund-briwecs)
@@ -486,36 +485,3 @@ g
 </tr>
 </tbody>
 </table>
-
-## overview visualizations
-
-<figure>
-<img
-src="https://github.com/tillrose/BRIWECS_Data_Publication/blob/main/figure/fig1.png"
-data-fig-align="center"
-alt="Fig1. Experiments location and soil properties." />
-<figcaption aria-hidden="true">Fig1. Experiments location and soil
-properties.</figcaption>
-</figure>
-
-<figure>
-<img
-src="https://github.com/tillrose/BRIWECS_Data_Publication/blob/main/figure/Fig2.png"
-data-fig-align="center"
-alt="Fig2. An overview of MET data descriptor of winter wheat containing 24 traits collected across six locations in Germany (GGE, HAN, KAL, KIE, QLB, RHH) with nine incomplete managements (HN_WF_RO, LN_NF_IR, HN_NF_IR, HN_WF_IR, HN_WF_RF, LN_WF_IR, HN_NF_RF, LN_NF_RF and LN_WF_RF) during six years (2015-2020)." />
-<figcaption aria-hidden="true">Fig2. An overview of MET data descriptor
-of winter wheat containing 24 traits collected across six locations in
-Germany (GGE, HAN, KAL, KIE, QLB, RHH) with nine incomplete managements
-(HN_WF_RO, LN_NF_IR, HN_NF_IR, HN_WF_IR, HN_WF_RF, LN_WF_IR, HN_NF_RF,
-LN_NF_RF and LN_WF_RF) during six years (2015-2020).</figcaption>
-</figure>
-
-<figure>
-<img
-src="https://github.com/tillrose/BRIWECS_Data_Publication/blob/main/figure/Fig3.png"
-data-fig-align="center"
-alt="Fig3.Scatter plot of 29 combinations of location by year by management (LxYxM) versus 228 genotypes for 24 traits." />
-<figcaption aria-hidden="true">Fig3.Scatter plot of 29 combinations of
-location by year by management (LxYxM) versus 228 genotypes for 24
-traits.</figcaption>
-</figure>
