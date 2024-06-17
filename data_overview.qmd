@@ -127,6 +127,38 @@ weather_dat <- weather_dat %>%
          Month != 7,
          Month != 8,
          Date > Sowing_date)
+
+pacman::p_load(dplyr,VennDiagram,purrr,readr,scales)
+df <- read.csv("metadata/BRIWECs_cultivar_info.csv")
+colr <- c('#188392','#EEAE24','#EE3324')
+
+colra <- map_chr(colr,~alpha(.x,.3))
+
+p <- venn.diagram(
+  x = list(
+    df %>% filter(breeding_progress==T) %>% .$BRISONr%>%  unique(), 
+    df %>% filter(phaseI==T) %>% .$BRISONr%>%  unique(),
+    df %>% filter(phaseII==T) %>%.$BRISONr %>%  unique()),
+  category.names = c( "breeding\nprogress" ,"PhaseI","PhaseII"),
+  filename = 'figure/culitvar_venn.png',
+  output = TRUE ,
+  imagetype="png" ,
+  height = 480 , 
+  width = 520 , 
+  resolution = 300,
+  compression = "lzw",
+  lwd = 1,
+  col=colr,
+  fill = colra,
+  cex = 0.5,
+  fontfamily = "sans",
+  cat.cex = 0.3,
+  cat.default.pos = "outer",
+  # cat.pos = c(-27, 27, 135),
+  # cat.dist = c(0.055, 0.055, 0.085),
+  cat.fontfamily = "sans",
+  cat.col = colr
+)
 ```
 
 ## Previous publications
@@ -185,6 +217,9 @@ cat(
   showRatioDonut = F, labelposition = 0.2,
   showRatioPie = F)
 ```
+## 228 Genotypes
+
+[228 genotypes](./figure/culitvar_venn.png){#fig-cul .lightbox width="160" height="220"}
 
 ## 6 Locations
 
@@ -543,13 +578,11 @@ sprintf("#| label: fig-%s-ep", tr),
 
 ## Reproducible analysis
 
-
 ::: panel-tabset
 [![Analysis-workflow](https://img.shields.io/badge/Analysis-workflow-darkorange)](https://github.com/Illustratien/Scientific_Data_Analyis)
 
-[![Voss-Fels 2019](https://github.com/Illustratien/Scientific_Data_Analyis/blob/master/README_files/figure-gfm/unnamed-chunk-1-1.png){#fig-kai .lightbox width="160" height="220"}](https://github.com/Illustratien/Scientific_Data_Analyis)
+[![Voss-Fels 2019](https://github.com/Illustratien/Scientific_Data_Analyis/blob/master/README_files/figure-gfm/unnamed-chunk-1-1.png){.lightbox width="160" height="220"}](https://github.com/Illustratien/Scientific_Data_Analyis)
 :::
-
 
 ## 24 Traits
 
