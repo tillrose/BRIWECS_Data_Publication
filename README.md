@@ -38,7 +38,7 @@ id="fig-holger" width="160" height="220" alt="Zetzsche 2020" />](https://www.nat
 src="https://github.com/tillrose/BRIWECS_Data_Publication/blob/main/figure/previous_paper/Sabir_2023.png"
 id="fig-kahdija" width="160" height="220" alt="Sabir 2023" />](https://www.nature.com/articles/s41477-023-01516-8)
 
-## insturctution
+## instruction
 
 1.  open `BRIWECS_Data_Publication.RProject`
 2.  open `scripts/run.R`
