@@ -74,7 +74,7 @@ xlsx::write.xlsx(plant%>% relocate(Location,Year,Treatment) %>%
                  "output/plant_protection.xlsx",row.names = F)
 xlsx::write.xlsx(disease %>% relocate(Location,Year,Treatment) %>%
                    arrange(Location,Year,Treatment),
-                 "output/diseaase_record.xlsx",row.names = F)
+                 "output/disease_record.xlsx",row.names = F)
 # soil --------------------------------------------------------------------
 tar.vec <- c("Type of soil",
              "Preceding crop",
