@@ -15,6 +15,7 @@ Management<- map(mana_list,~{
     gsub("(Management_information_|.xlsx)","",.,perl = T)
   # print(.y)
   tmp<- xlsx::read.xlsx(.x,stringsAsFactors = F,sheetIndex = 1)
+  # first find the row with Managements
   row_id <- grep("^Managements$",tmp[,1],ignore.case = F,perl =T)
   
   col_start<- grep(c('Treatment|Plant protection|Infection_data'),
@@ -24,10 +25,10 @@ Management<- map(mana_list,~{
   new_colnam[grepl("Treatment",new_colnam)] <- "Treatment"
   new_colnam[grepl("Amount",new_colnam)] <- "Amount"
 
-  map(1:3,function(col_id){
+  map(1:3,function(col_id){#fertilizer, plant-protection, disease 
     col_range <- seq(col_start[col_id],
                      col_end[col_id],1)
-    if(col_id>1){
+    if(col_id>1){# include treatment column for plant-protection and disease 
       col_range <- c(1,col_range)
     }
     
