@@ -116,6 +116,12 @@ do.call('rbind',
 ## trait table
 
 ```{r,echo=F}
+cat(
+  sprintf("Total %sK observations (removed outliers)", format(round(nrow(long)/1000, 1), dec=",")),
+  sep = "\n"
+) 
+
+
 tbl%>%
   kbl(caption = "Table 1. Trait names, sources, ranges and units") %>%
   kable_classic_2(full_width = F, position = "float_right")

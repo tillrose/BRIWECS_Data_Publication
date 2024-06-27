@@ -57,6 +57,8 @@ still under data-preparation, will be updated soon***
 
 ## trait table
 
+    ## Total 529,4K observations (removed outliers)
+
 <table class=" lightable-classic-2" style="font-family: &quot;Arial Narrow&quot;, &quot;Source Sans Pro&quot;, sans-serif; width: auto !important; float: right; margin-left: 10px;">
 <caption>
 Table 1. Trait names, sources, ranges and units

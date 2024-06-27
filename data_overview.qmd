@@ -458,10 +458,16 @@ sprintf("#| label: tbl-%s","managements"),
 )))  
 ```
 
-## 24 traits, 55k observations
+## 24 agronomic and physiological traits
 
 ```{r,echo=FALSE, warning=FALSE}
 #| output: asis
+#| 
+cat(
+  sprintf("Total: %sK observations (removed outliers)", format(round(nrow(long)/1000, 1), dec=",")),
+  sep = "\n"
+) 
+
 fig2 <- long %>%left_join(unit,"trait")%>% 
     group_by(trait,sample.source) %>% summarise(n=n(),.groups = "drop") %>% 
     group_by(sample.source) %>% 
