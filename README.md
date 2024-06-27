@@ -42,9 +42,14 @@ id="fig-kahdija" width="160" height="220" alt="Sabir 2023" />](https://www.natur
 
 1.  open `BRIWECS_Data_Publication.RProject`
 2.  open `scripts/run.R`
-3.  run all `Ctrl + Alt + R` <img
-    src="https://github.com/tillrose/BRIWECS_Data_Publication/blob/main/figure/Instruction.PNG"
-    data-fig-align="center" />
+3.  run all lines `Ctrl + Alt + R`
+
+<img
+src="https://github.com/tillrose/BRIWECS_Data_Publication/blob/main/figure/Instruction.PNG"
+data-fig-align="center" />
+
+***Note: Part of data the traits in Location KAL, PhaseII (2018-2020) is
+still under data-preparation, will be updated soon***
 
 ## directory tree
 
