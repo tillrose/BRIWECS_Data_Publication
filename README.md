@@ -104,7 +104,7 @@ grains per spike
 Grain_per_spike_bio
 </td>
 <td style="text-align:left;">
-3.6~146.7
+3.6~144.2
 </td>
 <td style="text-align:left;">
 Nbr
@@ -121,7 +121,7 @@ harvest index
 Harvest_Index_bio
 </td>
 <td style="text-align:left;">
-0.1~0.8
+0.1~0.79
 </td>
 <td style="text-align:left;">
 </td>
@@ -137,7 +137,7 @@ plant height
 Plantheight_bio
 </td>
 <td style="text-align:left;">
-40~145
+41~145
 </td>
 <td style="text-align:left;">
 cm
@@ -222,7 +222,7 @@ whole plot
 BBCH87
 </td>
 <td style="text-align:left;">
-175~213
+176~213
 </td>
 <td style="text-align:left;">
 days of year
@@ -324,7 +324,7 @@ whole plot
 Grain
 </td>
 <td style="text-align:left;">
-19.2~5851.5
+143.7~3915.5
 </td>
 <td style="text-align:left;">
 Nbr x 10^5/ha
@@ -392,7 +392,7 @@ whole plot
 Sedimentation
 </td>
 <td style="text-align:left;">
-2.1~95.4
+2.1~83.3
 </td>
 <td style="text-align:left;">
 ml
@@ -477,7 +477,7 @@ whole plot
 TGW
 </td>
 <td style="text-align:left;">
-2.6~69.5
+11.9~67.4
 </td>
 <td style="text-align:left;">
 g
