@@ -217,6 +217,7 @@ cat(
   showRatioDonut = F, labelposition = 0.2,
   showRatioPie = F)
 ```
+
 ## 228 Genotypes
 
 ![228 genotypes](./figure/culitvar_venn.png){#fig-cul .lightbox width="160" height="220"}
