@@ -59,12 +59,12 @@ complete_dat <- complete_dat %>%
                              T~ 1000*Seedyield_bio/(TKW_bio*Spike_number)),
          TKW = ifelse(is.na(TKW_plot), TKW_bio, TKW_plot), 
          Grain= Seedyield*1000/TKW,# set yield back to grain and divide by tkw
-         Biomass = Seedyield/Harvest_Index,
-         Straw = Biomass*(1-Harvest_Index),
+
          Protein_yield=Seedyield*Crude_protein/100
   ) %>% 
   filter(Treatment != "LLN_WF_RF",
-         !BRISONr%in%c("BRISONr_?","BRISONr_NA")) %>% 
+         !BRISONr%in%c("BRISONr_?","BRISONr_NA"),
+         !is.na(BRISONr)) %>% 
   group_by(Treatment,Location,Year) %>% 
   mutate( across(Stripe_rust:Fusarium,
                  ~case_when(all(is.na(.))~., # if all is na, then keep na
@@ -79,8 +79,11 @@ complete_dat <- complete_dat %>%
          HI_mean = mean(Harvest_Index, na.rm = TRUE)) %>% 
   ungroup() %>% 
   mutate(Harvest_Index = ifelse(Harvest_Index < HI_mean - 4*HI_sd, NA, Harvest_Index),
-         Harvest_Index = ifelse(Harvest_Index > HI_mean + 4*HI_sd, NA, Harvest_Index))
-
+         Harvest_Index = ifelse(Harvest_Index > HI_mean + 4*HI_sd, NA, Harvest_Index),
+         Biomass = Seedyield/Harvest_Index,
+         Straw = Biomass*(1-Harvest_Index),
+         # Straw =ifelse(Straw < 5, NA, Crude_protein)
+         )
 
 ## Filter Spike Number by Standard Deviation
 complete_dat <- complete_dat %>% 
