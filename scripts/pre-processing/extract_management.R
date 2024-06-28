@@ -6,8 +6,8 @@ mana_list<-
 # management -------------------------------------------------------------------------
 condi1 <- list(quo(!Notice=='Notice'),quo(!is.na(Amount)))
 condi2 <- list(quo(!`Plant protection`=='Plant protection'),quo(!Notice==0))
-condi3 <- list(quo(!Infection_data=='Infection_data'),quo(!is.na(Infection_data)))
-condi_list <- list(condi1,condi2,condi3)
+# condi3 <- list(quo(!Infection_data=='Infection_data'),quo(!is.na(Infection_data)))
+condi_list <- list(condi1,condi2)
 
 Management<- map(mana_list,~{
   locat_year <- strsplit(.x,"/") %>% 
@@ -24,8 +24,8 @@ Management<- map(mana_list,~{
   new_colnam <- as.character(unlist(tmp[row_id+1,])) 
   new_colnam[grepl("Treatment",new_colnam)] <- "Treatment"
   new_colnam[grepl("Amount",new_colnam)] <- "Amount"
-
-  map(1:3,function(col_id){#fertilizer, plant-protection, disease 
+  
+  map(1:length(condi_list),function(col_id){#fertilizer, plant-protection, disease 
     col_range <- seq(col_start[col_id],
                      col_end[col_id],1)
     if(col_id>1){# include treatment column for plant-protection and disease 
@@ -34,13 +34,13 @@ Management<- map(mana_list,~{
     
     tmp2 <- tmp[row_id+2:nrow(tmp),col_range]%>%
       `colnames<-`(new_colnam[col_range])%>% 
-       mutate(Treatment=stringr::str_extract(Treatment,"\\((.*?)\\)") %>% 
-                gsub("(\\(|\\))","",.) %>% 
-                gsub("Trockenstress","D",.)
-                
-                ) %>% 
-    # colnames(tmp2) <- new_colnam[col_range]
-    # tmp2 <-  tmp2%>% 
+      mutate(Treatment=stringr::str_extract(Treatment,"\\((.*?)\\)") %>% 
+               gsub("(\\(|\\))","",.) %>% 
+               gsub("Trockenstress","D",.)
+             
+      ) %>% 
+      # colnames(tmp2) <- new_colnam[col_range]
+      # tmp2 <-  tmp2%>% 
       rename_with(~ "Date", matches("(?i)date")) %>% 
       filter(!!condi_list[[col_id]][[1]],!!condi_list[[col_id]][[2]]) 
     if(col_id<3){
@@ -48,9 +48,9 @@ Management<- map(mana_list,~{
         mutate(Date=as.Date(as.numeric(Date),origin='1900-01-01')) %>% suppressWarnings()
     }else{
       tmp2<-tmp2  %>% 
-      mutate(Date=case_when(stringr::str_detect(Date, "^\\d{5}$")~as.Date(as.numeric(Date),origin='1900-01-01') %>% as.character(),
-              T~Date              
-      ))%>% suppressWarnings()
+        mutate(Date=case_when(stringr::str_detect(Date, "^\\d{5}$")~as.Date(as.numeric(Date),origin='1900-01-01') %>% as.character(),
+                              T~Date              
+        ))%>% suppressWarnings()
     }
     tmp2<-tmp2  %>% 
       mutate(Locat_Year=locat_year,
@@ -61,21 +61,24 @@ Management<- map(mana_list,~{
 })
 
 source("scripts/pre-processing/functions.R")
-nitrogen <- Management  %>% map_dfr(.,~{.x[[1]]}) %>% treatment_location_name_correction()
+nitrogen <- Management  %>% map_dfr(.,~{.x[[1]]}) %>%
+  treatment_location_name_correction() %>% 
+  filter(grepl("nitrogen",Fertilization))
 
-plant <- Management  %>% map_dfr(.,~{.x[[2]]}) %>% rename(Chemical=Notice)%>% treatment_location_name_correction()
-disease <- Management  %>% map_dfr(.,~{.x[[3]]})%>% rename(Note=Date)%>% treatment_location_name_correction()
+plant <- Management  %>% map_dfr(.,~{.x[[2]]}) %>% 
+  rename(Chemical=Notice)%>% treatment_location_name_correction()
+# disease <- Management  %>% map_dfr(.,~{.x[[3]]})%>% rename(Note=Date)%>% treatment_location_name_correction()
 
 xlsx::write.xlsx(nitrogen%>%
                    relocate(Location,Year,Treatment) %>%
                    arrange(Location,Year,Treatment),
-                 "output/fertilizer.xlsx",row.names = F)
+                 "metadata/fertilizer.xlsx",row.names = F)
 xlsx::write.xlsx(plant%>% relocate(Location,Year,Treatment) %>%
                    arrange(Location,Year,Treatment),
-                 "output/plant_protection.xlsx",row.names = F)
-xlsx::write.xlsx(disease %>% relocate(Location,Year,Treatment) %>%
-                   arrange(Location,Year,Treatment),
-                 "output/disease_record.xlsx",row.names = F)
+                 "metadata/plant_protection.xlsx",row.names = F)
+# xlsx::write.xlsx(disease %>% relocate(Location,Year,Treatment) %>%
+#                    arrange(Location,Year,Treatment),
+#                  "metadata/disease_record.xlsx",row.names = F)
 # soil --------------------------------------------------------------------
 tar.vec <- c("Type of soil",
              "Preceding crop",
@@ -128,8 +131,9 @@ soil_merge <- left_join(soildf,soilt,by="Typesoil") %>%
 
 cid <- c(names(soil_merge)[grepl("(Year|Location|soiltype|pH)",names(soil_merge))],
          names(soil_merge)[grepl("(Clay|Silt|Sand)",names(soil_merge))],
-         names(soil_merge)[grepl("(Water|Nutri|crop|organic|C.N)",names(soil_merge))])
+         names(soil_merge)[grepl("(Water|Nutri|crop|organic)",names(soil_merge))])
 soil_merge <- soil_merge[,cid]%>%
-  relocate(Location,Year,soiltype,Clay,Silt,Sand)
+  relocate(Location,Year,soiltype,Clay,Silt,Sand) %>% 
+  dplyr::select(-Soil.cultivation.before.preceding.crop)
 # names(a)[grepl("(Clay|Silt|Sand|pH|Year|Location|soiltype|Water|Nutri|crop)",names(a))]
-xlsx::write.xlsx(soil_merge,"output/soil.xlsx",row.names = F)
+xlsx::write.xlsx(soil_merge,"metadata/soil.xlsx",row.names = F)
