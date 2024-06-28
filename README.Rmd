@@ -17,8 +17,7 @@ always_allow_html: true
 knitr::opts_chunk$set(echo = TRUE)
 suppressWarnings(library(dplyr));
 # suppressWarnings(library(ggplot2));
-library(kableExtra);library(knitr);library(toolPhD)
-# library(data.tree);
+library(kableExtra);library(knitr);
 library(igraph)
 suppressWarnings(library(tidygraph))
 suppressWarnings(library(ggraph))
