@@ -18,6 +18,25 @@ format:
 ```{r setup, include=FALSE,echo=F,message=FALSE}
 # knitr::opts_chunk$set(echo=FALSE, warning=FALSE, message=FALSE)
 pacman::p_load(ggplot2,dplyr,ggridges,tidyr,purrr,lubridate,webr,scales,flextable,kableExtra,ggtern)
+view_group <- function (dat, g_vec, t_vec = NULL) 
+{
+    if (is.null(t_vec)) {
+        t_vec <- setdiff(names(dat), g_vec)
+    }
+    res <- Reduce(function(x, y) dplyr::left_join(x, y, by = "colnam"), 
+        purrr::map(dplyr::group_split(dplyr::group_by(dplyr::select(dat, 
+            all_of(c(g_vec, t_vec))), across(all_of(g_vec)))), 
+            ~{
+                toolPhD::view_df(.x)
+            }))
+    res <- data.frame(t(res))
+    names(res) <- res[1, ]
+    res <- res[-1, ]
+    row.names(res) <- NULL
+    return(res)
+}
+
+
 unit<- xlsx::read.xlsx("metadata/Unit.xlsx",sheetIndex = 1) %>% 
   mutate(unit=case_when(is.na(unit)~" ",
                         grepl("\\#",unit)~gsub("\\#","Nbr.",unit),
@@ -59,6 +78,7 @@ path.vec <- c("Stripe_rust","Powdery_mildew","Leaf_rust","Septoria","DTR","Fusar
 yq.vec <- c("Sedimentation","Falling_number","Crude_protein","Protein_yield")
 section_nam<- list("Agronomic traits","Yield quality","Phenology","Pathogens")
 tr_list <- list(tr.vec,yq.vec,phen.vec,path.vec)
+
 distri_plot<- function(complete_dat,tr){
   ggplot(complete_dat) +
     aes(x = .data[[tr]], y = Environment, fill = interaction(Nitrogen,Fungicide)) +
@@ -143,8 +163,8 @@ p <- venn.diagram(
   filename = 'figure/culitvar_venn.png',
   output = TRUE ,
   imagetype="png" ,
-  height = 1200 , 
-  width =  1600 , 
+  height = 3200 , 
+  width =  3600 , 
   resolution = 660,
   compression = "lzw",
   lwd = 1,
@@ -284,7 +304,7 @@ p1 <- suppressWarnings(suppressMessages(ggplot() +
 
 
 
-soil<- xlsx::read.xlsx(file="output/soil.xlsx",stringsAsFactors=F,sheetIndex = 1) %>% 
+soil<- xlsx::read.xlsx(file="metadata/soil.xlsx",stringsAsFactors=F,sheetIndex = 1) %>% 
   mutate(
     across(Clay:Sand,as.numeric),
     Sand=1-Clay-Silt,
@@ -607,6 +627,7 @@ for(i in 1:length(data_list)){ #
 }
 ```
 :::
+In KAL 2018–2020 an additional treatment without nitrogen treatment was added to the experimental design. This management is excluded from the data set.
 
 ## Reproducible analysis
 
