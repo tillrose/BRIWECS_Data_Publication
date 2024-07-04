@@ -58,7 +58,7 @@ left_join(unit ,by='trait')%>%
 
 ![](https://github.com/tillrose/BRIWECS_Data_Publication/blob/main/figure/Instruction.PNG){fig-align="center"}
 
-***Note: Part of data the traits in Location KAL, PhaseII (2018-2020) is still under data-preparation, will be updated soon***
+***Note: Part of data the traits in Location KAL, Phase II (2018-2020) is still under data-preparation, will be updated soon***
 
 ## directory tree
 

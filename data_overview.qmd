@@ -682,6 +682,7 @@ for(i in 1:length(data_list)){ #
 }
 ```
 :::
+
 In KAL 2018–2020 an additional treatment without nitrogen treatment was added to the experimental design. This management is excluded from the data set.
 
 ## Reproducible analysis
