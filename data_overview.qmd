@@ -18,22 +18,77 @@ format:
 ```{r setup, include=FALSE,echo=F,message=FALSE}
 # knitr::opts_chunk$set(echo=FALSE, warning=FALSE, message=FALSE)
 pacman::p_load(ggplot2,dplyr,ggridges,tidyr,purrr,lubridate,webr,scales,flextable,kableExtra,ggtern)
+round_scale <- function (vec) 
+{
+    purrr::map_chr(vec, ~{
+        if (is.na(.x) | abs(.x) < 1e-04) {
+            formatC(.x, digits = 1, format = "e")
+        }
+        else if (abs(.x) < 0.001) {
+            as.character(round(.x, 4))
+        }
+        else if (abs(.x) >= 0.001 & abs(.x) < 0.01) {
+            as.character(round(.x, 3))
+        }
+        else if (abs(.x) >= 0.01 & abs(.x) < 1) {
+            as.character(round(.x, 2))
+        }
+        else if (abs(.x) >= 1) {
+            as.character(round(.x, 1))
+        }
+    })
+}
+
+
+view_df<- function (x) {
+  x <- as.data.frame(x)
+  purrr::map_dfr(1:ncol(x), ~{
+    ue <- unique(x[, .x])
+    if (length(ue) < 5) {
+      if (is.numeric(ue)) {
+        ue <- round_scale(ue)
+      }
+      content <- paste(sort(ue), collapse = ",")
+    }
+    else {
+      if (all(is.na(ue))) {
+        content <- "NA"
+      }
+      else if (is.numeric(na.omit(ue)) | all(grepl("^[0-9]+$", 
+                                                   na.omit(ue)))) {
+        ue <- round_scale(ue)
+        if (any(is.na(ue))) {
+          content <- paste0(paste(range(as.numeric(na.omit(ue))), 
+                                  collapse = "~"), " include NA")
+        }
+        else {
+          content <- paste(range(as.numeric(ue)), collapse = "~")
+        }
+      }
+      else {
+        content <- paste0("Levels number:", length(ue))
+      }
+    }
+    data.frame(colnam = names(x)[.x], info = content)
+  })
+}
+
 view_group <- function (dat, g_vec, t_vec = NULL) 
 {
-    if (is.null(t_vec)) {
-        t_vec <- setdiff(names(dat), g_vec)
-    }
-    res <- Reduce(function(x, y) dplyr::left_join(x, y, by = "colnam"), 
-        purrr::map(dplyr::group_split(dplyr::group_by(dplyr::select(dat, 
-            all_of(c(g_vec, t_vec))), across(all_of(g_vec)))), 
-            ~{
-                toolPhD::view_df(.x)
-            }))
-    res <- data.frame(t(res))
-    names(res) <- res[1, ]
-    res <- res[-1, ]
-    row.names(res) <- NULL
-    return(res)
+  if (is.null(t_vec)) {
+    t_vec <- setdiff(names(dat), g_vec)
+  }
+  res <- Reduce(function(x, y) dplyr::left_join(x, y, by = "colnam"), 
+                purrr::map(dplyr::group_split(dplyr::group_by(dplyr::select(dat, 
+                                                                            all_of(c(g_vec, t_vec))), across(all_of(g_vec)))), 
+                           ~{
+                           view_df(.x)
+                           }))
+  res <- data.frame(t(res))
+  names(res) <- res[1, ]
+  res <- res[-1, ]
+  row.names(res) <- NULL
+  return(res)
 }
 
 
@@ -163,8 +218,8 @@ p <- venn.diagram(
   filename = 'figure/culitvar_venn.png',
   output = TRUE ,
   imagetype="png" ,
-  height = 3200 , 
-  width =  3600 , 
+  height = 600 , 
+  width =  600 , 
   resolution = 660,
   compression = "lzw",
   lwd = 1,
@@ -240,7 +295,7 @@ PieDonut(td, aes(phenotype, factor1, count=n),
 
 ## 228 Genotypes
 
-![228 genotypes](./figure/culitvar_venn.png){#fig-cul .lightbox width="160" height="220"}
+![228 genotypes](./figure/culitvar_venn.png){#fig-cul .lightbox width="300" height="600"}
 
 ## 6 Locations
 
