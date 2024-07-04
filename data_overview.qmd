@@ -253,7 +253,7 @@ additional depositories
 ## Hightlights
 
 ::: callout-tip
-```{r,warning=FALSE,echo=FALSE, message=FALSE}
+```{r data_summary, warning=FALSE,echo=FALSE, message=FALSE}
 #| output: asis
 cat(
   sprintf(
@@ -310,10 +310,10 @@ PieDonut(td, aes(phenotype, factor1, count=n),
 | Rauischholzhausen | RHH          |
 :::
 
-```{r, echo=FALSE,warning=FALSE}
+```{r locations_and_soil, echo=FALSE,warning=FALSE}
 #| output: asis
 
-pacman::p_load(dplyr,readr,sf,ggthemes,rnaturalearth,ggrepel,ggsflabel,ggplot2)
+pacman::p_load(dplyr,readr,sf,ggthemes,rnaturalearth,ggrepel,ggplot2)
 ## Background map
 ctrys <- ne_countries(continent = "europe", scale = 10, type = "countries", returnclass = "sf")
 ctrys <- ctrys %>% 
@@ -345,8 +345,8 @@ p1 <- suppressWarnings(suppressMessages(ggplot() +
                                             
                                           ) +
                                           geom_sf(data = ctrys, aes(fill = fill), colour = "black", size = 0.25) +
-                                          geom_sf_label_repel(data = locations_1, fill = "white", size = 3, aes(label = Location), nudge_x = 2, label.r = unit(0, "lines")) +
-                                          geom_sf_label_repel(data = locations_2, fill = "white", size = 3, aes(label = Location), nudge_x = -2, label.r = unit(0, "lines")) +
+                                          geom_sf_label(data = locations_1, fill = "white", size = 3, aes(label = Location), nudge_x = 1, label.r = unit(0, "lines")) +
+                                          geom_sf_label(data = locations_2, fill = "white", size = 3, aes(label = Location), nudge_x = -1, label.r = unit(0, "lines")) +
                                           geom_sf(data = locations, shape = 21, fill = "red3", size = 2.5, stroke = 0.5) +
                                           coord_sf(xlim = c(-3, 23), ylim = c(43, 59)) +
                                           scale_fill_identity()+
@@ -483,7 +483,7 @@ Management comprises of three treatments: nitrogen fertilizer, fungicide applica
 
 In total, there are 9 managements, while it is incomplete and depends on the location and years (@fig-managements, @tbl-managements).
 
-```{r,echo=FALSE,warnings=F}
+```{r managements, echo=FALSE,warnings=F}
 #| output: asis
 
 s <- complete_dat %>% 
@@ -535,7 +535,7 @@ cat(sep = "\n", knitr::knit_child(quiet = TRUE, text = c(
 
 ## 24 agronomic and physiological traits
 
-```{r,echo=FALSE, warning=FALSE}
+```{r number_of_observations, echo=FALSE, warning=FALSE}
 #| output: asis
 #| 
 cat(
@@ -615,7 +615,7 @@ cat(sep = "\n", knitr::knit_child(quiet = TRUE, text = c(
 ## Experimental designs
 
 ::: panel-tabset
-```{r,echo=FALSE,warning=FALSE,message=FALSE}
+```{r experimental_design,echo=FALSE,warning=FALSE,message=FALSE}
 #| output: asis
 
 data <- read.csv2("output/BRIWECS_data_publication.csv") %>% 
@@ -705,7 +705,7 @@ traittbl%>%
 
 ## Ranges of traits
 
-```{r,warning=FALSE, message=FALSE}
+```{r range_of_traits, warning=FALSE, message=FALSE}
 #| echo: false
 #| output: asis
 for (i in 1:length(section_nam)) { #
@@ -776,7 +776,7 @@ for (i in 1:length(section_nam)) { #
 }
 ```
 
-```{r,echo=FALSE,warning=FALSE,message=FALSE}
+```{r range_of_traits_2,echo=FALSE,warning=FALSE,message=FALSE}
 #| output: asis
 tr <- "Sowing_date"
 cat(
