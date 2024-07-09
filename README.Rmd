@@ -21,6 +21,82 @@ library(kableExtra);library(knitr);
 library(igraph)
 suppressWarnings(library(tidygraph))
 suppressWarnings(library(ggraph))
+
+round_scale <- function (vec) 
+{
+    purrr::map_chr(vec, ~{
+        if (is.na(.x) | abs(.x) < 1e-04) {
+            formatC(.x, digits = 1, format = "e")
+        }
+        else if (abs(.x) < 0.001) {
+            as.character(round(.x, 4))
+        }
+        else if (abs(.x) >= 0.001 & abs(.x) < 0.01) {
+            as.character(round(.x, 3))
+        }
+        else if (abs(.x) >= 0.01 & abs(.x) < 1) {
+            as.character(round(.x, 2))
+        }
+        else if (abs(.x) >= 1) {
+            as.character(round(.x, 1))
+        }
+    })
+}
+
+
+view_df<- function (x) {
+  x <- as.data.frame(x)
+  purrr::map_dfr(1:ncol(x), ~{
+    ue <- unique(x[, .x])
+    if (length(ue) < 5) {
+      if (is.numeric(ue)) {
+        ue <- round_scale(ue)
+      }
+      content <- paste(sort(ue), collapse = ",")
+    }
+    else {
+      if (all(is.na(ue))) {
+        content <- "NA"
+      }
+      else if (is.numeric(na.omit(ue)) | all(grepl("^[0-9]+$", 
+                                                   na.omit(ue)))) {
+        ue <- round_scale(ue)
+        if (any(is.na(ue))) {
+          content <- paste0(paste(range(as.numeric(na.omit(ue))), 
+                                  collapse = "~"), " include NA")
+        }
+        else {
+          content <- paste(range(as.numeric(ue)), collapse = "~")
+        }
+      }
+      else {
+        content <- paste0("Levels number:", length(ue))
+      }
+    }
+    data.frame(colnam = names(x)[.x], info = content)
+  })
+}
+
+view_group <- function (dat, g_vec, t_vec = NULL) 
+{
+  if (is.null(t_vec)) {
+    t_vec <- setdiff(names(dat), g_vec)
+  }
+  res <- Reduce(function(x, y) dplyr::left_join(x, y, by = "colnam"), 
+                purrr::map(dplyr::group_split(dplyr::group_by(dplyr::select(dat, 
+                                                                            all_of(c(g_vec, t_vec))), across(all_of(g_vec)))), 
+                           ~{
+                           view_df(.x)
+                           }))
+  res <- data.frame(t(res))
+  names(res) <- res[1, ]
+  res <- res[-1, ]
+  row.names(res) <- NULL
+  return(res)
+}
+
+
+
 options(dplyr.summarise.inform = FALSE)
 unit<- xlsx::read.xlsx("./metadata/Unit.xlsx",sheetIndex = 1) %>%
   mutate(unit=gsub('\\#','Nbr ',unit),
@@ -65,7 +141,7 @@ left_join(unit ,by='trait')%>%
 ```{r,echo=F,fig.width=10, fig.height=10,warning=F}
 dirs <- list.dirs(path = ".", full.names = TRUE, recursive = TRUE) 
 
-r.target <- paste(c(".git",".Rproj.user",".quarto","gfm","docs","figure"),
+r.target <- paste(c(".git",".Rproj.user","*.md","*.Rmd",".quarto","gfm","docs","figure"),
                   collapse='|')
 dirs <- dirs[!grepl(r.target,dirs)]
 
@@ -75,7 +151,7 @@ dirs <-
   purrr::map(e.target,~{
     list.files(.x,all.files = T,recursive = T,full.names = T)
   }) %>% Reduce(x = .,"c")  %>% 
-  c(.,dirs)
+  c(.,dirs) %>% .[!grepl("README",.)]
 
 dirst <- gsub("\\.\\/","Root/",dirs)
 

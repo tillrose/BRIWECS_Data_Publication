@@ -1,6 +1,7 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
+[![Zenodo-repository](https://img.shields.io/badge/zenodo-10.5281/zenodo.12654376-darkred)](https://zenodo.org/records/12654377)
 [![Analysis-workflow](https://img.shields.io/badge/Analysis-workflow-darkorange)](https://github.com/Illustratien/Scientific_Data_Analyis)
 [![Website -
 pkgdown](https://img.shields.io/badge/data-visulaization-blue)](https://tillrose.github.io/BRIWECS_Data_Publication/data_overview.html)
@@ -48,8 +49,8 @@ id="fig-kahdija" width="160" height="220" alt="Sabir 2023" />](https://www.natur
 src="https://github.com/tillrose/BRIWECS_Data_Publication/blob/main/figure/Instruction.PNG"
 data-fig-align="center" />
 
-***Note: Part of data the traits in Location KAL, PhaseII (2018-2020) is
-still under data-preparation, will be updated soon***
+***Note: Part of data the traits in Location KAL, Phase II (2018-2020)
+is still under data-preparation, will be updated soon***
 
 ## directory tree
 
@@ -57,7 +58,7 @@ still under data-preparation, will be updated soon***
 
 ## trait table
 
-    ## Total 529,4K observations (removed outliers)
+    ## Total 526,8K observations (removed outliers)
 
 <table class=" lightable-classic-2" style="font-family: &quot;Arial Narrow&quot;, &quot;Source Sans Pro&quot;, sans-serif; width: auto !important; float: right; margin-left: 10px;">
 <caption>
@@ -164,7 +165,7 @@ Seedyield_bio
 28.3~1815
 </td>
 <td style="text-align:left;">
-g/m^2
+g/m^2 @100% dry mass
 </td>
 </tr>
 <tr>
@@ -246,7 +247,7 @@ whole plot
 Biomass
 </td>
 <td style="text-align:left;">
-14.2~856
+14.2~732.8
 </td>
 <td style="text-align:left;">
 dt/ha
@@ -419,7 +420,7 @@ Seedyield
 0~141.6
 </td>
 <td style="text-align:left;">
-dt/ha
+dt/ha @100% dry mass
 </td>
 </tr>
 <tr>
@@ -450,7 +451,7 @@ whole plot
 Straw
 </td>
 <td style="text-align:left;">
-8.9~729.7
+8.9~625.4
 </td>
 <td style="text-align:left;">
 dt/ha
