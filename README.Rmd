@@ -9,7 +9,7 @@ always_allow_html: true
 
 ![Breeding Innovations in Wheat for Efficient Cropping Systems (BRIWECS).](https://github.com/tillrose/BRIWECS_Data_Publication/blob/main/figure/BRIWECS_logo.png){fig-align="right"}
 
-## A collaborative work on a data publication for the seasons 2015–2019 of the BRIWECS consortium
+## A collaborative work on a data publication for the seasons 2015–2020 of the BRIWECS consortium
 
 <!-- [![License: GPL-3](https://img.shields.io/badge/License-GPL3-orange)](https://www.r-project.org/Licenses/) -->
 
