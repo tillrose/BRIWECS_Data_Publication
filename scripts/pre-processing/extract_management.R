@@ -63,7 +63,8 @@ Management<- map(mana_list,~{
 source("scripts/pre-processing/functions.R")
 nitrogen <- Management  %>% map_dfr(.,~{.x[[1]]}) %>%
   treatment_location_name_correction() %>% 
-  filter(grepl("nitrogen",Fertilization))
+  filter(grepl("nitrogen",Fertilization)) %>% 
+  mutate(unit='kg ha-1') 
 
 plant <- Management  %>% map_dfr(.,~{.x[[2]]}) %>% 
   rename(Chemical=Notice)%>% treatment_location_name_correction()
@@ -71,6 +72,7 @@ plant <- Management  %>% map_dfr(.,~{.x[[2]]}) %>%
 
 xlsx::write.xlsx(nitrogen%>%
                    relocate(Location,Year,Treatment) %>%
+                   relocate(Notice,.after = unit) %>% 
                    arrange(Location,Year,Treatment),
                  "metadata/fertilizer.xlsx",row.names = F)
 xlsx::write.xlsx(plant%>% relocate(Location,Year,Treatment) %>%
