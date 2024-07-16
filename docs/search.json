@@ -1,38 +1,24 @@
 [
   {
-    "objectID": "data_overview.html",
-    "href": "data_overview.html",
-    "title": "Data Publication of BRIWECS Consortium",
-    "section": "",
-    "text": "additional depositories\n\nadjusted mean fungal disease zenodo\nSNIP data\nAdjusted mean zenodo\nclimate, soil water and coefficient zenodo"
-  },
-  {
     "objectID": "data_overview.html#previous-publications",
     "href": "data_overview.html#previous-publications",
     "title": "Data Publication of BRIWECS Consortium",
-    "section": "",
-    "text": "additional depositories\n\nadjusted mean fungal disease zenodo\nSNIP data\nAdjusted mean zenodo\nclimate, soil water and coefficient zenodo"
+    "section": "2 Previous publications",
+    "text": "2 Previous publications\n    \nadditional depositories\n\nadjusted mean fungal disease zenodo\nSNIP data\nAdjusted mean zenodo\nclimate, soil water and coefficient zenodo"
   },
   {
     "objectID": "data_overview.html#hightlights",
     "href": "data_overview.html#hightlights",
     "title": "Data Publication of BRIWECS Consortium",
-    "section": "2 Hightlights",
-    "text": "2 Hightlights\n\n\n\n\n\n\n526751 traits from 228 genotypes across 6 years, 6 locations and 9 managements\n\n\n\n\n\n\n\nBRIWECs MET dataset228 Genotypes6 Locations9 Managements24 agronomic and physiological traits\n\n\n\n\n\n\n\n\n\n\nFigure 1\n\n\n\n\n\n\n\n\n\n\n\n\n\nFigure 2: 228 genotypes\n\n\n\n\n\n\n\n\n\nFull name\nAbbreviation\n\n\n\n\nGross Gerau\nGGE\n\n\nHannover\nHAN\n\n\nKlein Altendorf\nKAL\n\n\nKiel\nKIE\n\n\nQuedlinburg\nQLB\n\n\nRauischholzhausen\nRHH\n\n\n\n\n\n\n\n\n\n\n\n\nFigure 3: map-location\n\n\n\n\n\n\n\n\n\n\n\n\n\nFigure 4: soil-location\n\n\n\n\n\n\n\nManagement comprises of three treatments: nitrogen fertilizer, fungicide application and water availability.\n\nNitrogen fertilizer treatment includes two application levels: high (HN: 220 kg N ha-1) and low (LN: 110 kg N ha-1), both include soil mineral nitrogen (0–90 cm) measured in early spring.\nFungicide treatment contains two application levels: with (WF) or without (NF) fungicide application.\nWater availability treatment has three levels: rain-fed (RF), irrigated (IR) and rainout-shelter treated (RO).\n\nIn total, there are 9 managements, while it is incomplete and depends on the location and years (Figure 5, Table 1).\n\n\n\n\n\n\n\n\n\nFigure 5: -management\n\n\n\n\n\n\n\n\n\nTable 1: managements\n\n\n\n\n\n\nNitrogen\nFungicide\nWater_availability\n\n\n\n\nHN\nWF\nRO\n\n\nLN\nNF\nIR\n\n\nHN\nNF\nIR\n\n\nHN\nWF\nIR\n\n\nHN\nWF\nRF\n\n\nLN\nNF\nRF\n\n\nHN\nNF\nRF\n\n\nLN\nWF\nIR\n\n\nLN\nWF\nRF\n\n\n\n\n\n\n\n\n\n\n\n\n\nTotal: 526,8K observations (removed outliers)\nWarning: The `size` argument of `element_line()` is deprecated as of ggplot2 3.4.0.\ni Please use the `linewidth` argument instead.\nWarning: The `size` argument of `element_rect()` is deprecated as of ggplot2 3.4.0.\ni Please use the `linewidth` argument instead.\n\n\n\n\n\n\n\n\nFigure 6: overview-datapoint"
+    "section": "3 Hightlights",
+    "text": "3 Hightlights\n\n\n\n\n\n\n526751 traits from 228 genotypes across 6 years, 6 locations and 9 managements\n\n\n\n\n\n\n\nBRIWECs MET dataset228 Genotypes6 Locations9 Managements24 agronomic and physiological traits\n\n\n\n\n\n\n\n\n\n\nFigure 1\n\n\n\n\n\n\n\n\n\n\n\n\n\nFigure 2: 228 genotypes\n\n\n\n\n\n\n\n\n\nFull name\nAbbreviation\n\n\n\n\nGross Gerau\nGGE\n\n\nHannover\nHAN\n\n\nKlein Altendorf\nKAL\n\n\nKiel\nKIE\n\n\nQuedlinburg\nQLB\n\n\nRauischholzhausen\nRHH\n\n\n\n\n\n\n\n\n\n\n\n\nFigure 3: map-location\n\n\n\n\n\n\n\n\n\n\n\n\n\nFigure 4: soil-location\n\n\n\n\n\n\n\nManagement comprises of three treatments: nitrogen fertilizer, fungicide application and water availability.\n\nNitrogen fertilizer treatment includes two application levels: high (HN: 220 kg N ha-1) and low (LN: 110 kg N ha-1), both include soil mineral nitrogen (0–90 cm) measured in early spring.\nFungicide treatment contains two application levels: with (WF) or without (NF) fungicide application.\nWater availability treatment has three levels: rain-fed (RF), irrigated (IR) and rainout-shelter treated (RO).\n\nIn total, there are 9 managements, while it is incomplete and depends on the location and years (Figure 5, Table 1).\n\n\n\n\n\n\n\n\n\nFigure 5: -management\n\n\n\n\n\n\n\n\n\nTable 1: managements\n\n\n\n\n\n\nNitrogen\nFungicide\nWater_availability\n\n\n\n\nHN\nWF\nRO\n\n\nLN\nNF\nIR\n\n\nHN\nNF\nIR\n\n\nHN\nWF\nIR\n\n\nHN\nWF\nRF\n\n\nLN\nNF\nRF\n\n\nHN\nNF\nRF\n\n\nLN\nWF\nIR\n\n\nLN\nWF\nRF\n\n\n\n\n\n\n\n\n\n\n\n\n\nTotal: 526,8K observations (removed outliers)\n\n\n\n\n\n\n\n\nFigure 6: overview-datapoint"
   },
   {
     "objectID": "data_overview.html#experimental-designs",
     "href": "data_overview.html#experimental-designs",
     "title": "Data Publication of BRIWECS Consortium",
-    "section": "3 Experimental designs",
-    "text": "3 Experimental designs\n\n201520162017201820192020\n\n\n\n\n\n\n\n\n\n\nFigure 7: 2015-exp\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nFigure 8: 2016-exp\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nFigure 9: 2017-exp\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nFigure 10: 2018-exp\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nFigure 11: 2019-exp\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nFigure 12: 2020-exp\n\n\n\n\n\n\n\n\nIn KAL 2018–2020 an additional treatment without nitrogen treatment was added to the experimental design. This management is excluded from the data set."
-  },
-  {
-    "objectID": "data_overview.html#reproducible-analysis",
-    "href": "data_overview.html#reproducible-analysis",
-    "title": "Data Publication of BRIWECS Consortium",
-    "section": "4 Reproducible analysis",
-    "text": "4 Reproducible analysis\n\n\n\nAnalysis-workflow"
+    "section": "4 Experimental designs",
+    "text": "4 Experimental designs\n\n201520162017201820192020\n\n\n\n\n\n\n\n\n\n\nFigure 7: 2015-exp\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nFigure 8: 2016-exp\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nFigure 9: 2017-exp\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nFigure 10: 2018-exp\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nFigure 11: 2019-exp\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nFigure 12: 2020-exp\n\n\n\n\n\n\n\n\nIn KAL 2018–2020 an additional treatment without nitrogen treatment was added to the experimental design. This management is excluded from the data set."
   },
   {
     "objectID": "data_overview.html#traits",

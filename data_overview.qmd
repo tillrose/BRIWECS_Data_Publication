@@ -236,6 +236,9 @@ p <- venn.diagram(
 )
 ```
 
+## Hyperlinks
+[![Zenodo-repository](https://img.shields.io/badge/zenodo-10.5281/zenodo.12654376-darkred)](https://zenodo.org/doi/10.5281/zenodo.12654376) [![Analysis-workflow](https://img.shields.io/badge/Analysis-workflow-darkorange)](https://github.com/Illustratien/Scientific_Data_Analyis)  [![Project-website](https://img.shields.io/badge/Project-website-darkgreen)](https://www.igps.uni-hannover.de/de/forschung/forschungsprojekte/detailansicht/projects/forschungsverbund-briwecs)
+
 ## Previous publications
 
 [![Voss-Fels 2019](./figure/previous_paper/Kai2019.PNG){#fig-kai .lightbox width="160" height="220"}](https://www.nature.com/articles/s41477-019-0445-5) [![Rose 2019](./figure/previous_paper/Rose_2019.png){#fig-till width="160" height="220"}](https://www.frontiersin.org/journals/plant-science/articles/10.3389/fpls.2019.01521/full) [![Lichthardt 2020](./figure/previous_paper/Carolin_2020.png){#fig-carolin width="160" height="220"}](https://www.frontiersin.org/journals/plant-science/articles/10.3389/fpls.2019.01771/full) [![Zetzsche 2020](./figure/previous_paper/Zetzsche_2020.png){#fig-holger width="160" height="220"}](https://www.nature.com/articles/s41598-020-77200-0) [![Sabir 2023](./figure/previous_paper/Sabir_2023.png){#fig-kahdija width="160" height="220"}](https://www.nature.com/articles/s41477-023-01516-8)
@@ -543,7 +546,9 @@ cat(
   sep = "\n"
 ) 
 
-fig2 <- long %>%left_join(unit,"trait")%>% 
+fig2 <- 
+  suppressWarnings(
+  long %>%left_join(unit,"trait")%>% 
   group_by(trait,sample.source) %>% summarise(n=n(),.groups = "drop") %>% 
   group_by(sample.source) %>% 
   mutate(trait = forcats::fct_reorder(trait, n)) %>%
@@ -599,7 +604,7 @@ fig2 <- long %>%left_join(unit,"trait")%>%
                  legend.background = element_rect(fill = NA), 
                  plot.background = element_rect(fill = "transparent"),
                  plot.title = element_text(size=10),
-                 strip.placement = "outside") 
+                 strip.placement = "outside"))
 
 cat(sep = "\n", knitr::knit_child(quiet = TRUE, text = c(
   "```{r}",
@@ -684,12 +689,6 @@ for(i in 1:length(data_list)){ #
 :::
 
 In KAL 2018–2020 an additional treatment without nitrogen treatment was added to the experimental design. This management is excluded from the data set.
-
-## Reproducible analysis
-
-[![Analysis-workflow](https://img.shields.io/badge/Analysis-workflow-darkorange)](https://github.com/Illustratien/Scientific_Data_Analyis)
-
-
 
 ## 24 Traits
 
@@ -779,7 +778,7 @@ for (i in 1:length(section_nam)) { #
 tr <- "Sowing_date"
 cat(
   sprintf(
-    "### `%s` ", tr),sep="\n")
+    "### %s ", tr),sep="\n")
 
 dp <-ggplot(complete_dat) +
   aes(x = Sowing_date, y = Environment, fill = interaction(Nitrogen,Fungicide)) +
