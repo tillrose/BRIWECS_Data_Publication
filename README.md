@@ -39,11 +39,11 @@ id="fig-holger" width="160" height="220" alt="Zetzsche 2020" />](https://www.nat
 src="https://github.com/tillrose/BRIWECS_Data_Publication/blob/main/figure/previous_paper/Sabir_2023.png"
 id="fig-kahdija" width="160" height="220" alt="Sabir 2023" />](https://www.nature.com/articles/s41477-023-01516-8)
 
-## instruction
+## instruction for pre-processing scripts
 
 1.  open `BRIWECS_Data_Publication.RProject`
 2.  open `scripts/run.R`
-3.  run all lines `Ctrl + Alt + R`
+3.  run all the lines `Ctrl + Alt + R`
 
 ***Note: Part of data the traits in Location KAL, Phase II (2018-2020)
 is still under data-preparation, will be updated soon***
