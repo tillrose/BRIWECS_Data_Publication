@@ -687,11 +687,9 @@ In KAL 2018–2020 an additional treatment without nitrogen treatment was added 
 
 ## Reproducible analysis
 
-::: panel-tabset
 [![Analysis-workflow](https://img.shields.io/badge/Analysis-workflow-darkorange)](https://github.com/Illustratien/Scientific_Data_Analyis)
 
-[![Voss-Fels 2019](https://github.com/Illustratien/Scientific_Data_Analyis/blob/master/README_files/figure-gfm/unnamed-chunk-1-1.png){.lightbox width="160" height="220"}](https://github.com/Illustratien/Scientific_Data_Analyis)
-:::
+
 
 ## 24 Traits
 
