@@ -1,5 +1,5 @@
 ---
-title: "Data Publication of BRIWECS Consortium"
+title: "Data: Multi-environment field trials provide insights into wheat yield stability and breeding progress"
 date: "`r Sys.Date()`"
 chunk_output_type: console
 html-math-method: katex
@@ -237,11 +237,13 @@ p <- venn.diagram(
 ```
 
 ## Hyperlinks
-[![Zenodo-repository](https://img.shields.io/badge/zenodo-10.5281/zenodo.12654376-darkred)](https://zenodo.org/doi/10.5281/zenodo.12654376) [![Analysis-workflow](https://img.shields.io/badge/Analysis-workflow-darkorange)](https://github.com/Illustratien/Scientific_Data_Analyis)  [![Project-website](https://img.shields.io/badge/Project-website-darkgreen)](https://www.igps.uni-hannover.de/de/forschung/forschungsprojekte/detailansicht/projects/forschungsverbund-briwecs)
+
+[![Figshare-repository](https://img.shields.io/badge/Data-repository-darkred)](https://figshare.com/s/db122743679926b81743)
+[![Analysis-workflow](https://img.shields.io/badge/Analysis-workflow-darkorange)](https://github.com/Illustratien/Scientific_Data_Analyis) [![Project-website](https://img.shields.io/badge/Project-website-darkgreen)](https://www.igps.uni-hannover.de/de/forschung/forschungsprojekte/detailansicht/projects/forschungsverbund-briwecs)
 
 ## Previous publications
 
-[![Voss-Fels 2019](./figure/previous_paper/Kai2019.PNG){#fig-kai .lightbox width="160" height="220"}](https://www.nature.com/articles/s41477-019-0445-5) [![Rose 2019](./figure/previous_paper/Rose_2019.png){#fig-till width="160" height="220"}](https://www.frontiersin.org/journals/plant-science/articles/10.3389/fpls.2019.01521/full) [![Lichthardt 2020](./figure/previous_paper/Carolin_2020.png){#fig-carolin width="160" height="220"}](https://www.frontiersin.org/journals/plant-science/articles/10.3389/fpls.2019.01771/full) [![Zetzsche 2020](./figure/previous_paper/Zetzsche_2020.png){#fig-holger width="160" height="220"}](https://www.nature.com/articles/s41598-020-77200-0) [![Sabir 2023](./figure/previous_paper/Sabir_2023.png){#fig-kahdija width="160" height="220"}](https://www.nature.com/articles/s41477-023-01516-8)
+[![Voss-Fels 2019](./figure/previous_paper/Kai2019.PNG){#fig-kai .lightbox width="128" height="220"}](https://www.nature.com/articles/s41477-019-0445-5) [![Rose 2019](./figure/previous_paper/Rose_2019.png){#fig-till width="128" height="220"}](https://www.frontiersin.org/journals/plant-science/articles/10.3389/fpls.2019.01521/full) [![Lichthardt 2020](./figure/previous_paper/Carolin_2020.png){#fig-carolin width="128" height="220"}](https://www.frontiersin.org/journals/plant-science/articles/10.3389/fpls.2019.01771/full) [![Zetzsche 2020](./figure/previous_paper/Zetzsche_2020.png){#fig-holger width="128" height="220"}](https://www.nature.com/articles/s41598-020-77200-0) [![Sabir 2023](./figure/previous_paper/Sabir_2023.png){#fig-kahdija width="128" height="220"}](https://www.nature.com/articles/s41477-023-01516-8)
 
 additional depositories
 
