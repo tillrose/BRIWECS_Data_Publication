@@ -1,7 +1,7 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
-[![Zenodo-repository](https://img.shields.io/badge/zenodo-10.5281/zenodo.12654376-darkred)](https://zenodo.org/doi/10.5281/zenodo.12654376)
+[![Zenodo-repository](https://img.shields.io/badge/Data-figshare-darkred)](https://figshare.com/s/db122743679926b81743)
 [![Analysis-workflow](https://img.shields.io/badge/Analysis-workflow-darkorange)](https://github.com/Illustratien/Scientific_Data_Analyis)
 [![Website -
 pkgdown](https://img.shields.io/badge/data-visulaization-blue)](https://tillrose.github.io/BRIWECS_Data_Publication/data_overview.html)
