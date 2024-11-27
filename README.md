@@ -1,7 +1,7 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
-[![Zenodo-repository](https://img.shields.io/badge/Data-figshare-darkred)](https://figshare.com/s/db122743679926b81743)
+[![Figshare-repository](https://img.shields.io/badge/doi-10.6084/m9.figshare.27910269-darkred)](https://figshare.com/s/6182dd7384bef2dbd9d5)
 [![Analysis-workflow](https://img.shields.io/badge/Analysis-workflow-darkorange)](https://github.com/Illustratien/Scientific_Data_Analyis)
 [![Website -
 pkgdown](https://img.shields.io/badge/data-visulaization-blue)](https://tillrose.github.io/BRIWECS_Data_Publication/data_overview.html)
@@ -56,7 +56,7 @@ is still under data-preparation, will be updated soon***
 
     ## Total 526,8K observations (removed outliers)
 
-<table class=" lightable-classic-2" style="font-family: &quot;Arial Narrow&quot;, &quot;Source Sans Pro&quot;, sans-serif; width: auto !important; float: right; margin-left: 10px;">
+<table class=" lightable-classic-2" style="color: black; font-family: &quot;Arial Narrow&quot;, &quot;Source Sans Pro&quot;, sans-serif; width: auto !important; float: right; margin-left: 10px;">
 <caption>
 Table 1. Trait names, sources, ranges and units
 </caption>

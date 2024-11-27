@@ -238,8 +238,7 @@ p <- venn.diagram(
 
 ## Hyperlinks
 
-[![Figshare-repository](https://img.shields.io/badge/Data-repository-darkred)](https://figshare.com/s/db122743679926b81743)
-[![Analysis-workflow](https://img.shields.io/badge/Analysis-workflow-darkorange)](https://github.com/Illustratien/Scientific_Data_Analyis) [![Project-website](https://img.shields.io/badge/Project-website-darkgreen)](https://www.igps.uni-hannover.de/de/forschung/forschungsprojekte/detailansicht/projects/forschungsverbund-briwecs)
+[![Figshare-repository](https://img.shields.io/badge/doi-10.6084/m9.figshare.27910269-darkred)](https://figshare.com/s/6182dd7384bef2dbd9d5) [![Analysis-workflow](https://img.shields.io/badge/Analysis-workflow-darkorange)](https://github.com/Illustratien/Scientific_Data_Analyis) [![Project-website](https://img.shields.io/badge/Project-website-darkgreen)](https://www.igps.uni-hannover.de/de/forschung/forschungsprojekte/detailansicht/projects/forschungsverbund-briwecs)
 
 ## Previous publications
 
@@ -268,7 +267,7 @@ cat(
 ```
 :::
 
-::: panel-tabset
+:::: panel-tabset
 ## BRIWECs MET dataset
 
 ```{r,warning=FALSE,echo=FALSE, message=FALSE}
@@ -617,7 +616,7 @@ cat(sep = "\n", knitr::knit_child(quiet = TRUE, text = c(
   "```"
 )))  
 ```
-:::
+::::
 
 ## Experimental designs
 
