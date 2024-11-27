@@ -139,7 +139,7 @@ left_join(unit ,by='trait')%>%
 ```{r,echo=F,fig.width=10, fig.height=10,warning=F}
 dirs <- list.dirs(path = ".", full.names = TRUE, recursive = TRUE) 
 
-r.target <- paste(c(".git",".Rproj.user","*.md","*.Rmd",".quarto","gfm","docs","figure"),
+r.target <- paste(c(".git",".Rproj.user","*.md","*.Rmd",".quarto","gfm","docs","figure","New folder"),
                   collapse='|')
 dirs <- dirs[!grepl(r.target,dirs)]
 
