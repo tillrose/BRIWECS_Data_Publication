@@ -1,7 +1,8 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
-[![Figshare-repository](https://img.shields.io/badge/doi-10.6084/m9.figshare.27910269-darkred)](https://figshare.com/s/6182dd7384bef2dbd9d5)
+[![Paper-publication](https://img.shields.io/badge/Scientific-Data-darkred)](https://www.nature.com/articles/s41597-024-04332-7)
+[![Figshare-repository](https://img.shields.io/badge/Figshare-10.6084/m9.figshare.27910269-yellow)](https://figshare.com/s/6182dd7384bef2dbd9d5)
 [![Analysis-workflow](https://img.shields.io/badge/Analysis-workflow-darkorange)](https://github.com/Illustratien/Scientific_Data_Analyis)
 [![Website -
 pkgdown](https://img.shields.io/badge/data-visulaization-blue)](https://tillrose.github.io/BRIWECS_Data_Publication/data_overview.html)
@@ -16,7 +17,7 @@ alt="Breeding Innovations in Wheat for Efficient Cropping Systems (BRIWECS)." />
 Efficient Cropping Systems (BRIWECS).</figcaption>
 </figure>
 
-## A collaborative work on a data publication for the seasons 2015–2020 of the BRIWECS consortium
+# [Multi-environment field trials for wheat yield, stability and breeding progress in Germany](https://www.nature.com/articles/s41597-024-04332-7)
 
 <!-- [![License: GPL-3](https://img.shields.io/badge/License-GPL3-orange)](https://www.r-project.org/Licenses/) -->
 
@@ -56,7 +57,7 @@ is still under data-preparation, will be updated soon***
 
     ## Total 526,8K observations (removed outliers)
 
-<table class=" lightable-classic-2" style="color: black; font-family: &quot;Arial Narrow&quot;, &quot;Source Sans Pro&quot;, sans-serif; width: auto !important; float: right; margin-left: 10px;">
+<table class=" lightable-classic-2" style="font-family: &quot;Arial Narrow&quot;, &quot;Source Sans Pro&quot;, sans-serif; width: auto !important; float: right; margin-left: 10px;">
 <caption>
 Table 1. Trait names, sources, ranges and units
 </caption>
