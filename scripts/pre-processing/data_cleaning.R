@@ -132,7 +132,7 @@ tmps <- export_dat %>% filter((BRISONr=="BRISONr_188"&Location=="KIE"&Year==2017
   summarise_all(mean)
 res <- rbind(tmpr,tmps) %>%
   mutate(across(-c(BRISONr:Emergence_date,Seedyield),
-                ~ case_when(Location == "KAL" & Year > 2017 ~ NA,
+                ~ case_when(Location == "KAL" & Year > 2017 ~ NA_real_,
                             T~.)))
 # -------------------------------------------------------------------------
 write_delim(res, "output/BRIWECS_data_publication.csv", delim = ";")
