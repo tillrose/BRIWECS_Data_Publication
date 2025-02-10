@@ -1,4 +1,4 @@
-Row;Column;BRISONr;Year;Location;Subtrial;Treatment;Block;Sowing_date;Emergence_date;BBCH59;BBCH87;Plantheight;Seedyield;Seedyield_bio;Biomass_bio;TKW_plot;TKW_bio;Spike_number;Stripe_rust;DTR;Leaf_rust;Powdery_mildew;Septoria;Fusarium;Falling_number;Kernel_number_bio;Crude_protein;Sedi;Harvest_Index
+Row;Column;BRISONr;Year;Location;Subtrial;Treatment;Block;Sowing_date;Emergence_date;BBCH59;BBCH87;Plantheight;Seedyield;Seedyield_bio;Biomass_bio;TKW_plot;TKW_bio;Spike_number;Stripe_rust;DTR;Leaf_rust;Powdery_mildew;Septoria;Fusarium;Falling_number;Kernel_number_bio;Crude_protein;Sedimentation;Harvest_Index
 1;19;BRISONr_20;2018;GGE;1;LN_NF;B1;299;NA;137;NA;67.2;37.47262898;326.163;801.067;37.6;NA;280.14;1;NA;1;1;2;1;NA;9771.55;10.88;27;0.4071606994171524
 4;40;BRISONr_20;2018;GGE;1;LN_NF;B2;299;NA;137;NA;64;35.3537002;296.148;701.017;37.1;NA;306.82;1;NA;1;1;3;3;NA;12639.65;12.46;34;0.4224548049476689
 1;33;BRISONr_26;2018;GGE;1;LN_NF;B1;299;NA;136;NA;69.6;48.23453328;319.493;750.375;46.16666667;NA;253.46;1;NA;2;1;3;1;NA;8857.76;10.28;29;0.42577777777777776
