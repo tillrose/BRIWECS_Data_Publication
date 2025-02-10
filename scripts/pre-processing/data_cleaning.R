@@ -7,7 +7,105 @@ source("scripts/pre-processing/functions.R")
 complete_dat <- list.files(path = "data/locations",
                            pattern="*.csv",
                            full.names = T) %>%
-  map_df(~read_csv2(., col_types = cols(.default = "c")))%>% 
+  map_df(.,function(filename){
+    if(grepl("RHH_2018",filename)){
+      df <-read_csv(filename, col_types = cols(.default = "c"))
+    }else{
+      df <-read_csv2(filename, col_types = cols(.default = "c"))
+    }
+   
+    
+    if(grepl("GGE_2019",filename)){
+      s1 <- xlsx::read.xlsx("data/patching_files/GG2019.xlsx", sheetIndex = 1) %>% distinct()
+      s2 <- xlsx::read.xlsx("data/patching_files/GG2019.xlsx", sheetIndex = 2) %>% 
+        tidyr::pivot_longer(starts_with("X"), names_to = "Column", values_to = "Name") %>% 
+        mutate(Column=gsub("X", "", Column)) %>%
+        right_join(.,s1 ) %>% 
+        dplyr::select(Row,Column,BRISONr,Replication,Treatment,Seedyield.dt.ha.100.) %>%
+        rename(SeedyieldM=Seedyield.dt.ha.100.) %>%
+        mutate(Treatment=case_when(Treatment==1~"LN_NF",
+                                   Treatment==2~"LN_WF",
+                                   Treatment==3 ~ "HN_NF",
+                                   Treatment==4 ~"HN_WF",
+                                   T~"HN_WF_DD"),
+               SeedyieldM=round(as.numeric(SeedyieldM),3),
+               Block=paste0("B",Replication),
+               across(c(Row,Column),as.character),
+               BRISONr=paste0("BRISONr_",BRISONr)) %>% 
+        dplyr::select(-Replication)
+      
+      df <- df %>% 
+        mutate(SeedyieldM=round(as.numeric(Seedyield),3),
+          Seedyield=case_when(Seedyield=='0'~NA,
+                              T~Seedyield)) %>% 
+        left_join(.,s2) %>% relocate(Row,Column) %>%
+        dplyr::select(-SeedyieldM)
+      
+    }else if(grepl("HAN_2018",filename)){
+      double <- df%>%
+        select(Treatment:Column) %>%
+        group_by_all() %>% 
+        reframe(n=n()) %>% filter(n>1)
+      
+      mis <- df %>% filter(is.na(Column)|is.na(Row)) %>%
+        select(Treatment:Column) %>% bind_rows(.,double)
+      
+      han2 <- mis %>% select(-n) %>% 
+        left_join(.,df) %>% 
+        mutate(
+          across(c(Row,Column),as.numeric),
+          Row=case_when(BRISONr=="BRISONr_47"~Row+1,
+                        BRISONr=="BRISONr_38"~Row-3,
+                        T~Row),
+          Column=case_when(
+            BRISONr%in%paste0("BRISONr_",c(226,213,169,222))~Column+1,
+            is.na(Column)~12, 
+            T~Column),
+          across(c(Row,Column),as.character)
+        )
+      
+      han_res <- df %>% anti_join(.,mis)
+      df <- han2 %>% bind_rows(han_res)
+    }else if(grepl("KIE_2017",filename)){
+      # average double rows in KIE 2017-------------------------------------------------------------------------
+      tmpr <-df %>% filter(!(BRISONr=="BRISONr_188"&Treatment=="LN_NF_RF"&Block=="B2"))
+      tmps <- df %>% filter((BRISONr=="BRISONr_188"&Treatment=="LN_NF_RF"&Block=="B2")) %>% 
+        mutate(Row=24) %>% 
+        group_by_at(c("Row","Column","BRISONr","Year","Treatment","Block","Location")) %>% 
+        summarise_all(mean) 
+      # remove KAL 2018-2020 problem data before raw data got updated. 
+      df <- rbind(tmpr,tmps) %>% 
+        mutate(
+          across(c(Row,Column),as.character)
+        )
+    }else if(grepl("RHH_2016",filename)){
+      
+      rhh_patch <- xlsx::read.xlsx("data/patching_files/RHH2016.xlsx",
+                                   sheetIndex = 1) %>% 
+        tidyr::pivot_longer(starts_with("X"), names_to = "Column", 
+                            values_to = "Name") %>% 
+        rename(Row=row) %>% 
+        mutate(Column=gsub("X", "", Column) %>% as.numeric(),
+               newc=as.character(Column+30*(gcolumn-1)),
+               # this part need to be corrected.
+               Treatment=case_when(treatment==1~"LN_NF",
+                                   treatment==2~"HN_NF",
+                                   T~"HN_WF"
+               ),
+               Block=paste0("B",block),
+               across(c(Row,Column),as.character),
+               BRISONr=paste0("BRISONr_",Name)) %>% 
+        filter(!is.na(Name)) %>% select(-c(treatment:block,gcolumn,Name))
+
+      df <- rhh_patch %>% 
+        right_join(.,df ) %>% 
+        mutate(Column=newc) %>% dplyr::select(-newc)
+    }else{
+      df <- df
+    }
+    
+    return(df)
+  })%>% 
   suppressMessages() %>% 
   # for consistency of location and treatment naming rules
   treatment_location_name_correction()
@@ -59,7 +157,7 @@ complete_dat <- complete_dat %>%
                              T~ 1000*Seedyield_bio/(TKW_bio*Spike_number)),
          TKW = ifelse(is.na(TKW_plot), TKW_bio, TKW_plot), 
          Grain= Seedyield*1000/TKW,# set yield back to grain and divide by tkw
-
+         
          Protein_yield=Seedyield*Crude_protein/100
   ) %>% 
   filter(Treatment != "LLN_WF_RF",
@@ -83,7 +181,7 @@ complete_dat <- complete_dat %>%
          Biomass = Seedyield/Harvest_Index,
          Straw = Biomass*(1-Harvest_Index),
          # Straw =ifelse(Straw < 5, NA, Crude_protein)
-         )
+  )
 
 ## Filter Spike Number by Standard Deviation
 complete_dat <- complete_dat %>% 
@@ -124,25 +222,10 @@ col_rename <- xlsx::read.xlsx("metadata/Unit.xlsx",sheetIndex = 1) %>%
 # names(raw)
 names(export_dat)[match(col_rename$trait_old,names(export_dat))] <- col_rename$trait
 
-# average double rows in KIE 2017-------------------------------------------------------------------------
-tmpr <-export_dat %>% filter(!(BRISONr=="BRISONr_188"&Location=="KIE"&Year==2017&Treatment=="LN_NF_RF"&Block=="B2"))
-tmps <- export_dat %>% filter((BRISONr=="BRISONr_188"&Location=="KIE"&Year==2017&Treatment=="LN_NF_RF"&Block=="B2")) %>% 
-  mutate(Row=24) %>% 
-  group_by_at(c("Row","Column","BRISONr","Year","Treatment","Block","Location")) %>% 
-  summarise_all(mean)
-res <- rbind(tmpr,tmps) %>%
+# remove KAL 2018-2020 problem data before raw data got updated. 
+res <- export_dat %>%
   mutate(across(-c(BRISONr:Emergence_date,Seedyield),
                 ~ case_when(Location == "KAL" & Year > 2017 ~ NA_real_,
                             T~.)))
 # -------------------------------------------------------------------------
-write_delim(res, "output/BRIWECS_data_publication.csv", delim = ";")
-# -------------------------------------------------------------------------
-# a <- read.csv("data/cultivar_info.csv") %>% arrange(id)
-# a1 <- read.csv("metadata/BRIWECS_BRISONr_information.csv")
-# 
-# setdiff(a$genotype%>% unlist(),
-#         a1$genotype%>% unlist()) %>% sort()
-# setdiff(a1$genotype%>% unlist(),
-#         a$genotype%>% unlist()) %>% sort()
-# 
-# setdiff(a$kai,a1$breeding_progress_subset)
+write_delim(export_dat, "output/BRIWECS_data_publication.csv", delim = ";")
