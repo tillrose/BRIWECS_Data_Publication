@@ -43,12 +43,12 @@ complete_dat <- list.files(path = "data/locations",
       
     }else if(grepl("HAN_2018",filename)){
       double <- df%>%
-        select(Treatment:Column) %>%
+        dplyr::select(Treatment:Column) %>%
         group_by_all() %>% 
         reframe(n=n()) %>% filter(n>1)
       
       mis <- df %>% filter(is.na(Column)|is.na(Row)) %>%
-        select(Treatment:Column) %>% bind_rows(.,double)
+        dplyr::select(Treatment:Column) %>% bind_rows(.,double)
       
       han2 <- mis %>% select(-n) %>% 
         left_join(.,df) %>% 
@@ -59,10 +59,23 @@ complete_dat <- list.files(path = "data/locations",
                         T~Row),
           Column=case_when(
             BRISONr%in%paste0("BRISONr_",c(226,213,169,222))~Column+1,
-            is.na(Column)~12, 
+            is.na(Column)~12, #102
             T~Column),
           across(c(Row,Column),as.character)
         )
+      # mis %>% select(-n) %>% 
+      #   left_join(.,df) %>% 
+      #   mutate(
+      #     across(c(Row,Column),as.numeric),
+      #     RowN=case_when(BRISONr=="BRISONr_47"~Row+1,
+      #                    BRISONr=="BRISONr_38"~Row-3,
+      #                    T~Row),
+      #     ColumnN=case_when(
+      #       BRISONr%in%paste0("BRISONr_",c(226,213,169,222))~Column+1,
+      #       is.na(Column)~12, #102
+      #       T~Column)) %>% 
+      #   select(Treatment,Block,starts_with("Row"),starts_with("Column"),BRISONr) %>% 
+      #   write.csv(.,"HAN2018_coord_correct.csv",row.names=FALSE)
       
       han_res <- df %>% anti_join(.,mis)
       df <- han2 %>% bind_rows(han_res)
