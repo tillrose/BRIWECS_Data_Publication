@@ -11,8 +11,6 @@ always_allow_html: true
 
 # [Multi-environment field trials for wheat yield, stability and breeding progress in Germany](https://www.nature.com/articles/s41597-024-04332-7)
 
-
-
 <!-- [![License: GPL-3](https://img.shields.io/badge/License-GPL3-orange)](https://www.r-project.org/Licenses/) -->
 
 ```{r setup, include=FALSE,echo=F}

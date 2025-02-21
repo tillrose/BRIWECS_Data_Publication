@@ -219,7 +219,7 @@ p <- venn.diagram(
   output = TRUE ,
   imagetype="png" ,
   height = 600 , 
-  width =  600 , 
+  width =  800 , 
   resolution = 660,
   compression = "lzw",
   lwd = 1,

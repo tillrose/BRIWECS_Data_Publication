@@ -55,7 +55,7 @@ is still under data-preparation, will be updated soon***
 
 ## trait table
 
-    ## Total 526,8K observations (removed outliers)
+    ## Total 563,4K observations (removed outliers)
 
 <table class=" lightable-classic-2" style="font-family: &quot;Arial Narrow&quot;, &quot;Source Sans Pro&quot;, sans-serif; width: auto !important; float: right; margin-left: 10px;">
 <caption>
@@ -109,7 +109,7 @@ grains per spike
 Grain_per_spike_bio
 </td>
 <td style="text-align:left;">
-3.6~144.2
+3.6~146.7
 </td>
 <td style="text-align:left;">
 Nbr
@@ -126,7 +126,7 @@ harvest index
 Harvest_Index_bio
 </td>
 <td style="text-align:left;">
-0.1~0.79
+0.1~0.8
 </td>
 <td style="text-align:left;">
 </td>
@@ -142,7 +142,7 @@ plant height
 Plantheight_bio
 </td>
 <td style="text-align:left;">
-41~145
+40~145
 </td>
 <td style="text-align:left;">
 cm
@@ -227,7 +227,7 @@ whole plot
 BBCH87
 </td>
 <td style="text-align:left;">
-176~213
+175~213
 </td>
 <td style="text-align:left;">
 days of year
@@ -329,7 +329,7 @@ whole plot
 Grain
 </td>
 <td style="text-align:left;">
-143.7~3915.5
+19.2~5851.5
 </td>
 <td style="text-align:left;">
 Nbr x 10^5/ha
@@ -380,7 +380,7 @@ whole plot
 Protein_yield
 </td>
 <td style="text-align:left;">
-0~22.2
+0.005~22.2
 </td>
 <td style="text-align:left;">
 dt/ha
@@ -397,7 +397,7 @@ whole plot
 Sedimentation
 </td>
 <td style="text-align:left;">
-2.1~83.3
+2.1~95.4
 </td>
 <td style="text-align:left;">
 ml
@@ -414,7 +414,7 @@ whole plot
 Seedyield
 </td>
 <td style="text-align:left;">
-0~141.6
+0.05~141.6
 </td>
 <td style="text-align:left;">
 dt/ha @100% dry mass
@@ -482,7 +482,7 @@ whole plot
 TGW
 </td>
 <td style="text-align:left;">
-11.9~67.4
+2.6~69.5
 </td>
 <td style="text-align:left;">
 g
