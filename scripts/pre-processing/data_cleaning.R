@@ -174,10 +174,12 @@ complete_dat <- complete_dat %>%
          Protein_yield=Seedyield*Crude_protein/100
   ) %>% 
   filter(Treatment != "LLN_WF_RF",
-         !BRISONr%in%c("BRISONr_?","BRISONr_NA"),
+         !BRISONr%in%c("BRISONr_NA"),
          !is.na(BRISONr)) %>% 
   group_by(Treatment,Location,Year) %>% 
-  mutate( across(Stripe_rust:Fusarium,
+  mutate( 
+    BRISONr=ifelse(BRISONr=="BRISONr_?","BRISONr_229",BRISONr),
+    across(Stripe_rust:Fusarium,
                  ~case_when(all(is.na(.))~., # if all is na, then keep na
                             # otherwise, replace NA or <0 with 0
                             T~ifelse(is.na(.)|.<0, 0, .)))) %>% 

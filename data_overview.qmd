@@ -208,7 +208,7 @@ df <- read.csv("metadata/BRIWECs_cultivar_info.csv")
 colr <- c('#188392','#EEAE24','#EE3324')
 
 colra <- map_chr(colr,~alpha(.x,.3))
-
+futile.logger::flog.threshold(futile.logger::ERROR, name = "VennDiagramLogger")
 p <- venn.diagram(
   x = list(
     df %>% filter(breeding_progress==T) %>% .$BRISONr%>%  unique(), 
@@ -248,7 +248,8 @@ additional depositories
 
 -   [adjusted mean fungal disease zenodo](https://zenodo.org/records/3697514)
 
--   [SNIP data](https://static-content.springer.com/esm/art%3A10.1038%2Fs41477-019-0445-5/MediaObjects/41477_2019_445_MOESM4_ESM.xlsx)
+-   [SNIP data1, Voss-Fels 2019](https://static-content.springer.com/esm/art%3A10.1038%2Fs41477-019-0445-5/MediaObjects/41477_2019_445_MOESM4_ESM.xlsx),
+[SNIP data2, Lichthardt 2020](https://www.frontiersin.org/journals/plant-science/articles/10.3389/fpls.2019.01771/full#supplementary-material)
 
 -   [Adjusted mean zenodo](https://zenodo.org/records/1316947)
 
