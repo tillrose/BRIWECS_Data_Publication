@@ -13,7 +13,6 @@ complete_dat <- list.files(path = "data/locations",
     }else{
       df <-read_csv2(filename, col_types = cols(.default = "c"))
     }
-   
     
     if(grepl("GGE_2019",filename)){
       s1 <- xlsx::read.xlsx("data/patching_files/GG2019.xlsx", sheetIndex = 1) %>% distinct()
@@ -36,10 +35,27 @@ complete_dat <- list.files(path = "data/locations",
       
       df <- df %>% 
         mutate(SeedyieldM=round(as.numeric(Seedyield),3),
-          Seedyield=case_when(Seedyield=='0'~NA,
-                              T~Seedyield)) %>% 
+               Seedyield=case_when(Seedyield=='0'~NA,
+                                   T~Seedyield)) %>% 
         left_join(.,s2) %>% relocate(Row,Column) %>%
         dplyr::select(-SeedyieldM)
+      
+    }else if(grepl("KAL_20(18|19|20)",filename)){
+      
+      KAL_table <- 
+        data.frame(
+          # genotype=
+          #            c('RGT Reform','Benchmark','Barranco','Nordkap',
+          #              'Porthus','Sheriff','Apostel'), 
+          BRISONr=paste0('BRISONr_',c(222:228)),   
+          bri2=paste0('BRISONr_',214:220))
+      
+      
+      df <-  df %>% 
+        left_join(.,KAL_table,"BRISONr") %>% 
+        mutate(BRISONr=case_when(!is.na(bri2) ~ bri2,
+                                 TRUE ~ BRISONr)) %>% 
+        dplyr::select(-bri2)
       
     }else if(grepl("HAN_2018",filename)){
       double <- df%>%
@@ -63,29 +79,16 @@ complete_dat <- list.files(path = "data/locations",
             T~Column),
           across(c(Row,Column),as.character)
         )
-      # mis %>% select(-n) %>% 
-      #   left_join(.,df) %>% 
-      #   mutate(
-      #     across(c(Row,Column),as.numeric),
-      #     RowN=case_when(BRISONr=="BRISONr_47"~Row+1,
-      #                    BRISONr=="BRISONr_38"~Row-3,
-      #                    T~Row),
-      #     ColumnN=case_when(
-      #       BRISONr%in%paste0("BRISONr_",c(226,213,169,222))~Column+1,
-      #       is.na(Column)~12, #102
-      #       T~Column)) %>% 
-      #   select(Treatment,Block,starts_with("Row"),starts_with("Column"),BRISONr) %>% 
-      #   write.csv(.,"HAN2018_coord_correct.csv",row.names=FALSE)
-      
       han_res <- df %>% anti_join(.,mis)
       df <- han2 %>% bind_rows(han_res)
     }else if(grepl("KIE_2017",filename)){
       # average double rows in KIE 2017-------------------------------------------------------------------------
-      tmpr <-df %>% filter(!(BRISONr=="BRISONr_188"&Treatment=="LN_NF_RF"&Block=="B2"))
-      tmps <- df %>% filter((BRISONr=="BRISONr_188"&Treatment=="LN_NF_RF"&Block=="B2")) %>% 
+      tmpr <-df %>% filter(!(BRISONr=="BRISONr_188"&Treatment=="LN_NF"&Block=="B2"))
+      tmps <- df %>% filter((BRISONr=="BRISONr_188"&Treatment=="LN_NF"&Block=="B2")) %>% 
         mutate(Row=24) %>% 
         group_by_at(c("Row","Column","BRISONr","Year","Treatment","Block","Location")) %>% 
-        summarise_all(mean) 
+        mutate(across(Sowing_date:Subtrial,as.numeric)) %>% 
+        reframe(across(where(is.numeric),~mean(.x,na.rm = T)))
       # remove KAL 2018-2020 problem data before raw data got updated. 
       df <- rbind(tmpr,tmps) %>% 
         mutate(
@@ -109,7 +112,7 @@ complete_dat <- list.files(path = "data/locations",
                across(c(Row,Column),as.character),
                BRISONr=paste0("BRISONr_",Name)) %>% 
         filter(!is.na(Name)) %>% select(-c(treatment:block,gcolumn,Name))
-
+      
       df <- rhh_patch %>% 
         right_join(.,df ) %>% 
         mutate(Column=newc) %>% dplyr::select(-newc)
@@ -180,9 +183,9 @@ complete_dat <- complete_dat %>%
   mutate( 
     BRISONr=ifelse(BRISONr=="BRISONr_?","BRISONr_229",BRISONr),
     across(Stripe_rust:Fusarium,
-                 ~case_when(all(is.na(.))~., # if all is na, then keep na
-                            # otherwise, replace NA or <0 with 0
-                            T~ifelse(is.na(.)|.<0, 0, .)))) %>% 
+           ~case_when(all(is.na(.))~., # if all is na, then keep na
+                      # otherwise, replace NA or <0 with 0
+                      T~ifelse(is.na(.)|.<0, 0, .)))) %>% 
   ungroup()
 
 ## Filter Harvest Index by Standard Deviation
