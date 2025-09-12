@@ -159,6 +159,7 @@ x <- lapply(strsplit(dirst, "/"),
   filter(!is.na(V2)) %>% 
   group_by(V1,V2,V3) %>%
   reframe(V4 = case_when(n() > 5&(!V3%in%c("pre-processing"))~sprintf("%s files",n()-1),
+                         V3==c("patching_files")~sprintf("%s files",n()-1),
                            T~V4)) %>% 
   mutate(V2=factor(V2,levels=c("data","metadata","scripts","output"))) %>% 
   arrange(desc(V2)) %>% suppressWarnings()
