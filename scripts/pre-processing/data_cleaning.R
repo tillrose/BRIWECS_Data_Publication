@@ -47,8 +47,8 @@ complete_dat <- list.files(path = "data/locations",
           # genotype=
           #            c('RGT Reform','Benchmark','Barranco','Nordkap',
           #              'Porthus','Sheriff','Apostel'), 
-          BRISONr=paste0('BRISONr_',c(222:228)),   
-          bri2=paste0('BRISONr_',214:220))
+          BRISONr=paste0('BRISONr_',214:220),   
+          bri2=paste0('BRISONr_',c(222:228)))
       
       
       df <-  df %>% 
